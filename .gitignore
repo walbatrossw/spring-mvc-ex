@@ -1,0 +1,35 @@
+target
+build
+bin
+*~
+*.log
+.classpath
+.project
+*.ipr
+*.iws
+*.iml
+.settings
+.git
+.svn
+*.bak
+*.class
+*.jar
+*.war
+*.ear
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
