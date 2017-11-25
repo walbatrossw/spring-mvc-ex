@@ -12,6 +12,8 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 
+    <!--웹자원과 관련되지 않은 모든 자원의 설정을 위해 존재하는 파일-->
+
     <!--DataSource 설정-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
