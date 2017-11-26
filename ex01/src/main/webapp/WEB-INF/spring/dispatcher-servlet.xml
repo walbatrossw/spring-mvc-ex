@@ -14,6 +14,9 @@
 
     <!--정적 자원 : js, css, 이미지파일 등등-->
     <resources mapping="/resources/**" location="/resources/" />
+    <resources mapping="/bootstrap/**" location="/resources/bootstrap/"/>
+    <resources mapping="/plugins/**" location="/resources/plugins/"/>
+    <resources mapping="/dist/**" location="/resources/dist/"/>
 
     <!--viewResolver : jsp-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
