@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex01.mapper.BoardMapper">
+
+    <insert id="create">
+        INSERT INTO tbl_board (
+            title
+            , content
+            , writer
+        ) VALUES (
+            #{title}
+            , #{content}
+            , #{writer}
+        )
+    </insert>
+
+    <select id="read" resultType="BoardVO">
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM tbl_board
+        WHERE bno = #{bno}
+    </select>
+
+    <update id="update">
+        UPDATE tbl_board
+        SET title = #{title}, content = #{content}
+        WHERE bno = #{bno}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tbl_board WHERE bno = #{bno}
+    </delete>
+
+    <select id="listAll" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        ]]>
+    </select>
+
+</mapper>

@@ -1,54 +1,57 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
+
 <html>
-<head>
-    <!--헤드(CSS) include-->
-    <%@ include file="include/head.jsp" %>
-</head>
-<body class="fixed sidebar-mini skin-green">
+
+<%--head.jsp--%>
+<%@ include file="include/head.jsp" %>
+
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
-    <!--헤더 네비바 include-->
-    <%@ include file="include/navbar.jsp" %>
+    <%--main_header.jsp--%>
+    <%-- Main Header --%>
+    <%@ include file="include/main_header.jsp" %>
 
-    <!--사이드 메뉴 include-->
+    <%--left_column.jsp--%>
+    <%-- Left side column. contains the logo and sidebar --%>
     <%@ include file="include/left_column.jsp" %>
-
-    <!--본문 페이지-->
+    
+    <%-- Content Wrapper. Contains page content --%>
     <div class="content-wrapper">
-        <!--본문 페이지 헤더-->
+        <%-- Content Header (Page header) --%>
         <section class="content-header">
             <h1>
                 메인페이지
-                <small></small>
+                <small>스프링연습예제</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Main</a></li>
+                <li class="active">Home</li>
             </ol>
         </section>
 
-        <!--본문 페이지 내용-->
-        <section class="content">
-            <!-- 페이지 내용 -->
-            <div class="row">
-                <section class="col-lg-12">
-                    메인 페이지 입니다....
-                </section>
-            </div>
+        <%-- Main content --%>
+        <section class="content container-fluid">
+            <p>메인 페이지입니다.</p>
+            <%--------------------------
+              | Your Page Content Here |
+              --------------------------%>
         </section>
-
+        <%-- /.content --%>
     </div>
+    <%-- /.content-wrapper --%>
 
-    <!--풋터 include-->
-    <%@ include file="include/footer.jsp" %>
-
-    <!--컨트롤 사이드바 -->
-    <%@ include file="include/control_sidebar.jsp" %>
+    <%--main_footer.jsp--%>
+    <%-- Main Footer --%>
+    <%@ include file="include/main_footer.jsp" %>
 
 </div>
+<%-- ./wrapper --%>
 
-<!-- 풋(JS) include-->
-<%@ include file="include/js.jsp" %>
+<%--plugin_js.jsp--%>
+<%@ include file="include/plugin_js.jsp" %>
+
 </body>
 </html>

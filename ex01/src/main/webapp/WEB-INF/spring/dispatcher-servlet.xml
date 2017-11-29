@@ -9,12 +9,12 @@
 
     <!--스프링 MVC관련 설정만을 분리하기 위한 파일-->
 
-    <!--@Controller 애너테이션 인식-->
+    <!--애너테이션 자동 인식-->
     <annotation-driven />
 
     <!--정적 자원 : js, css, 이미지파일 등등-->
     <resources mapping="/resources/**" location="/resources/" />
-    <resources mapping="/bootstrap/**" location="/resources/bootstrap/"/>
+    <resources mapping="/bower_components/**" location="/resources/bower_components/"/>
     <resources mapping="/plugins/**" location="/resources/plugins/"/>
     <resources mapping="/dist/**" location="/resources/dist/"/>
 
