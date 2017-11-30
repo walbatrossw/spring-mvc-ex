@@ -69,7 +69,7 @@ public class BoardController {
 
     // 게시글 수정페이지
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(int bno, Model model) throws Exception {
+    public String modifyGET(@RequestParam("bno") int bno, Model model) throws Exception {
 
         logger.info("modifyGET() : called...");
         logger.info("Get boardVO : " + boardService.read(bno));
