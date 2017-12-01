@@ -3,6 +3,9 @@ package com.doubles.ex01.domain;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 // 페이징 처리용 클래스
 public class PageMaker {
 
@@ -72,6 +75,29 @@ public class PageMaker {
                 .build();
 
         return uriComponents.toUriString();
+    }
+
+    // 검색 처리를 위한 메서드
+    public String makeSearch(int page) {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .queryParam("searchType", ((SearchCriteria) criteria).getSearchType())
+                .queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword()))
+                .build();
+
+        return uriComponents.toUriString();
+    }
+
+    private String encoding(String keyword) {
+        if (keyword == null || keyword.trim().length() == 0) {
+            return "";
+        }
+        try {
+            return URLEncoder.encode(keyword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
     }
 
     public int getTotalCount() {

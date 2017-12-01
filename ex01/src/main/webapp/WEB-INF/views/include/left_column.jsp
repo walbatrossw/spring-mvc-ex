@@ -34,7 +34,7 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">메뉴</li>
             <%-- Optionally, you can add icons to the links --%>
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-clipboard"></i>
                     <span>게시판</span>
@@ -47,6 +47,7 @@
                     <li><a href="${path}/board/listAll"><i class="fa fa-list"></i> <span>게시글 목록(페이징X)</span></a></li>
                     <li><a href="${path}/board/listCriteria"><i class="fa fa-list"></i> <span>게시글 목록(페이징 진행중)</span></a></li>
                     <li><a href="${path}/board/listPage"><i class="fa fa-list"></i> <span>게시글 목록(페이징 처리완료)</span></a></li>
+                    <li><a href="${path}/sboard/list"><i class="fa fa-list"></i> <span>게시글 목록(검색처리)</span></a></li>
                 </ul>
             </li>
         </ul>

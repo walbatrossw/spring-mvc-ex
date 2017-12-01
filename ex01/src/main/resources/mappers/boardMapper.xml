@@ -40,7 +40,8 @@
 
     <!--게시글 삭제-->
     <delete id="delete">
-        DELETE FROM tbl_board WHERE bno = #{bno}
+        DELETE FROM tbl_board
+        WHERE bno = #{bno}
     </delete>
 
     <!--게시글 전체 목록-->
@@ -96,11 +97,66 @@
     <!--전체 게시글의 갯수-->
     <select id="countPaging" resultType="int">
         <![CDATA[
-          SELECT
-              COUNT(bno)
-          FROM tbl_board
-          WHERE bno > 0
+        SELECT COUNT(bno)
+        FROM tbl_board
+        WHERE bno > 0
         ]]>
     </select>
+
+    <select id="listSearch" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+          *
+        FROM tbl_board
+        WHERE bno > 0
+        ]]>
+        <include refid="search"/>
+        <![CDATA[
+        ORDER BY bno DESC
+        LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <select id="listSearchCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(bno)
+        FROM tbl_board
+        WHERE bno > 0
+        ]]>
+        <include refid="search"/>
+    </select>
+
+    <sql id="search">
+        <if test="searchType != null">
+            <if test="searchType == 't'.toString()">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'c'.toString()">
+                AND content LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'w'.toString()">
+                AND writer LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'tc'.toString()">
+                AND (
+                title LIKE CONCAT('%', #{keyword}, '%')
+                OR content LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'cw'.toString()">
+                AND (
+                content LIKE CONCAT('%', #{keyword}, '%')
+                OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'tcw'.toString()">
+                AND (
+                title LIKE CONCAT('%', #{keyword}, '%')
+                OR content LIKE CONCAT('%', #{keyword}, '%')
+                OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+        </if>
+    </sql>
 
 </mapper>
