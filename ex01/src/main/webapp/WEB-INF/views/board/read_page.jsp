@@ -37,6 +37,7 @@
         <section class="content container-fluid">
 
             <div class="col-lg-12">
+
                 <%--게시글 영역--%>
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -66,13 +67,15 @@
 
                 <%--버튼 영역--%>
                 <div>
-                    <form role="form" method="post">
+                    <form role="form" method="post" action="${path}/board/modifyPage">
                         <input type="hidden" name="bno" value="${boardVO.bno}">
+                        <input type="hidden" name="page" value="${criteria.page}">
+                        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
                     </form>
 
-                    <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
-                    <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
-                    <button type="submit" class="btn btn-primary listBtn pull-right"><i class="fa fa-list"></i> 목록</button>
+                    <button type="submit" class="btn btn-warning modBtn">수정</button>
+                    <button type="submit" class="btn btn-danger delBtn">삭제</button>
+                    <button type="submit" class="btn btn-primary listBtn pull-right">목록</button>
                 </div>
                 <br/>
 
@@ -181,20 +184,23 @@
 
         // 수정버튼 클릭시
         $(".modBtn").on("click", function () {
-           formObj.attr("action", "/board/modify");
+           formObj.attr("action", "/board/modifyPage");
            formObj.attr("method", "get");
            formObj.submit();
         });
 
         // 삭제 버튼 클릭시
         $(".delBtn").on("click", function () {
-            formObj.attr("action", "/board/remove");
+            formObj.attr("action", "/board/removePage");
             formObj.submit();
         });
 
         // 목록 버튼 클릭시
         $(".listBtn").on("click", function () {
-            self.location = "/board/listAll";
+            $("input[name=bno]").remove();
+            formObj.attr("action", "/board/listPage");
+            formObj.attr("method", "get");
+            formObj.submit();
         });
 
         // 수정완료시

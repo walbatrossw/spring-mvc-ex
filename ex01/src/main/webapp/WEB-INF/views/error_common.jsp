@@ -41,7 +41,7 @@
                     <li>${stack.toString()}</li>
                 </c:forEach>
             </ul>
-            
+
         </section>
         <%-- /.content --%>
     </div>

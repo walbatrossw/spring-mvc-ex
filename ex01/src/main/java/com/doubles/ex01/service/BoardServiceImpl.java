@@ -1,6 +1,7 @@
 package com.doubles.ex01.service;
 
 import com.doubles.ex01.domain.BoardVO;
+import com.doubles.ex01.domain.Criteria;
 import com.doubles.ex01.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
 
@@ -16,26 +17,50 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void register(BoardVO boardVO) throws Exception {
+
         boardDAO.create(boardVO);
+
     }
 
     @Override
     public BoardVO read(Integer bno) throws Exception {
+
         return boardDAO.read(bno);
+
     }
 
     @Override
     public void modify(BoardVO boardVO) throws Exception {
+
         boardDAO.update(boardVO);
+
     }
 
     @Override
     public void delete(Integer bno) throws Exception {
+
         boardDAO.delete(bno);
+
     }
 
     @Override
     public List<BoardVO> listAll() throws Exception {
+
         return boardDAO.listAll();
+
+    }
+
+    @Override
+    public List<BoardVO> listCriteria(Criteria criteria) throws Exception {
+
+        return boardDAO.listCriteria(criteria);
+
+    }
+
+    @Override
+    public int listCountCriteria(Criteria criteria) throws Exception {
+
+        return boardDAO.countPaging(criteria);
+
     }
 }

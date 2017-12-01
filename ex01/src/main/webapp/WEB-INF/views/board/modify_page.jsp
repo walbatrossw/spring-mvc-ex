@@ -43,29 +43,32 @@
                             <h3 class="box-title">게시글 수정</h3>
                         </div>
                         <form role="form" method="post">
-                        <div class="box-body">
+                            <div class="box-body">
 
-                            <div class="form-group">
-                                <label for="bno">게시글 번호</label>
-                                <input type="text" id="bno" name="bno" class="form-control" value="${boardVO.bno}" readonly="readonly">
+                                <input type="hidden" name="page" value="${criteria.page}">
+                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+
+                                <div class="form-group">
+                                    <label for="bno">게시글 번호</label>
+                                    <input type="text" id="bno" name="bno" class="form-control" value="${boardVO.bno}" readonly="readonly">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">제목</label>
+                                    <input type="text" id="title" name="title" class="form-control" value="${boardVO.title}" >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="content">내용</label>
+                                    <textarea class="form-control" id="content" name="content" rows="10" style="resize: none;">${boardVO.content}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="writer">작성자</label>
+                                    <input type="text" class="form-control" id="writer" name="writer" value="${boardVO.writer}" readonly="readonly">
+                                </div>
+
                             </div>
-
-                            <div class="form-group">
-                                <label for="title">제목</label>
-                                <input type="text" id="title" name="title" class="form-control" value="${boardVO.title}" >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="content">내용</label>
-                                <textarea class="form-control" id="content" name="content" rows="10" style="resize: none;">${boardVO.content}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="writer">작성자</label>
-                                <input type="text" class="form-control" id="writer" name="writer" value="${boardVO.writer}" readonly="readonly">
-                            </div>
-
-                        </div>
                         </form>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-warning modifyBtn">수정</button>
@@ -105,7 +108,7 @@
         });
         
         $(".listBtn").on("click", function () {
-            self.location = "/board/listAll";
+            self.location = "/board/listPage?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
         });
 
     })

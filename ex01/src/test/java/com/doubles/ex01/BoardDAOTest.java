@@ -22,11 +22,14 @@ public class BoardDAOTest {
 
     @Test
     public void testCreate() throws Exception {
-        BoardVO boardVO = new BoardVO();
-        boardVO.setTitle("새글입니다...");
-        boardVO.setContent("새글 내용입니다...");
-        boardVO.setWriter("user00");
-        boardDAO.create(boardVO);
+        for (int i = 501; i <= 1500; i++) {
+            BoardVO boardVO = new BoardVO();
+            boardVO.setTitle(i+"번째 글입니다...");
+            boardVO.setContent(i+"번째 글 내용입니다...");
+            boardVO.setWriter("user0"+(1%10));
+            boardDAO.create(boardVO);
+        }
+
     }
 
     @Test
