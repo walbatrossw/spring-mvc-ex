@@ -6,7 +6,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-// 페이징 처리용 클래스
+// 페이징 처리를 위한 클래스
 public class PageMaker {
 
     // [prev][1][2][3][4][5][6][7][8][9][10][next]

@@ -7,11 +7,11 @@ public class Criteria {
     private int page;           // 현재 페이지 번호
     private int perPageNum;     // 페이지 당 보여지는 게시글의 갯수
 
-    // 기본 생성자 : 1페이지, 페이지당 10개의 게시글로 초기화
+    // 기본 생성자 : 1페이지, 페이지당 20개의 게시글로 초기화
     public Criteria() {
 
         this.page = 1;
-        this.perPageNum = 10;
+        this.perPageNum = 20;
 
     }
 

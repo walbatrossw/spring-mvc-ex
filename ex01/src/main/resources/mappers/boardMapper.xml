@@ -103,6 +103,7 @@
         ]]>
     </select>
 
+    <!--게시글 전체 목록 페이징처리3 + 검색처리-->
     <select id="listSearch" resultType="BoardVO">
         <![CDATA[
         SELECT
@@ -117,6 +118,7 @@
         ]]>
     </select>
 
+    <!--검색된 게시글의 갯수-->
     <select id="listSearchCount" resultType="int">
         <![CDATA[
         SELECT COUNT(bno)
@@ -126,6 +128,7 @@
         <include refid="search"/>
     </select>
 
+    <!--검색옵션 SQL-->
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">

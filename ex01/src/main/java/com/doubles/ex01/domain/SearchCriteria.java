@@ -2,8 +2,8 @@ package com.doubles.ex01.domain;
 
 public class SearchCriteria extends Criteria {
 
-    private String searchType;
-    private String keyword;
+    private String searchType;  // 검색 유형
+    private String keyword;     // 검색 키워드
 
     public String getSearchType() {
         return searchType;

@@ -6,18 +6,18 @@
 <html>
 
 <%--head.jsp--%>
-<jsp:include page="../include/head.jsp"/>
+<jsp:include page="../../include/head.jsp"/>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%--main_header.jsp--%>
     <%-- Main Header --%>
-    <jsp:include page="../include/main_header.jsp"/>
+    <jsp:include page="../../include/main_header.jsp"/>
 
     <%--left_column.jsp--%>
     <%-- Left side column. contains the logo and sidebar --%>
-    <jsp:include page="../include/left_column.jsp"/>
+    <jsp:include page="../../include/left_column.jsp"/>
     
     <%-- Content Wrapper. Contains page content --%>
     <div class="content-wrapper">
@@ -29,6 +29,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 게시판</a></li>
+                <li class="active">일반</li>
                 <li class="active">입력성공</li>
             </ol>
         </section>
@@ -54,13 +55,13 @@
 
     <%--main_footer.jsp--%>
     <%-- Main Footer --%>
-    <jsp:include page="../include/main_footer.jsp"/>
+    <jsp:include page="../../include/main_footer.jsp"/>
 
 </div>
 <%-- ./wrapper --%>
 
 <%--plugin_js.jsp--%>
-<jsp:include page="../include/plugin_js.jsp"/>
+<jsp:include page="../../include/plugin_js.jsp"/>
 
 </body>
 </html>

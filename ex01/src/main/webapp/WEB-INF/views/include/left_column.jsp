@@ -43,11 +43,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="${path}/board/register"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
-                    <li><a href="${path}/board/listAll"><i class="fa fa-list"></i> <span>게시글 목록(페이징X)</span></a></li>
-                    <li><a href="${path}/board/listCriteria"><i class="fa fa-list"></i> <span>게시글 목록(페이징 진행중)</span></a></li>
-                    <li><a href="${path}/board/listPage"><i class="fa fa-list"></i> <span>게시글 목록(페이징 처리완료)</span></a></li>
-                    <li><a href="${path}/sboard/list"><i class="fa fa-list"></i> <span>게시글 목록(검색처리)</span></a></li>
+                    <li><a href="${path}/board/register"><i class="fa fa-edit"></i> <span>글쓰기(페이징 X)</span></a></li>
+                    <li><a href="${path}/board/listAll"><i class="fa fa-list"></i> <span>목록1 (전체)</span></a></li>
+                    <li><a href="${path}/board/paging/listCriteria"><i class="fa fa-list"></i> <span>목록2 (일부목록, 페이징 X)</span></a></li>
+                    <li><a href="${path}/board/paging/list"><i class="fa fa-list"></i> <span>목록3 (페이징 O)</span></a></li>
+                    <li><a href="${path}/board/paging/search/list"><i class="fa fa-list"></i> <span>목록4 (페이징/검색처리)</span></a></li>
                 </ul>
             </li>
         </ul>

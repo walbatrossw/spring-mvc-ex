@@ -6,18 +6,18 @@
 <html>
 
 <%--head.jsp--%>
-<%@ include file="../include/head.jsp" %>
+<%@ include file="../../include/head.jsp" %>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%--main_header.jsp--%>
     <%-- Main Header --%>
-    <%@ include file="../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <%--left_column.jsp--%>
     <%-- Left side column. contains the logo and sidebar --%>
-    <%@ include file="../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp" %>
     
     <%-- Content Wrapper. Contains page content --%>
     <div class="content-wrapper">
@@ -42,11 +42,14 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 수정</h3>
                         </div>
-                        <form role="form" method="post">
+                        <form role="form" method="post" action="${path}/board/paging/search/modify">
                             <div class="box-body">
 
+                                <%--이전의 목록 페이지 정보, 검색정보 를 가지고 페이지 이동을 위한 값들 세팅--%>
                                 <input type="hidden" name="page" value="${criteria.page}">
                                 <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                                <input type="hidden" name="searchType" value="${criteria.searchType}">
+                                <input type="hidden" name="keyword" value="${criteria.keyword}">
 
                                 <div class="form-group">
                                     <label for="bno">게시글 번호</label>
@@ -86,13 +89,13 @@
 
     <%--main_footer.jsp--%>
     <%-- Main Footer --%>
-    <%@ include file="../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 <%-- ./wrapper --%>
 
 <%--plugin_js.jsp--%>
-<%@ include file="../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
 
@@ -104,11 +107,12 @@
         });
         
         $(".cancelBtn").on("click", function () {
-            self.location = "/board/read?bno="+"${boardVO.bno}";
+            self.location = "/board/paging/search/read?bno="+"${boardVO.bno}";
         });
         
         $(".listBtn").on("click", function () {
-            self.location = "/board/listPage?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
+            self.location = "/board/paging/search/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}"
+                + "&searchType=${criteria.searchType}&keyword=${criteria.keyword}";
         });
 
     })

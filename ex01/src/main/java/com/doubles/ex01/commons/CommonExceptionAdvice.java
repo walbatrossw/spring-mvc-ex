@@ -1,4 +1,4 @@
-package com.doubles.ex01.controller;
+package com.doubles.ex01.commons;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,12 @@ public class CommonExceptionAdvice {
     private static final Logger logger = LoggerFactory.getLogger(ControllerAdvice.class);
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView common(Exception e) {
+    public ModelAndView commonException(Exception e) {
+        logger.info("commonException() : called....");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exception", e);
-        modelAndView.setViewName("/error_common");
+        logger.info(e.toString());
+        modelAndView.setViewName("/commons/error_common");
         return modelAndView;
     }
 

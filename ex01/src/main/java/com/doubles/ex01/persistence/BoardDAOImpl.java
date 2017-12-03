@@ -87,11 +87,13 @@ public class BoardDAOImpl implements BoardDAO {
 
     }
 
+    // 게시글 전체 목록 : 페이징 + 검색
     @Override
     public List<BoardVO> listSearch(SearchCriteria criteria) throws Exception {
         return sqlSession.selectList(NAMESPACE + ".listSearch", criteria);
     }
 
+    // 게시글 전체 갯수 : 검색
     @Override
     public int listSearchCount(SearchCriteria criteria) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".listSearchCount", criteria);

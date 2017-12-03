@@ -6,18 +6,18 @@
 <html>
 
 <%--head.jsp--%>
-<%@ include file="../include/head.jsp" %>
+<%@ include file="../../include/head.jsp" %>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%--main_header.jsp--%>
     <%-- Main Header --%>
-    <%@ include file="../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <%--left_column.jsp--%>
     <%-- Left side column. contains the logo and sidebar --%>
-    <%@ include file="../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp" %>
     
     <%-- Content Wrapper. Contains page content --%>
     <div class="content-wrapper">
@@ -25,10 +25,11 @@
         <section class="content-header">
             <h1>
                 게시판 예제
-                <small>조회페이지</small>
+                <small>일반적인 조회페이지</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 게시판</a></li>
+                <li class="active">일반</li>
                 <li class="active">조회</li>
             </ol>
         </section>
@@ -37,7 +38,6 @@
         <section class="content container-fluid">
 
             <div class="col-lg-12">
-
                 <%--게시글 영역--%>
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -67,17 +67,13 @@
 
                 <%--버튼 영역--%>
                 <div>
-                    <form role="form" method="post" action="${path}/board/modifyPage">
+                    <form role="form" method="post">
                         <input type="hidden" name="bno" value="${boardVO.bno}">
-                        <input type="hidden" name="page" value="${criteria.page}">
-                        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-                        <input type="hidden" name="searchType" value="${criteria.searchType}">
-                        <input type="hidden" name="keyword" value="${criteria.keyword}">
                     </form>
 
-                    <button type="submit" class="btn btn-warning modBtn">수정</button>
-                    <button type="submit" class="btn btn-danger delBtn">삭제</button>
-                    <button type="submit" class="btn btn-primary listBtn pull-right">목록</button>
+                    <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
+                    <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
+                    <button type="submit" class="btn btn-primary listBtn pull-right"><i class="fa fa-list"></i> 목록</button>
                 </div>
                 <br/>
 
@@ -171,13 +167,13 @@
 
     <%--main_footer.jsp--%>
     <%-- Main Footer --%>
-    <%@ include file="../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 <%-- ./wrapper --%>
 
 <%--plugin_js.jsp--%>
-<%@ include file="../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
 
@@ -186,23 +182,20 @@
 
         // 수정버튼 클릭시
         $(".modBtn").on("click", function () {
-           formObj.attr("action", "/sboard/modifyPage");
+           formObj.attr("action", "/board/modify");
            formObj.attr("method", "get");
            formObj.submit();
         });
 
         // 삭제 버튼 클릭시
         $(".delBtn").on("click", function () {
-            formObj.attr("action", "/sboard/deletePage");
+            formObj.attr("action", "/board/remove");
             formObj.submit();
         });
 
         // 목록 버튼 클릭시
         $(".listBtn").on("click", function () {
-            $("input[name=bno]").remove();
-            formObj.attr("action", "/sboard/list");
-            formObj.attr("method", "get");
-            formObj.submit();
+            self.location = "/board/list";
         });
 
         // 수정완료시

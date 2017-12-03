@@ -3,28 +3,29 @@
 <html>
 
 <%--head.jsp--%>
-<%@ include file="../include/head.jsp" %>
+<%@ include file="../../include/head.jsp" %>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%--main_header.jsp--%>
     <%-- Main Header --%>
-    <%@ include file="../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <%--left_column.jsp--%>
     <%-- Left side column. contains the logo and sidebar --%>
-    <%@ include file="../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp" %>
     <%-- Content Wrapper. Contains page content --%>
     <div class="content-wrapper">
         <%-- Content Header (Page header) --%>
         <section class="content-header">
             <h1>
                 게시판 예제
-                <small>목록페이지</small>
+                <small>일반적인 목록페이지</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 게시판</a></li>
+                <li class="active">일반</li>
                 <li class="active">전체목록</li>
             </ol>
         </section>
@@ -38,6 +39,9 @@
                         <h3 class="box-title">게시글 목록</h3>
                     </div>
                     <div class="box-body">
+
+                        <%--게시글 목록 영역--%>
+
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
@@ -58,10 +62,14 @@
                             </c:forEach>
                             </tbody>
                         </table>
+
+                        <%--페이징 처리 영역--%>
+
                     </div>
                     <div class="box-footer">
-                        [페이징 처리...예정] <br/>
-                        [검색 처리...예정]
+
+                        <%--검색 기능 추가 영역--%>
+
                     </div>
                 </div>
             </div>
@@ -73,20 +81,24 @@
 
     <%--main_footer.jsp--%>
     <%-- Main Footer --%>
-    <%@ include file="../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 <%-- ./wrapper --%>
 
 <%--plugin_js.jsp--%>
-<%@ include file="../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script>
+
     var result = "${msg}";
+
+    // 게시글 등록, 삭제 알림
     if (result == "INSERT") {
         alert("게시글이 등록되었습니다.");
     } else if(result == "DELETE") {
         alert("게시글이 삭제되었습니다.");
     }
+
 </script>
 </body>
 </html>
