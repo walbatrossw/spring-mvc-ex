@@ -155,4 +155,41 @@ public class BoardControllerTest {
 
     }
 
+    @Test
+    public void testRemoveWithCriteria() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
+                .param("bno", "991")
+                .param("page", "6")
+                .param("perPageNum", "20")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attribute("msg", "REMOVED"))
+                .andExpect(model().attributeExists("page"))
+                .andExpect(model().attributeExists("perPageNum"))
+                .andExpect(redirectedUrl("/board/list?page=6&perPageNum=20"));
+
+    }
+
+    @Test
+    public void testModifyPOSTWithCriteria() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+                .param("bno", "1000")
+                .param("title", "수정된 글 제목입니다. --> testModifyPOSTWithCriteria()")
+                .param("content", "수정된 글 내용입니다...")
+                .param("page", "6")
+                .param("perPageNum", "20")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("msg"))
+                .andExpect(model().attributeExists("bno"))
+                .andExpect(model().attributeExists("page"))
+                .andExpect(model().attributeExists("perPageNum"))
+                .andExpect(redirectedUrl("/board/read?page=6&perPageNum=20&bno=1000"));
+
+    }
+
 }

@@ -70,9 +70,9 @@
                 <div>
                     <%--목록 페이지의 정보를 가지고 페이지 이동을 위한 값들 세팅--%>
                     <form role="form">
-                        <input type="hidden" name="bno" value="${boardVO.bno}">
                         <input type="hidden" name="page" value="${criteria.page}">
                         <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                        <input type="hidden" name="bno" value="${boardVO.bno}">
                     </form>
 
                     <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>

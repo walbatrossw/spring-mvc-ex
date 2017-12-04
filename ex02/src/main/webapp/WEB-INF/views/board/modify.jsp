@@ -36,15 +36,16 @@
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">게시글 수정</h3>
+                        <h3 class="box-title">게시글 수정 - <small>게시글번호(${boardVO.bno})</small></h3>
                     </div>
                     <form role="form" method="post">
                         <div class="box-body">
 
-                            <div class="form-group">
-                                <label for="bno">게시글 번호</label>
-                                <input type="text" id="bno" name="bno" class="form-control" value="${boardVO.bno}" readonly="readonly">
-                            </div>
+                            <form role="form">
+                                <input type="hidden" name="bno" value="${boardVO.bno}">
+                                <input type="hidden" name="page" value="${criteria.page}">
+                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                            </form>
 
                             <div class="form-group">
                                 <label for="title">제목</label>
@@ -103,7 +104,7 @@
 
         // 목록버튼 클릭시
         $(".listBtn").on("click", function () {
-            self.location = "/board/list";
+            self.location = "/board/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
         });
 
     })
