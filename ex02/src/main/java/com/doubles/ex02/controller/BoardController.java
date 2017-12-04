@@ -32,7 +32,7 @@ public class BoardController {
 
         logger.info("registerGET() : called...");
 
-        return "/board/register";
+        return "board/register";
     }
 
     // 입력처리
@@ -60,17 +60,18 @@ public class BoardController {
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", pageMaker);
 
-        return "/board/list";
+        return "board/list";
     }
 
-    // 조회
+    // 조회 : 목록페이지 정보 유지 추가
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam Integer bno, Model model) throws Exception {
+    public String read(@RequestParam Integer bno,
+                       @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 
         logger.info("read() : called...");
         model.addAttribute("boardVO", boardService.read(bno));
 
-        return "/board/read";
+        return "board/read";
     }
 
     // 수정 페이지
@@ -80,7 +81,7 @@ public class BoardController {
         logger.info("modifyGET() : called...");
         model.addAttribute("boardVO", boardService.read(bno));
 
-        return "/board/modify";
+        return "board/modify";
     }
 
     // 수정 처리

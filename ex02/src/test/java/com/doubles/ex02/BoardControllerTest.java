@@ -44,7 +44,7 @@ public class BoardControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/board/register"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("/board/register"));
+                .andExpect(view().name("board/register"));
 
     }
 
@@ -59,7 +59,7 @@ public class BoardControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("msg", "INSERTED"))
-                .andExpect(redirectedUrl("/board/list"));
+                .andExpect(redirectedUrl("board/list"));
 
     }
 
@@ -70,7 +70,7 @@ public class BoardControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("list"))
-                .andExpect(view().name("/board/list"));
+                .andExpect(view().name("board/list"));
 
     }
 
@@ -83,7 +83,7 @@ public class BoardControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("boardVO"))
-                .andExpect(view().name("/board/read"));
+                .andExpect(view().name("board/read"));
 
     }
 
@@ -95,7 +95,7 @@ public class BoardControllerTest {
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("/board/modify"));
+                .andExpect(view().name("board/modify"));
 
     }
 
@@ -111,7 +111,7 @@ public class BoardControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("msg", "MODIFIED"))
                 .andExpect(model().attribute("bno", "1000"))
-                .andExpect(redirectedUrl("/board/read?bno=1000"));
+                .andExpect(redirectedUrl("board/read?bno=1000"));
 
     }
 
@@ -124,7 +124,34 @@ public class BoardControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("msg", "REMOVED"))
-                .andExpect(redirectedUrl("/board/list"));
+                .andExpect(redirectedUrl("board/list"));
+
+    }
+
+    @Test
+    public void testReadWithCriteria() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/read")
+                .param("bno", "25")
+                .param("page", "6")
+                .param("perPageNum", "20")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("boardVO"))
+                .andExpect(view().name("board/read"));
+
+    }
+
+    @Test
+    public void testListWithCriteria() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/list?page=6&perPageNum=20"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("list"))
+                .andExpect(model().attributeExists("pageMaker"))
+                .andExpect(view().name("board/list"));
 
     }
 
