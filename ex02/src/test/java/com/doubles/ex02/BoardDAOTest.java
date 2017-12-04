@@ -1,6 +1,7 @@
 package com.doubles.ex02;
 
 import com.doubles.ex02.domain.BoardVO;
+import com.doubles.ex02.domain.Criteria;
 import com.doubles.ex02.persistence.BoardDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/applicationContext.xml"})
@@ -68,6 +70,21 @@ public class BoardDAOTest {
     public void TestList() throws Exception {
 
         logger.info(boardDAO.list().toString());
+
+    }
+
+    @Test
+    public void TestCriteria() throws Exception {
+
+        Criteria criteria = new Criteria();
+        criteria.setPage(2);
+        criteria.setPerPageNum(20);
+
+        List<BoardVO> list = boardDAO.list(criteria);
+
+        for (BoardVO boardVO : list) {
+            logger.info(boardVO.getBno() + " : " + boardVO.getTitle());
+        }
 
     }
 }

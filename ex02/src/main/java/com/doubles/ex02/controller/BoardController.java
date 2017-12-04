@@ -1,6 +1,8 @@
 package com.doubles.ex02.controller;
 
 import com.doubles.ex02.domain.BoardVO;
+import com.doubles.ex02.domain.Criteria;
+import com.doubles.ex02.domain.PageMaker;
 import com.doubles.ex02.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,11 +48,17 @@ public class BoardController {
 
     // 목록
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) throws Exception {
+    public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 
         logger.info("list() : called...");
-        List<BoardVO> list = boardService.list();
+
+        List<BoardVO> list = boardService.list(criteria);
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(boardService.listCount(criteria));
+
         model.addAttribute("list", list);
+        model.addAttribute("pageMaker", pageMaker);
 
         return "/board/list";
     }

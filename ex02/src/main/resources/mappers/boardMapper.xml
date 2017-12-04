@@ -60,4 +60,47 @@
         ]]>
     </select>
 
+    <!--게시글 전체 목록 2 - 페이지당 게시물의 갯수 10으로 고정, 파라미터 : 페이지의 첫번째 게시물 번호-->
+    <select id="listPaging" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        LIMIT #{pageStart}, 10
+        ]]>
+    </select>
+
+    <!--게시글 전체 목록 3 - 파라미터 : 페이지의 첫번째 게시물번호, 페이지당 게시물의 갯수-->
+    <select id="listCriteria" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <!--전체 게시글의 갯수-->
+    <select id="listCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(bno)
+        FROM tbl_board
+        WHERE bno > 0
+        ]]>
+    </select>
+
 </mapper>
