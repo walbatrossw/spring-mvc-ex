@@ -3,6 +3,7 @@ package com.doubles.ex02.controller;
 import com.doubles.ex02.domain.BoardVO;
 import com.doubles.ex02.domain.Criteria;
 import com.doubles.ex02.domain.PageMaker;
+import com.doubles.ex02.domain.SearchCriteria;
 import com.doubles.ex02.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,11 +47,12 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    // 목록
+    // 목록 : 목록페이지 정보 + 검색옵션, 키워드 정보 유지
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+    public String list(@ModelAttribute("criteria") SearchCriteria criteria, Model model) throws Exception {
 
         logger.info("list() : called...");
+        logger.info(criteria.toString());
 
         List<BoardVO> list = boardService.list(criteria);
         PageMaker pageMaker = new PageMaker();
@@ -59,11 +61,12 @@ public class BoardController {
 
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", pageMaker);
+        model.addAttribute("totalCount", boardService.listCount(criteria));
 
         return "board/list";
     }
 
-    // 조회 : 목록페이지 정보 유지 추가
+    // 조회 : 목록페이지 정보 유지
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam Integer bno,
                        @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
@@ -74,7 +77,7 @@ public class BoardController {
         return "board/read";
     }
 
-    // 수정 페이지
+    // 수정 페이지 : 목록페이지 정보 유지
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("bno") Integer bno,
                             @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
@@ -85,7 +88,7 @@ public class BoardController {
         return "board/modify";
     }
 
-    // 수정 처리
+    // 수정 처리 : 목록페이지 정보 유지
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(@ModelAttribute("boardVO") BoardVO boardVO,
                              @ModelAttribute("criteria") Criteria criteria, RedirectAttributes rttr) throws Exception {
@@ -100,7 +103,7 @@ public class BoardController {
         return "redirect:/board/read";
     }
 
-    // 삭제
+    // 삭제 : 목록페이지 정보 유지
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String remove(@RequestParam("bno") Integer bno,
                          @ModelAttribute("criteria") Criteria criteria, RedirectAttributes rttr) throws Exception {

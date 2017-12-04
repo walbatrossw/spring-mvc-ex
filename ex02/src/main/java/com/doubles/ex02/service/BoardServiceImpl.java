@@ -2,6 +2,7 @@ package com.doubles.ex02.service;
 
 import com.doubles.ex02.domain.BoardVO;
 import com.doubles.ex02.domain.Criteria;
+import com.doubles.ex02.domain.SearchCriteria;
 import com.doubles.ex02.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class BoardServiceImpl implements BoardService {
+
     @Inject
     private BoardDAO boardDAO;
 
@@ -49,7 +51,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardVO> list(SearchCriteria criteria) throws Exception {
+        return boardDAO.list(criteria);
+    }
+
+    @Override
     public int listCount(Criteria criteria) throws Exception {
+        return boardDAO.listCount(criteria);
+    }
+
+    @Override
+    public int listCount(SearchCriteria criteria) throws Exception {
         return boardDAO.listCount(criteria);
     }
 }

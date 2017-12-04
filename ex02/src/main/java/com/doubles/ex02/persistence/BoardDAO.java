@@ -2,6 +2,7 @@ package com.doubles.ex02.persistence;
 
 import com.doubles.ex02.domain.BoardVO;
 import com.doubles.ex02.domain.Criteria;
+import com.doubles.ex02.domain.SearchCriteria;
 
 import java.util.List;
 
@@ -28,7 +29,13 @@ public interface BoardDAO {
     // 목록 페이징 2
     public List<BoardVO> list(Criteria criteria) throws Exception;
 
+    // 목록 페이징 + 검색처리
+    public List<BoardVO> list(SearchCriteria criteria) throws Exception;
+
     // 전체 게시글의 갯수
     public int listCount(Criteria criteria) throws Exception;
+
+    // 검색처리된 게시글의 갯수
+    public int listCount(SearchCriteria criteria) throws Exception;
 
 }

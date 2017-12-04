@@ -2,6 +2,7 @@ package com.doubles.ex02;
 
 import com.doubles.ex02.domain.BoardVO;
 import com.doubles.ex02.domain.Criteria;
+import com.doubles.ex02.domain.SearchCriteria;
 import com.doubles.ex02.persistence.BoardDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,5 +121,24 @@ public class BoardDAOTest {
 
     }
 
+    @Test
+    public void testDynamic1() throws Exception {
 
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPage(1);
+        criteria.setKeyword("글");
+        criteria.setSearchType("t");
+
+        logger.info("===================================");
+
+        List<BoardVO> list = boardDAO.list(criteria);
+
+        for (BoardVO boardVO : list) {
+            logger.info(boardVO.getBno() + " : " + boardVO.getTitle());
+        }
+
+        logger.info("===================================");
+
+        logger.info("COUNT : " + boardDAO.listCount(criteria));
+    }
 }

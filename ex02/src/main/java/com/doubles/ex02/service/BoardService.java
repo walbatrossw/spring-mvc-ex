@@ -2,6 +2,7 @@ package com.doubles.ex02.service;
 
 import com.doubles.ex02.domain.BoardVO;
 import com.doubles.ex02.domain.Criteria;
+import com.doubles.ex02.domain.SearchCriteria;
 
 import java.util.List;
 
@@ -28,6 +29,12 @@ public interface BoardService {
     // 목록 페이징 2
     public List<BoardVO> list(Criteria criteria) throws Exception;
 
-    // 게시물 전체 갯수
+    // 목록 페이징 + 검색옵션, 키워드
+    public List<BoardVO> list(SearchCriteria criteria) throws Exception;
+
+    // 게시글 전체 갯수
     public int listCount(Criteria criteria) throws Exception;
+
+    // 검색처리된 게시글의 갯수
+    public int listCount(SearchCriteria criteria) throws Exception;
 }

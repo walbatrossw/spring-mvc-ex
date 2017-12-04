@@ -36,7 +36,7 @@
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">게시글 목록</h3>
+                        <h3 class="box-title">게시글 목록 (${totalCount})</h3>
                     </div>
                     <div class="box-body">
                         <%--게시글 목록 영역--%>
@@ -67,49 +67,74 @@
                         <div class="text-center">
                             <ul class="pagination">
                                 <%--자바스크립트를 이용한 페이지링크 처리를 위한 form 태그--%>
-                                <form id="pageLinkForm">
-                                    <input type="hidden" name="page" value="${pageMaker.criteria.page}">
-                                    <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
-                                </form>
+                                <%--<form id="pageLinkForm">--%>
+                                    <%--<input type="hidden" name="page" value="${pageMaker.criteria.page}">--%>
+                                    <%--<input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">--%>
+                                <%--</form>--%>
 
                                 <%--UriComponentBuilder를 이용한 페이지링크 처리--%>
-                                <%--<c:if test="${pageMaker.prev}">--%>
-                                    <%--<li>--%>
-                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a>--%>
-                                    <%--</li>--%>
-                                <%--</c:if>--%>
-                                <%--<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">--%>
-                                    <%--<li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>--%>
-                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>--%>
-                                    <%--</li>--%>
-                                <%--</c:forEach>--%>
-                                <%--<c:if test="${pageMaker.next && pageMaker.endPage > 0}">--%>
-                                    <%--<li>--%>
-                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>--%>
-                                    <%--</li>--%>
-                                <%--</c:if>--%>
-
-                                <%--자바스크립트를 이용한 페이지링크 처리--%>
                                 <c:if test="${pageMaker.prev}">
-                                    <li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
+                                    <li>
+                                        <a href="${path}/board/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">&laquo;</a>
+                                    </li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>
-                                        <a href="${idx}">${idx}</a>
+                                        <a href="${path}/board/list${pageMaker.makeSearch(idx)}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>
+                                    <li>
+                                        <a href="${path}/board/list${pageMaker.makeSearch(pageMaker.endPage + 1)}">&raquo;</a>
+                                    </li>
                                 </c:if>
 
+                                <%--자바스크립트를 이용한 페이지링크 처리--%>
+                                <%--<c:if test="${pageMaker.prev}">--%>
+                                    <%--<li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>--%>
+                                <%--</c:if>--%>
+                                <%--<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">--%>
+                                    <%--<li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>--%>
+                                        <%--<a href="${idx}">${idx}</a>--%>
+                                    <%--</li>--%>
+                                <%--</c:forEach>--%>
+                                <%--<c:if test="${pageMaker.next && pageMaker.endPage > 0}">--%>
+                                    <%--<li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>--%>
+                                <%--</c:if>--%>
                             </ul>
                         </div>
                     </div>
+
                     <div class="box-footer">
-
-                        <%--검색 기능 추가 영역--%>
-
+                        <br/>
+                        <div class="form-group col-sm-2">
+                            <select class="form-control" name="searchType" id="searchType">
+                                <option value="n" <c:out value="${criteria.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
+                                <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+                                <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+                                <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+                                <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+                                <option value="cw" <c:out value="${criteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+                                <option value="tcw" <c:out value="${criteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-flat" id="searchBtn">
+                                        <i class="fa fa-search"></i> 검색
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success btn-flat" id="writeBtn">
+                        <i class="fa fa-edit"></i> 글쓰기
+                    </button>
                 </div>
             </div>
 
@@ -139,14 +164,31 @@
     }
 
     // 페이지링크 처리
-    $(".pagination li a").on("click", function (event) {
-        event.preventDefault();
-        var targetPage = $(this).attr("href");
-        var pageLinkForm = $("#pageLinkForm");
-        pageLinkForm.find("[name='page']").val(targetPage);
-        pageLinkForm.attr("action", "/board/list").attr("method", "get");
-        pageLinkForm.submit();
-    })
+    // $(".pagination li a").on("click", function (event) {
+    //     event.preventDefault();
+    //     var targetPage = $(this).attr("href");
+    //     var pageLinkForm = $("#pageLinkForm");
+    //     pageLinkForm.find("[name='page']").val(targetPage);
+    //     pageLinkForm.attr("action", "/board/list").attr("method", "get");
+    //     pageLinkForm.submit();
+    // })
+
+
+    $(document).ready(function () {
+        // 검색 버튼 클릭시
+        $("#searchBtn").on("click", function (event) {
+            self.location = "list${pageMaker.makeQuery(1)}"
+                + "&searchType=" + $("select option:selected").val()
+                + "&keyword=" + encodeURIComponent($("#keywordInput").val());
+        });
+
+        // 글쓰기 버튼 클릭시
+        $("#writeBtn").on("click", function (event) {
+           self.location = "register";
+        });
+    });
+    
+    
 
 </script>
 </body>
