@@ -66,21 +66,42 @@
                         <%--페이징 처리 영역--%>
                         <div class="text-center">
                             <ul class="pagination">
+                                <%--자바스크립트를 이용한 페이지링크 처리를 위한 form 태그--%>
+                                <form id="pageLinkForm">
+                                    <input type="hidden" name="page" value="${pageMaker.criteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+                                </form>
+
+                                <%--UriComponentBuilder를 이용한 페이지링크 처리--%>
+                                <%--<c:if test="${pageMaker.prev}">--%>
+                                    <%--<li>--%>
+                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a>--%>
+                                    <%--</li>--%>
+                                <%--</c:if>--%>
+                                <%--<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">--%>
+                                    <%--<li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>--%>
+                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>--%>
+                                    <%--</li>--%>
+                                <%--</c:forEach>--%>
+                                <%--<c:if test="${pageMaker.next && pageMaker.endPage > 0}">--%>
+                                    <%--<li>--%>
+                                        <%--<a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>--%>
+                                    <%--</li>--%>
+                                <%--</c:if>--%>
+
+                                <%--자바스크립트를 이용한 페이지링크 처리--%>
                                 <c:if test="${pageMaker.prev}">
-                                    <li>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a>
-                                    </li>
+                                    <li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>
+                                        <a href="${idx}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
-                                    </li>
+                                    <li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>
                                 </c:if>
+
                             </ul>
                         </div>
                     </div>
@@ -116,6 +137,16 @@
     } else if(result == "REMOVED") {
         alert("게시글이 삭제되었습니다.");
     }
+
+    // 페이지링크 처리
+    $(".pagination li a").on("click", function (event) {
+        event.preventDefault();
+        var targetPage = $(this).attr("href");
+        var pageLinkForm = $("#pageLinkForm");
+        pageLinkForm.find("[name='page']").val(targetPage);
+        pageLinkForm.attr("action", "/board/list").attr("method", "get");
+        pageLinkForm.submit();
+    })
 
 </script>
 </body>
