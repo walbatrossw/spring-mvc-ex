@@ -1,5 +1,8 @@
 package com.doubles.ex02.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
     private int totalCount;
@@ -10,25 +13,30 @@ public class PageMaker {
     private int displayNum = 10;
     private Criteria criteria;
 
+    public String makeQuery(int page) {
+
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
+    }
+
     private void calcData() {
 
-        // 끝페이지 연산
         endPage = (int) (Math.ceil(criteria.getPage() / (double) displayNum) * displayNum);
 
-        // 시작페이지 연산
         startPage = (endPage - displayNum) + 1;
 
-        // 끝페이지 재연산
         int tempEndPage = (int) (Math.ceil(totalCount / (double) criteria.getPerPageNum()));
 
         if (endPage > tempEndPage) {
             endPage =  tempEndPage;
         }
 
-        // 이전버튼
         prev = startPage == 1 ? false : true;
 
-        // 다음버튼
         next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
 
     }

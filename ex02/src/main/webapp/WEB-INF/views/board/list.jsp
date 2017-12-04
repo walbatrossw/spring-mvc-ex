@@ -53,7 +53,7 @@
                                 <c:forEach var="boardVO" varStatus="i" items="${list}">
                                     <tr>
                                         <td>${boardVO.bno}</td>
-                                        <td><a href="${path}/board/read?bno=${boardVO.bno}">${boardVO.title}</a></td>
+                                        <td><a href="${path}/board/read${pageMaker.makeQuery(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}</a></td>
                                         <td>${boardVO.writer}</td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
                                         <td><span class="badge bg-aqua">${boardVO.viewcnt}</span></td>
@@ -68,17 +68,17 @@
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
                                     <li>
-                                        <a href="${path}/board/list?page=${pageMaker.startPage - 1}">&laquo;</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>
-                                        <a href="${path}/board/list?page=${idx}">${idx}</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                     <li>
-                                        <a href="${path}/board/list?page=${pageMaker.endPage + 1}">&raquo;</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
                                     </li>
                                 </c:if>
                             </ul>
