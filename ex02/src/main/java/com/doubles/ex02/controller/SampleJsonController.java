@@ -70,7 +70,7 @@ public class SampleJsonController {
     }
 
     // ResponseEntity : 결과데이터 + HTTP 상태코드를 제어할 수 있는 클래스
-    
+
     // ResponseEntity 타입 반환 1
     @RequestMapping("/sendErrorAuth")
     public ResponseEntity<Void> sendListAuth() {
