@@ -16,39 +16,9 @@ public class PageMaker {
     private int displayNum = 10;
     private Criteria criteria;
 
-    private String encoding(String keyword) {
-
-        if (keyword == null || keyword.trim().length() == 0) {
-            return "";
-        }
-
-        try {
-            return URLEncoder.encode(keyword, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return "";
-        }
-
-    }
-
-    public String makeSearch(int page) {
-
-        UriComponents uriComponents = UriComponentsBuilder.newInstance()
-                .queryParam("page", page)
-                .queryParam("perPageNum", criteria.getPerPageNum())
-                .queryParam("searchType", ((SearchCriteria) criteria).getSearchType())
-                .queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword())).build();
-
-        return uriComponents.toUriString();
-    }
-
-    public String makeQuery(int page) {
-
-        UriComponents uriComponents = UriComponentsBuilder.newInstance()
-                .queryParam("page", page)
-                .queryParam("perPageNum", criteria.getPerPageNum())
-                .build();
-
-        return uriComponents.toUriString();
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+        calcData();
     }
 
     private void calcData() {
@@ -69,13 +39,46 @@ public class PageMaker {
 
     }
 
-    public int getTotalCount() {
-        return totalCount;
+
+    public String makeQuery(int page) {
+
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-        calcData();
+
+    public String makeSearch(int page) {
+
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .queryParam("searchType", ((SearchCriteria) criteria).getSearchType())
+                .queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword()))
+                .build();
+
+        return uriComponents.toUriString();
+    }
+
+    private String encoding(String keyword) {
+
+        if (keyword == null || keyword.trim().length() == 0) {
+            return "";
+        }
+
+        try {
+            return URLEncoder.encode(keyword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
+
+    }
+
+    public int getTotalCount() {
+        return totalCount;
     }
 
     public int getStartPage() {

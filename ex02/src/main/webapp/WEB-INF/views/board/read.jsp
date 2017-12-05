@@ -65,9 +65,12 @@
                 <%--버튼 영역--%>
                 <div>
                     <form role="form" method="post">
+                        <%--페이징 정보 유지를 위한 입력 form--%>
                         <input type="hidden" name="bno" value="${boardVO.bno}">
                         <input type="hidden" name="page" value="${criteria.page}">
                         <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                        <input type="hidden" name="searchType" value="${criteria.searchType}">
+                        <input type="hidden" name="keyword" value="${criteria.keyword}">
                     </form>
 
                     <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>

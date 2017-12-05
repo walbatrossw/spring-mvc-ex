@@ -38,6 +38,8 @@ public class BoardControllerTest {
 
     }
 
+    // 기본적인 CRUD 테스트
+
     @Test
     public void testRegisterGET() throws Exception {
 
@@ -128,6 +130,8 @@ public class BoardControllerTest {
 
     }
 
+    // 페이징 처리 추가 CRUD 테스트
+
     @Test
     public void testReadWithCriteria() throws Exception {
 
@@ -192,4 +196,99 @@ public class BoardControllerTest {
 
     }
 
+    // 페이징, 검색처리 추가 CRUD 테스트
+
+    @Test
+    public void testListWithSearch() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+                .param("page", "6")
+                .param("perPageNum", "20")
+                .param("searchType", "t")
+                .param("keyword", "글")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("list"))
+                .andExpect(model().attributeExists("pageMaker"))
+                .andExpect(model().attributeExists("totalCount"))
+                .andExpect(model().attributeExists("criteria"))
+                .andExpect(view().name("board/list"));
+    }
+
+    @Test
+    public void testReadWithSearch() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/read")
+                .param("bno", "25")
+                .param("page", "6")
+                .param("perPageNum", "20")
+                .param("searchType", "t")
+                .param("keyword", "글")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("boardVO"))
+                .andExpect(model().attributeExists("criteria"))
+                .andExpect(view().name("board/read"));
+    }
+
+    @Test
+    public void testModifyGetWithSearch() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/modify")
+                .param("bno", "25")
+                .param("page", "6")
+                .param("perPageNum", "20")
+                .param("searchType", "t")
+                .param("keyword", "글")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("boardVO"))
+                .andExpect(model().attributeExists("criteria"))
+                .andExpect(view().name("board/modify"));
+    }
+
+    @Test
+    public void testModifyPostWithSearch() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+                .param("bno", "996")
+                .param("title", "수정된 글 제목입니다.")
+                .param("content", "수정된 글 내용입니다...")
+                .param("page", "6")
+                .param("perPageNum", "20")
+                .param("searchType", "t")
+                .param("keyword", "글")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("msg"))
+                .andExpect(model().attributeExists("bno"))
+                .andExpect(model().attributeExists("page"))
+                .andExpect(model().attributeExists("perPageNum"))
+                .andExpect(model().attributeExists("searchType"))
+                .andExpect(model().attributeExists("keyword"))
+                .andExpect(redirectedUrl("/board/read?bno=996&page=6&perPageNum=20&searchType=t&keyword=글"));
+
+    }
+
+    @Test
+    public void testRemoveWithSearch() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
+                .param("bno", "973")
+                .param("page", "6")
+                .param("perPageNum", "20")
+                .param("searchType", "t")
+                .param("keyword", "글")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attribute("msg", "REMOVED"))
+                .andExpect(model().attributeExists("page"))
+                .andExpect(model().attributeExists("perPageNum"))
+                .andExpect(model().attributeExists("searchType"))
+                .andExpect(model().attributeExists("keyword"))
+                .andExpect(redirectedUrl("/board/list?page=6&perPageNum=20&searchType=t&keyword=%3F"));
+    }
 }

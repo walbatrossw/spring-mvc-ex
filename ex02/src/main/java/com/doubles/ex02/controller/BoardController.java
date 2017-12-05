@@ -66,10 +66,10 @@ public class BoardController {
         return "board/list";
     }
 
-    // 조회 : 목록페이지 정보 유지
+    // 조회 : 목록페이지 정보 + 검색옵션, 키워드 정보 유지
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam Integer bno,
-                       @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+                       @ModelAttribute("criteria") SearchCriteria criteria, Model model) throws Exception {
 
         logger.info("read() : called...");
         model.addAttribute("boardVO", boardService.read(bno));
@@ -77,10 +77,10 @@ public class BoardController {
         return "board/read";
     }
 
-    // 수정 페이지 : 목록페이지 정보 유지
+    // 수정 페이지 : 목록페이지 정보 + 검색옵션, 키워드 정보 유지
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("bno") Integer bno,
-                            @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+                            @ModelAttribute("criteria") SearchCriteria criteria, Model model) throws Exception {
 
         logger.info("modifyGET() : called...");
         model.addAttribute("boardVO", boardService.read(bno));
@@ -88,30 +88,37 @@ public class BoardController {
         return "board/modify";
     }
 
-    // 수정 처리 : 목록페이지 정보 유지
+    // 수정 처리 : 목록페이지 정보 + 검색옵션, 키워드 정보 유지
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(@ModelAttribute("boardVO") BoardVO boardVO,
-                             @ModelAttribute("criteria") Criteria criteria, RedirectAttributes rttr) throws Exception {
+                             @ModelAttribute("criteria") SearchCriteria criteria,
+                             RedirectAttributes rttr) throws Exception {
 
         logger.info("modifyPOST() : called...");
         boardService.modify(boardVO);
+
+        rttr.addAttribute("bno", boardVO.getBno());
         rttr.addAttribute("page", criteria.getPage());
         rttr.addAttribute("perPageNum", criteria.getPerPageNum());
-        rttr.addAttribute("bno", boardVO.getBno());
+        rttr.addAttribute("searchType", criteria.getSearchType());
+        rttr.addAttribute("keyword", criteria.getKeyword());
+
         rttr.addFlashAttribute("msg", "MODIFIED");
 
         return "redirect:/board/read";
     }
 
-    // 삭제 : 목록페이지 정보 유지
+    // 삭제 : 목록페이지 정보 + 검색옵션, 키워드 정보 유지
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String remove(@RequestParam("bno") Integer bno,
-                         @ModelAttribute("criteria") Criteria criteria, RedirectAttributes rttr) throws Exception {
+                         @ModelAttribute("criteria") SearchCriteria criteria, RedirectAttributes rttr) throws Exception {
 
         logger.info("remove() : called...");
         boardService.remove(bno);
         rttr.addAttribute("page", criteria.getPage());
         rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+        rttr.addAttribute("searchType", criteria.getSearchType());
+        rttr.addAttribute("keyword", criteria.getKeyword());
         rttr.addFlashAttribute("msg", "REMOVED");
 
         return "redirect:/board/list";

@@ -38,14 +38,15 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">게시글 수정 - <small>게시글번호(${boardVO.bno})</small></h3>
                     </div>
-                    <form role="form" method="post">
+                    <form role="form" method="post" action="${path}/board/modify">
                         <div class="box-body">
 
-                            <form role="form">
-                                <input type="hidden" name="bno" value="${boardVO.bno}">
-                                <input type="hidden" name="page" value="${criteria.page}">
-                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-                            </form>
+                            <%--이전의 목록 페이지 정보, 검색정보 를 가지고 페이지 이동을 위한 값들 세팅--%>
+                            <input type="hidden" name="bno" value="${boardVO.bno}">
+                            <input type="hidden" name="page" value="${criteria.page}">
+                            <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                            <input type="hidden" name="searchType" value="${criteria.searchType}">
+                            <input type="hidden" name="keyword" value="${criteria.keyword}">
 
                             <div class="form-group">
                                 <label for="title">제목</label>
@@ -104,7 +105,8 @@
 
         // 목록버튼 클릭시
         $(".listBtn").on("click", function () {
-            self.location = "/board/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
+            self.location = "/board/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}"
+                            + "&searchType=${criteria.searchType}&keyword=${criteria.keyword}";
         });
 
     })

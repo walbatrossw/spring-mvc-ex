@@ -53,7 +53,7 @@
                                 <c:forEach var="boardVO" varStatus="i" items="${list}">
                                     <tr>
                                         <td>${boardVO.bno}</td>
-                                        <td><a href="${path}/board/read${pageMaker.makeQuery(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}</a></td>
+                                        <td><a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}</a></td>
                                         <td>${boardVO.writer}</td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
                                         <td><span class="badge bg-aqua">${boardVO.viewcnt}</span></td>
@@ -179,7 +179,7 @@
         $("#searchBtn").on("click", function (event) {
             self.location = "list${pageMaker.makeQuery(1)}"
                 + "&searchType=" + $("select option:selected").val()
-                + "&keyword=" + encodeURIComponent($("#keywordInput").val());
+                + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
 
         // 글쓰기 버튼 클릭시
