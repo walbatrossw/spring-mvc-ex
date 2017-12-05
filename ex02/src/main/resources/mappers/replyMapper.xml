@@ -36,4 +36,18 @@
       DELETE FROM tbl_reply WHERE rno = #{rno}
     </delete>
 
+    <select id="listPaging" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(bno)
+        FROM tbl_reply
+        WHERE bno = #{bno}
+    </select>
+
 </mapper>

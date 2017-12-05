@@ -1,5 +1,6 @@
 package com.doubles.ex02.service;
 
+import com.doubles.ex02.domain.Criteria;
 import com.doubles.ex02.domain.ReplyVO;
 import com.doubles.ex02.persistence.ReplyDAO;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,15 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void removeReply(Integer rno) throws Exception {
         replyDAO.delete(rno);
+    }
+
+    @Override
+    public List<ReplyVO> listReplyPaging(Integer bno, Criteria criteria) throws Exception {
+        return replyDAO.listPaging(bno, criteria);
+    }
+
+    @Override
+    public int count(Integer bno) throws Exception {
+        return replyDAO.count(bno);
     }
 }
