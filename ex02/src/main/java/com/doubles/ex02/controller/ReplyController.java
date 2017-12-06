@@ -113,6 +113,7 @@ public class ReplyController {
             pageMaker.setTotalCount(replyCount);
 
             map.put("list", list);
+            map.put("replyCount", replyCount);
             map.put("pageMaker", pageMaker);
 
             entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

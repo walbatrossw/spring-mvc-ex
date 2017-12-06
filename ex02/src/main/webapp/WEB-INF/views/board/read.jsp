@@ -4,6 +4,7 @@
 
 <%--head.jsp--%>
 <%@ include file="../include/head.jsp" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
@@ -79,89 +80,52 @@
                 </div>
                 <br/>
 
-
-                <%--댓글 영역--%>
-                <div class="box box-success">
+                <%--댓글 등록 영역--%>
+                <div class="box box-warning">
                     <div class="box-header with-border">
-                        <a href="#" class="link-black text-lg"><i class="fa fa-comments-o margin-r-5"></i> 댓글(0)</a>
-                        <div class="box-tools">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
+                        <a href="#" class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글작성</a>
                     </div>
                     <div class="box-body">
-                        <div class="post">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
-                                <span class="username">
-                                    <a href="#">댓글작성자</a>
-                                    <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                </span>
-                                <span class="description">댓글작성시간</span>
-                            </div>
-                            <p>
-                                댓글 내용
-                            </p>
-                            <ul class="list-inline">
-                                <li>
-                                    <a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="post">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
-                                <span class="username">
-                                    <a href="#">댓글작성자</a>
-                                    <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                </span>
-                                <span class="description">댓글작성시간</span>
-                            </div>
-                            <p>
-                                댓글 내용
-                            </p>
-                            <ul class="list-inline">
-                                <li>
-                                    <a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="post">
-                            <div class="user-block">
-                                <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
-                                <span class="username">
-                                    <a href="#">댓글작성자</a>
-                                    <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                </span>
-                                <span class="description">댓글작성시간</span>
-                            </div>
-                            <p>
-                                댓글 내용
-                            </p>
-                            <ul class="list-inline">
-                                <li>
-                                    <a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="box-footer">
                         <form class="form-horizontal">
                             <div class="form-group margin-bottom-none">
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input class="form-control input-sm" type="text" placeholder="댓글 입력...">
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block">저장</button>
+                                    <input class="form-control input-sm" type="text" placeholder="작성자">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-save"></i> 저장</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
 
-            </div>
+                <%--댓글 목록 영역--%>
+                <div class="box box-success collapsed-box">
+                    <div class="box-header with-border">
+                        <a href="" class="link-black text-lg"><i class="fa fa-comments-o margin-r-5 replyCount"></i> </a>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <%--댓글 목록--%>
+                    <div class="box-body repliesDiv">
 
+                    </div>
+                    <%--댓글 페이징--%>
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <ul class="pagination pagination-sm no-margin">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         <%-- /.content --%>
     </div>
@@ -210,7 +174,103 @@
             alert("게시글이 수정되었습니다.");
         }
 
-    })
+        // 댓글 등록일자 출력을 위한 날짜/시간 문자열 처리
+        Handlebars.registerHelper("prettifyDate", function (timeValue) {
+
+            var dateObj = new Date(timeValue);
+            var year = dateObj.getFullYear();
+            var month = dateObj.getMonth() + 1;
+            var date = dateObj.getDate();
+            var hour = dateObj.getHours();
+            var minutes = dateObj.getMinutes();
+            return year+"-"+month+"-"+date + " " + hour + ":" + minutes;
+        });
+
+        // 댓글 리스트 출력 처리
+        var printData = function (replyArr, target, templateObject) {
+
+            var template = Handlebars.compile(templateObject.html());
+            var html = template(replyArr);
+            $(".replyDiv").remove();
+            target.html(html);
+
+        };
+
+        // 게시글 번호
+        var bno = ${boardVO.bno};
+        // 댓글 페이지 초기화
+        var replyPage = 1;
+
+        getPage("/replies/" + bno + "/1");
+
+        $(".pagination").on("click", "li a", function (event) {
+            event.preventDefault();
+            replyPage = $(this).attr("href");
+            getPage("/replies/"+bno+"/"+replyPage);
+        });
+
+        // 댓글 페이징 처리
+        function getPage(pageInfo) {
+            
+            $.getJSON(pageInfo, function (data) {
+                printReplyCount(data.replyCount);
+                printData(data.list, $(".repliesDiv"), $("#template"));
+                printPaging(data.pageMaker, $(".pagination"))
+            });
+        }
+
+        // 댓글 갯수 출력, 댓글 보기 버튼 활성/비활성
+        var printReplyCount = function (replyCount) {
+
+            if (replyCount > 0) {
+                $(".replyCount").html(" 댓글목록 ("+replyCount+")");
+            } else if (replyCount == 0) {
+                $(".replyCount").html(" 댓글이 없습니다. 의견을 남겨주세요.");
+                $(".collapsed-box").find(".box-tools").remove();
+            }
+
+        };
+
+        // 하단페이징
+        var printPaging = function (pageMaker, target) {
+
+            var str = "";
+            if (pageMaker.prev) {
+                str += "<li><a href='"+(pageMaker.startPage - 1)+"'>&laquo;</a></li>"
+            }
+            for (var i =  pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+                var strClass = pageMaker.criteria.page == i ? "class=active": "";
+                str += "<li "+strClass+"><a href='"+i+"'>"+i+"</a></li>"
+            }
+            if (pageMaker.next) {
+                str += "<li><a href='"+(pageMaker.endPage + 1)+"'>&raquo;</a></li>"
+            }
+            target.html(str);
+        }
+
+    });
+
+</script>
+<script id="template" type="text/x-handlebars-template">
+    {{#each.}}
+    <div class="post replyDiv">
+        <div class="user-block">
+            <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
+            <span class="username">
+                <a href="#">{{replyer}}</a>
+                <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"> 삭제</i></a>
+                <a href="#" class="pull-right btn-box-tool"><i class="fa fa-edit"> 수정</i></a>
+            </span>
+            <span class="description">{{prettifyDate regdate}}</span>
+        </div>
+        <p>{{replytext}}</p>
+        <ul class="list-inline">
+            <li>
+                <a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)</a>
+            </li>
+        </ul>
+    </div>
+    {{/each}}
 </script>
 </body>
 </html>
