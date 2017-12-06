@@ -43,8 +43,7 @@ public class ReplyDAOImpl implements ReplyDAO {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("bno", bno);
         paramMap.put("criteria", criteria);
-        sqlSession.selectList(NAMESPACE + ".listPaging", paramMap);
-        return null;
+        return sqlSession.selectList(NAMESPACE + ".listPaging", paramMap);
     }
 
     @Override
