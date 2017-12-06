@@ -293,7 +293,7 @@
                 str += "<li><a href='"+(pageMaker.endPage + 1)+"'>&raquo;</a></li>"
             }
             target.html(str);
-        }
+        };
 
         // 댓글 등록
         $(".replyAddBtn").on("click", function () {
