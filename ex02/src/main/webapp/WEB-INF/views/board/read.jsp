@@ -89,13 +89,13 @@
                         <form class="form-horizontal">
                             <div class="form-group margin-bottom-none">
                                 <div class="col-sm-8">
-                                    <input class="form-control input-sm" type="text" placeholder="댓글 입력...">
+                                    <input class="form-control input-sm" id="newReplyText" type="text" placeholder="댓글 입력...">
                                 </div>
                                 <div class="col-sm-2">
-                                    <input class="form-control input-sm" type="text" placeholder="작성자">
+                                    <input class="form-control input-sm" id="newReplyWriter" type="text" placeholder="작성자">
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-save"></i> 저장</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
                                 </div>
                             </div>
                         </form>
@@ -125,6 +125,49 @@
                         </div>
                     </div>
                 </div>
+
+                <%--댓글 수정을 위한 modal 영역--%>
+                <div class="modal fade" id="modModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body" data-rno>
+                                <p><input type="text" id="replytext" class="form-control"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-primary modalModBtn">수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%--댓글 삭제를 위한 modal 영역--%>
+                <div class="modal fade" id="delModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body" data-rno>
+                                <p>댓글을 삭제하시겠습니까?</p>
+                                <p><input type="password" id="password" class="form-control" placeholder="회원비밀번호를 입력해주세요"></p>
+                                <button type="button" class="btn btn-warning">비밀번호 확인</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-primary modalDelBtn">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
         <%-- /.content --%>
@@ -224,9 +267,13 @@
 
             if (replyCount > 0) {
                 $(".replyCount").html(" 댓글목록 ("+replyCount+")");
+                $(".collapsed-box").find(".box-tools").html(
+                    "<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
+                    + "<i class='fa fa-plus'></i>"
+                    + "</button>");
             } else if (replyCount == 0) {
                 $(".replyCount").html(" 댓글이 없습니다. 의견을 남겨주세요.");
-                $(".collapsed-box").find(".box-tools").remove();
+                $(".collapsed-box").find(".btn-box-tool").remove();
             }
 
         };
@@ -248,22 +295,126 @@
             target.html(str);
         }
 
+        // 댓글 등록
+        $(".replyAddBtn").on("click", function () {
+
+            var replyerObj = $("#newReplyWriter");
+            var replytextObj = $("#newReplyText");
+            var replyer = replyerObj.val();
+            var replytext = replytextObj.val();
+
+            $.ajax({
+                type: "post",
+                url: "/replies/",
+                headers: {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "POST"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                   bno:bno,
+                   replyer:replyer,
+                   replytext:replytext
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result == "INSERTED") {
+                        alert("댓글이 등록되었습니다.");
+                        replyPage = 1;
+                        getPage("/replies/" + bno + "/" + replyPage);
+                        replyerObj.val("");
+                        replytextObj.val("");
+                    }
+                }
+            });
+        });
+
+        // 댓글 수정을 위해 modal 창에 값 출력
+        $(".repliesDiv").on("click", ".replyDiv", function (event) {
+
+            var reply = $(this);
+            console.log(reply);
+            $("#replytext").val(reply.find(".oldReplytext").text());
+            $(".modal-title").html(reply.attr("data-rno"))
+
+        });
+
+        // modal 창의 댓글 수정버튼 클릭시
+        $(".modalModBtn").on("click", function () {
+
+            var rno = $(".modal-title").html();
+            var replytext = $("#replytext").val();
+
+            $.ajax({
+                type: "put",
+                url: "/replies/" + rno,
+                headers: {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "PUT"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                    replytext:replytext
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result == "MODIFIED") {
+                        alert("댓글이 수정되었습니다.");
+                        getPage("/replies/" + bno + "/" + replyPage);
+                        $('#modModal').modal("hide");
+                    }
+                }
+            })
+        });
+
+        $(".modalDelBtn").on("click", function () {
+
+            var rno = $(".modal-title").html();
+            var replytext = $("#replytext").val();
+
+            if(confirm("댓글을 삭제하시겠습니까?")) {
+
+                $.ajax({
+                    type: "delete",
+                    url: "/replies/" + rno,
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "X-HTTP-Method-Override" : "DELETE"
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("result : " + result);
+                        if (result == "DELETED") {
+                            alert("댓글이 삭제되었습니다.");
+                            getPage("/replies/" + bno + "/" + replyPage);
+                            $('#delModal').modal("hide");
+                        }
+                    }
+                });
+
+            }
+        });
     });
 
 </script>
 <script id="template" type="text/x-handlebars-template">
     {{#each.}}
-    <div class="post replyDiv">
+    <div class="post replyDiv" data-rno={{rno}}>
         <div class="user-block">
             <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
             <span class="username">
                 <a href="#">{{replyer}}</a>
-                <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"> 삭제</i></a>
-                <a href="#" class="pull-right btn-box-tool"><i class="fa fa-edit"> 수정</i></a>
+                <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
+                    <i class="fa fa-times"> 삭제</i>
+                </a>
+                <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
+                    <i class="fa fa-edit"> 수정</i>
+                </a>
             </span>
             <span class="description">{{prettifyDate regdate}}</span>
         </div>
-        <p>{{replytext}}</p>
+        <div class="oldReplytext">{{replytext}}</div>
+        <br/>
         <ul class="list-inline">
             <li>
                 <a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)</a>

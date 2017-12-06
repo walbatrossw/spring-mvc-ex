@@ -64,9 +64,9 @@ public class ReplyController {
         ResponseEntity<String> entity = null;
 
         try {
-            replyVO.setBno(rno);
+            replyVO.setRno(rno);
             replyService.modifyReply(replyVO);
-            entity = new ResponseEntity<String>("MODIFIED",HttpStatus.OK);
+            entity = new ResponseEntity<String>("MODIFIED", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
