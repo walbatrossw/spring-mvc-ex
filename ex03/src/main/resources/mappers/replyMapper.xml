@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex03.mapper.ReplyMapper">
+
+    <!--입력-->
+    <insert id="create">
+        INSERT INTO tbl_reply (
+            bno
+            , replytext
+            , replyer
+        ) VALUES (
+            #{bno}
+            , #{replytext}
+            , #{replyer}
+        )
+    </insert>
+
+    <!--수정-->
+    <update id="update">
+        UPDATE tbl_reply
+        SET replytext = #{replytext}
+        WHERE rno = #{rno}
+    </update>
+
+    <!--삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_reply
+        WHERE rno = #{rno}
+    </delete>
+
+    <!--목록-->
+    <select id="list" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+    </select>
+
+
+</mapper>
