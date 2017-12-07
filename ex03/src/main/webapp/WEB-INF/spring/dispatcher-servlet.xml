@@ -17,6 +17,7 @@
     <resources mapping="/bower_components/**" location="/resources/bower_components/"/>
     <resources mapping="/plugins/**" location="/resources/plugins/"/>
     <resources mapping="/dist/**" location="/resources/dist/"/>
+    <resources mapping="/web_js/**" location="/resources/web_js/"/>
 
     <!--viewResolver : jsp-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
