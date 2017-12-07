@@ -2,6 +2,7 @@ package com.doubles.ex03.persistence;
 
 import com.doubles.ex03.domain.BoardVO;
 import com.doubles.ex03.domain.Criteria;
+import com.doubles.ex03.domain.SearchCriteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +59,18 @@ public class BoardDAOImpl implements BoardDAO {
         return sqlSession.selectOne(NAMESPACE + ".listCount", criteria);
     }
 
-
     // 목록 : 페이징 + 검색
+    @Override
+    public List<BoardVO> list(SearchCriteria criteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listPaging", criteria);
+    }
+
+    // 목록 : 전체 갯수 or 검색된 갯수
+    @Override
+    public int listCount(SearchCriteria criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".listCount", criteria);
+    }
+
+
+
 }
