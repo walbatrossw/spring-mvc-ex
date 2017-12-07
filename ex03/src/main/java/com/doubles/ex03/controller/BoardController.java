@@ -1,6 +1,8 @@
 package com.doubles.ex03.controller;
 
 import com.doubles.ex03.domain.BoardVO;
+import com.doubles.ex03.domain.Criteria;
+import com.doubles.ex03.domain.PageMaker;
 import com.doubles.ex03.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,16 +84,16 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    // 목록 : 기본
+    // 목록 : 기본 + 페이징
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) throws Exception {
+    public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 
-        model.addAttribute("list", boardService.list());
+        model.addAttribute("list", boardService.list(criteria));
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(boardService.listCount(criteria));
+        model.addAttribute("pageMaker", pageMaker);
 
         return "board/list";
     }
-
-    // 목록 : 페이징
-
-    // 목록 : 페이징 + 검색
 }

@@ -66,6 +66,23 @@
 
                         <%--페이징 처리 영역--%>
                         <div class="text-center">
+                            <ul class="pagination">
+                                <c:if test="${pageMaker.prev}">
+                                    <li>
+                                        <a href="${path}/board/list?page=${pageMaker.startPage - 1}">&laquo;</a>
+                                    </li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                                    <li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>
+                                        <a href="${path}/board/list?page=${idx}">${idx}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                    <li>
+                                        <a href="${path}/board/list?page=${pageMaker.endPage + 1}">&raquo;</a>
+                                    </li>
+                                </c:if>
+                            </ul>
                         </div>
 
                     </div>

@@ -1,6 +1,7 @@
 package com.doubles.ex03.persistence;
 
 import com.doubles.ex03.domain.BoardVO;
+import com.doubles.ex03.domain.Criteria;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface BoardDAO {
     public List<BoardVO> list() throws Exception;
 
     // 목록 : 페이징
+    public List<BoardVO> list(Criteria criteria) throws Exception;
+
+    // 목록 전체 갯수
+    public int listCount(Criteria criteria) throws Exception;
 
     // 목록 : 페이징 + 검색
 }
