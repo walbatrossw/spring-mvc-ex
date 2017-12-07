@@ -45,7 +45,8 @@ public class BoardController {
 
     // 조회
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("bno") Integer bno, Model model) throws Exception {
+    public String read(@RequestParam("bno") Integer bno,
+                       @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 
         model.addAttribute("boardVO", boardService.read(bno));
 
@@ -54,7 +55,8 @@ public class BoardController {
 
     // 수정 페이지
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(@RequestParam("bno") Integer bno, Model model) throws Exception {
+    public String modifyGET(@RequestParam("bno") Integer bno,
+                            @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 
         model.addAttribute("boardVO", boardService.read(bno));
 
@@ -64,11 +66,13 @@ public class BoardController {
     // 수정 처리
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(@ModelAttribute("BoardVO") BoardVO boardVO,
-                             RedirectAttributes redirectAttributes) throws Exception {
+                             Criteria criteria, RedirectAttributes redirectAttributes) throws Exception {
 
         boardService.modify(boardVO);
         redirectAttributes.addFlashAttribute("msg", "MODIFIED");
         redirectAttributes.addAttribute("bno", boardVO.getBno());
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
 
         return "redirect:/board/read";
     }
@@ -76,9 +80,11 @@ public class BoardController {
     // 삭제 처리
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String remove(@RequestParam("bno") Integer bno,
-                         RedirectAttributes redirectAttributes) throws Exception {
+                         Criteria criteria, RedirectAttributes redirectAttributes) throws Exception {
 
         boardService.remove(bno);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg", "REMOVED");
 
         return "redirect:/board/list";

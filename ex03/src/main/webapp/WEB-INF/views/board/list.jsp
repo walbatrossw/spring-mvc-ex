@@ -69,7 +69,7 @@
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
                                     <li>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(startPage - 1)}">&laquo;</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
@@ -79,7 +79,7 @@
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                     <li>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(endPage + 1)}">&raquo;</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a>
                                     </li>
                                 </c:if>
                             </ul>
