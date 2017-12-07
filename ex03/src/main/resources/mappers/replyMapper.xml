@@ -31,7 +31,7 @@
         WHERE rno = #{rno}
     </delete>
 
-    <!--목록-->
+    <!--특정 게시글의 댓글 목록-->
     <select id="list" resultType="ReplyVO">
         SELECT *
         FROM tbl_reply
@@ -39,5 +39,19 @@
         ORDER BY rno DESC
     </select>
 
+    <!--목록 + 페이징-->
+    <select id="listPaging" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
 
+    <!--특정 게시글의 댓글 갯수-->
+    <select id="replyCount" resultType="int">
+        SELECT COUNT(rno)
+        FROM tbl_reply
+        WHERE bno = #{bno}
+    </select>
 </mapper>

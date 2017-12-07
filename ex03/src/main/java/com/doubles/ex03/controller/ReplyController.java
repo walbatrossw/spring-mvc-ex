@@ -1,5 +1,7 @@
 package com.doubles.ex03.controller;
 
+import com.doubles.ex03.domain.Criteria;
+import com.doubles.ex03.domain.PageMaker;
 import com.doubles.ex03.domain.ReplyVO;
 import com.doubles.ex03.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -7,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/replies")
@@ -34,14 +38,31 @@ public class ReplyController {
 
     }
 
-    // 특정 게시물의 댓글목록
-    @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
-    public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
+    // 특정 게시물의 댓글목록 + 페이징
+    @RequestMapping(value = "/all/{bno}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> list(@PathVariable("bno") Integer bno,
+                                                    @PathVariable("page") Integer page) {
 
-        ResponseEntity<List<ReplyVO>> entity = null;
+        ResponseEntity<Map<String, Object>> entity = null;
 
         try {
-            entity = new ResponseEntity<>(replyService.listReply(bno), HttpStatus.OK);
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+
+            Map<String, Object> map = new HashMap<>();
+            List<ReplyVO> list = replyService.listReply(bno, criteria);
+
+            map.put("list", list);
+
+            int replyCount = replyService.replyCount(bno);
+            pageMaker.setTotalCount(replyCount);
+
+            map.put("pageMaker", pageMaker);
+            entity = new ResponseEntity<>(map, HttpStatus.OK);
+
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
