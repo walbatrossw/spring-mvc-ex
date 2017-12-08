@@ -59,7 +59,7 @@ public class ReplyController {
 
             int replyCount = replyService.replyCount(bno);
             pageMaker.setTotalCount(replyCount);
-
+            map.put("replyCount", replyCount);
             map.put("pageMaker", pageMaker);
             entity = new ResponseEntity<>(map, HttpStatus.OK);
 
@@ -99,7 +99,7 @@ public class ReplyController {
 
         try {
             replyService.removeReply(rno);
-            entity = new ResponseEntity<>("REMOVED", HttpStatus.OK);
+            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
