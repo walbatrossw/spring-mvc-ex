@@ -54,7 +54,11 @@
                                 <c:forEach var="boardVO" varStatus="i" items="${list}">
                                     <tr>
                                         <td>${boardVO.bno}</td>
-                                        <td><a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}</a></td>
+                                        <td>
+                                            <a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}
+                                                <span class="label label-warning">${boardVO.replycnt}</span>
+                                            </a>
+                                        </td>
                                         <td>${boardVO.writer}</td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
                                         <td><span class="badge bg-aqua">${boardVO.viewcnt}</span></td>

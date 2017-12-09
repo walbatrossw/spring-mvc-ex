@@ -93,11 +93,11 @@
                                     <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글을 입력해주세요..." style="resize: none"></textarea>
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
+                                    <input class="form-control" id="newReplyWriter" type="text" placeholder="작성자">
                                 </div>
                                 <hr/>
                                 <div class="col-sm-2">
-                                    <input class="form-control" id="newReplyWriter" type="text" placeholder="작성자">
+                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
                                 </div>
                             </div>
                         </form>
