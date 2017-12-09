@@ -23,10 +23,7 @@ public class SampleAdvice {
         logger.info(Arrays.toString(jp.getArgs()));
     }
 
-    @Around("execution(* com.doubles.ex03..*Controller.*(..))"
-            + " || execution(* com.doubles.ex03..*Service*.*(..))"
-            + " || execution(* com.doubles.ex03..*DAO*.*(..))"
-    )
+    @Around("execution(* com.doubles.ex03..MessageService*.*(..))")
     public Object logPrint(ProceedingJoinPoint pjp) throws Throwable {
         // Start time
         long startTime = System.currentTimeMillis();

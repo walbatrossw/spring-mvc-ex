@@ -4,6 +4,7 @@ import com.doubles.ex03.domain.MessageVO;
 import com.doubles.ex03.persistence.MessageDAO;
 import com.doubles.ex03.persistence.PointDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,7 @@ public class MessageServiceImpl implements MessageService {
     @Inject
     private PointDAO pointDAO;
 
+    @Transactional
     @Override
     public void addMessage(MessageVO messageVO) throws Exception {
 
