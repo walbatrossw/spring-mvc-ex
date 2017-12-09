@@ -16,6 +16,8 @@ public class BoardVO {
     private Date regdate;
     // 조회수
     private int viewcnt;
+    // 댓글 갯수
+    private int replycnt;
 
     public Integer getBno() {
         return bno;
@@ -65,6 +67,14 @@ public class BoardVO {
         this.viewcnt = viewcnt;
     }
 
+    public int getReplycnt() {
+        return replycnt;
+    }
+
+    public void setReplycnt(int replycnt) {
+        this.replycnt = replycnt;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
@@ -74,6 +84,7 @@ public class BoardVO {
                 ", writer='" + writer + '\'' +
                 ", regdate=" + regdate +
                 ", viewcnt=" + viewcnt +
+                ", replycnt=" + replycnt +
                 '}';
     }
 }

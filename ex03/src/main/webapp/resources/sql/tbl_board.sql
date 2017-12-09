@@ -31,3 +31,7 @@ UPDATE tbl_board SET title='수정된 제목...' WHERE bno = 1;
 
 -- 게시물 삭제
 DELETE FROM tbl_board WHERE bno = 1;
+
+-- 댓글 갯수 칼럼 추가
+
+ALTER TABLE tbl_board ADD COLUMN replycnt INT DEFAULT 0;

@@ -37,4 +37,7 @@ public interface BoardDAO {
     // 목록 : 전체 갯수 or 검색된 갯수
     public int listCount(SearchCriteria criteria) throws Exception;
 
+    // 댓글 갯수
+    public void updateReplyCnt(Integer bno, int amount) throws Exception;
+
 }

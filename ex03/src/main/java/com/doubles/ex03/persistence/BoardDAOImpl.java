@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -71,6 +73,14 @@ public class BoardDAOImpl implements BoardDAO {
         return sqlSession.selectOne(NAMESPACE + ".listCount", criteria);
     }
 
+    // 댓글 갯수
+    @Override
+    public void updateReplyCnt(Integer bno, int amount) throws Exception {
 
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("bno", bno);
+        paramMap.put("amount", amount);
 
+        sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
+    }
 }

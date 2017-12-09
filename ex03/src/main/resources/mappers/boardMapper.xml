@@ -50,6 +50,7 @@
             , writer
             , regdate
             , viewcnt
+            , replycnt
         FROM tbl_board
         WHERE bno > 0
         ORDER BY bno DESC, regdate DESC
@@ -66,6 +67,7 @@
             , writer
             , regdate
             , viewcnt
+            , replycnt
         FROM tbl_board
         WHERE bno > 0
         ]]>
@@ -84,6 +86,12 @@
         ]]>
         <include refid="search"/>
     </select>
+
+    <update id="updateReplyCnt">
+        UPDATE tbl_board
+        SET replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
 
     <!--검색옵션 SQL-->
     <sql id="search">
