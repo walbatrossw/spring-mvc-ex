@@ -13,14 +13,6 @@
 
     <!--웹자원과 관련되지 않은 모든 자원의 설정을 위해 존재하는 파일-->
 
-    <!--DataSource default 설정-->
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-    <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/spring_ex?useSSL=false"/>-->
-    <!--<property name="username" value="doubles"/>-->
-    <!--<property name="password" value="qazwsxdc8375!"/>-->
-    <!--</bean>-->
-
     <!--DataSource log4jdbc-log4j2 설정-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
@@ -40,5 +32,7 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
-    <context:component-scan base-package="com.doubles.ex03"/>
+    <!--base-package 속성 값에 해당하는 패키지 내부의 클래스들을 모두 조사-->
+    <context:component-scan base-package="com.doubles.ex03" />
+
 </beans>
