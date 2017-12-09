@@ -78,6 +78,7 @@
         ]]>
     </select>
 
+    <!--게시글 전체숫자 or 검색된 게시글의 숫자-->
     <select id="listCount" resultType="int">
         <![CDATA[
         SELECT COUNT(bno)
@@ -87,9 +88,16 @@
         <include refid="search"/>
     </select>
 
+    <!--특정 게시글의 댓글수 갱신-->
     <update id="updateReplyCnt">
         UPDATE tbl_board
         SET replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
+
+    <update id="updateViewCnt">
+        UPDATE tbl_board
+        SET viewcnt = viewcnt + 1
         WHERE bno = #{bno}
     </update>
 

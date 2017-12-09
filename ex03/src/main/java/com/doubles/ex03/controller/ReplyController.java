@@ -59,7 +59,6 @@ public class ReplyController {
 
             int replyCount = replyService.replyCount(bno);
             pageMaker.setTotalCount(replyCount);
-            map.put("replyCount", replyCount);
             map.put("pageMaker", pageMaker);
             entity = new ResponseEntity<>(map, HttpStatus.OK);
 

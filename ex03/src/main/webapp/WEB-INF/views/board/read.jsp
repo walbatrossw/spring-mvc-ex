@@ -272,7 +272,7 @@
             // 댓글 목록 가져오기
             $.getJSON(pageInfo, function (data) {
                 // 1. 댓글 갯수 출력 함수 호출
-                printReplyCount(data.replyCount);
+                printReplyCount(data.pageMaker.totalCount);
                 // 2. 댓글 목록 출력 함수 호출
                 printData(data.list, $(".repliesDiv"), $("#template"));
                 // 3. 댓글 하단 페이징 출력 함수 호출
@@ -281,14 +281,14 @@
         };
 
         // 1. 댓글 갯수 출력, 댓글 보기 버튼 활성/비활성 함수
-        var printReplyCount = function (replyCount) {
-            if (replyCount > 0) {
-                $(".replyCount").html(" 댓글목록 ("+replyCount+")");
+        var printReplyCount = function (totalCount) {
+            if (totalCount > 0) {
+                $(".replyCount").html(" 댓글목록 ("+totalCount+")");
                 $(".collapsed-box").find(".box-tools").html(
                     "<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
                     + "<i class='fa fa-plus'></i>"
                     + "</button>");
-            } else if (replyCount == 0) {
+            } else if (totalCount == 0) {
                 $(".replyCount").html(" 댓글이 없습니다. 의견을 남겨주세요.");
                 $(".collapsed-box").find(".btn-box-tool").remove();
             }

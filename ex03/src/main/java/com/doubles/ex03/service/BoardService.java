@@ -34,5 +34,4 @@ public interface BoardService {
 
     // 목록 : 전체 갯수 or 검색된 갯수
     public int listCount(SearchCriteria criteria) throws Exception;
-
 }
