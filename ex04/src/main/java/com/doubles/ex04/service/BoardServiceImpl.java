@@ -2,6 +2,7 @@ package com.doubles.ex04.service;
 
 import com.doubles.ex04.domain.BoardVO;
 import com.doubles.ex04.domain.Criteria;
+import com.doubles.ex04.domain.SearchCriteria;
 import com.doubles.ex04.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,20 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.listCount(criteria);
     }
 
-
     // 게시글 목록 + 페이징 + 검색
+    @Override
+    public List<BoardVO> list(SearchCriteria criteria) throws Exception {
+        return boardDAO.list(criteria);
+    }
+
+    // 게시글 전체 갯수 or 검색된 게시글의 수
+    @Override
+    public int listSearchCount(SearchCriteria criteria) throws Exception {
+        return boardDAO.listSearchCount(criteria);
+    }
+
+
+
+
 
 }
