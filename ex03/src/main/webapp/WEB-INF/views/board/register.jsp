@@ -76,6 +76,5 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
-
 </body>
 </html>

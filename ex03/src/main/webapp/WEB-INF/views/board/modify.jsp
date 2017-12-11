@@ -83,7 +83,6 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
-<script src="/web_js/modify.js"></script>
 <script>
     $(document).ready(function () {
 
