@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex04.mapper.replyMapper">
+
+    <!--댓글 목록-->
+    <select id="list" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+    </select>
+
+    <!--댓글 목록 + 페이징-->
+    <select id="listPaging" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
+
+    <!--특정 게시글의 댓글 갯수-->
+    <select id="listCount" resultType="int">
+        SELECT COUNT(bno)
+        FROM tbl_reply
+        WHERE bno = #{bno}
+    </select>
+
+    <!--댓글 추가-->
+    <insert id="create">
+        INSERT INTO tbl_reply (
+            bno
+            , replytext
+            , replyer
+        ) VALUES (
+            #{bno}
+            , #{replytext}
+            , #{replyer}
+        )
+    </insert>
+
+    <!--댓글 수정-->
+    <update id="update">
+        UPDATE tbl_reply
+        SET
+            replytext = #{replytext}
+            , updatedate = NOW()
+        WHERE rno = #{rno}
+    </update>
+
+    <!--댓글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_reply
+        WHERE rno = #{rno}
+    </delete>
+
+
+</mapper>
