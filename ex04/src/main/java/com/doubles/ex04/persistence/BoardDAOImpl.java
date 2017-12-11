@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
 import javax.print.attribute.standard.MediaSize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -74,5 +76,12 @@ public class BoardDAOImpl implements BoardDAO {
         return sqlSession.selectOne(NAMESPACE + ".listSearchCount", criteria);
     }
 
-
+    // 특정 게시글의 댓글 갯수 갱신
+    @Override
+    public void updateReplyCnt(Integer bno, int amount) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("bno", bno);
+        paramMap.put("amount", amount);
+        sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
+    }
 }

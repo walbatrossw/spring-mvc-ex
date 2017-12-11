@@ -8,7 +8,7 @@ import java.util.List;
 public interface ReplyService {
 
     // 댓글 목록
-    public List<ReplyVO> replyList(Integer bno) throws Exception;
+    public List<ReplyVO> list(Integer bno) throws Exception;
 
     // 댓글 목록 + 페이징
     public List<ReplyVO> list(Integer bno, Criteria criteria) throws Exception;

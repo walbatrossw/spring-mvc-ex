@@ -105,6 +105,12 @@
         ]]>
     </select>
 
+    <!--특정 게시글의 댓글 갯수 갱신-->
+    <update id="updateReplyCnt">
+        UPDATE tbl_board
+        SET replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
 
     <!--게시글 전체 갯수 or 검색된 게시글의 갯수-->
     <select id="listSearchCount" resultType="int">

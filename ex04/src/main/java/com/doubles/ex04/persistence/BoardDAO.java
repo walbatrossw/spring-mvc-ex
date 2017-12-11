@@ -34,4 +34,8 @@ public interface BoardDAO {
 
     // 게시글 전체 갯수 or 검색된 게시글의 수
     public int listSearchCount(SearchCriteria criteria) throws Exception;
+
+    // 특정 게시글의 댓글 갯수 갱신
+    public void updateReplyCnt(Integer bno, int amount) throws Exception;
+
 }
