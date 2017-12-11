@@ -1,6 +1,8 @@
 package com.doubles.ex04.controller;
 
 import com.doubles.ex04.domain.BoardVO;
+import com.doubles.ex04.domain.Criteria;
+import com.doubles.ex04.domain.PageMaker;
 import com.doubles.ex04.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,16 +68,16 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    // 게시글 목록
+    // 게시글 목록 + 페이징
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) throws Exception {
-        model.addAttribute("list", boardService.list());
+    public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(boardService.listCount(criteria));
+        model.addAttribute("list", boardService.list(criteria));
+        model.addAttribute("pageMaker", pageMaker);
+        model.addAttribute("totalCount", boardService.listCount(criteria));
         return "board/list";
     }
-
-    // 게시글 목록 + 페이징
-
-    // 게시글 목록 + 페이징 + 검색
-
 
 }

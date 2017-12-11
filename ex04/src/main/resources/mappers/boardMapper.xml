@@ -58,6 +58,31 @@
     </select>
 
     <!--게시글 목록 + 페이징-->
+    <select id="listPaging" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+            , replycnt
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <!--게시글 전체 갯수-->
+    <select id="listCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(bno)
+        FROM tbl_board
+        WHERE bno > 0
+        ]]>
+    </select>
 
     <!--게시글 목록 + 페이징 + 검색-->
 

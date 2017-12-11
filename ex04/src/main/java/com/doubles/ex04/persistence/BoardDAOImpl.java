@@ -1,10 +1,12 @@
 package com.doubles.ex04.persistence;
 
 import com.doubles.ex04.domain.BoardVO;
+import com.doubles.ex04.domain.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import javax.print.attribute.standard.MediaSize;
 import java.util.List;
 
 
@@ -47,6 +49,17 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     // 게시글 목록 + 페이징
+    @Override
+    public List<BoardVO> list(Criteria criteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listPaging", criteria);
+    }
+
+    // 게시글의 전체 갯수
+    @Override
+    public int listCount(Criteria criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".listCount", criteria);
+    }
+
 
     // 게시글 목록 + 페이징 + 검색
 
