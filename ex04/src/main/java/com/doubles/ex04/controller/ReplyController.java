@@ -54,7 +54,7 @@ public class ReplyController {
             pageMaker.setTotalCount(replyCount);
 
             map.put("list", list);
-            map.put("pageMake", pageMaker);
+            map.put("pageMaker", pageMaker);
             entity = new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,12 +79,12 @@ public class ReplyController {
     }
 
     // 댓글 삭제
-    @RequestMapping(value = "/{bno}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
     public ResponseEntity<String> remove(@PathVariable("rno") Integer rno) {
         ResponseEntity<String> entity = null;
         try {
             replyService.replyRemove(rno);
-            entity = new ResponseEntity<>("REMOVED", HttpStatus.OK);
+            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
         } catch (Exception e) {
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
