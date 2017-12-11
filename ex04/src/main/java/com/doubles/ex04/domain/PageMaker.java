@@ -1,5 +1,8 @@
 package com.doubles.ex04.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
     // 게시물의 전체 갯수
@@ -41,6 +44,15 @@ public class PageMaker {
 
         // next
         next = endPage * criteria.getPerPageNum() >= totalCount ?  false : true;
+    }
+
+    public String makeQuery(int page) {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
     }
 
     public int getTotalCount() {

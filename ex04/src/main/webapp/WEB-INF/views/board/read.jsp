@@ -66,6 +66,8 @@
                     <%--페이징 정보 유지를 위한 입력 form--%>
                     <form role="form" method="post">
                         <input type="hidden" name="bno" value="${boardVO.bno}">
+                        <input type="hidden" name="page" value="${criteria.page}">
+                        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
                     </form>
 
                     <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
