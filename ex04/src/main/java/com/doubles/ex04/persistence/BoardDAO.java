@@ -38,4 +38,6 @@ public interface BoardDAO {
     // 특정 게시글의 댓글 갯수 갱신
     public void updateReplyCnt(Integer bno, int amount) throws Exception;
 
+    // 게시글 조회수 갱신
+    public void updateViewCnt(Integer bno) throws Exception;
 }

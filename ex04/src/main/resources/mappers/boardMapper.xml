@@ -122,6 +122,13 @@
         <include refid="search"/>
     </select>
 
+    <!--게시글 조회수 갱신-->
+    <select id="updateViewCnt">
+        UPDATE tbl_board
+        SET viewcnt = viewcnt + 1
+        WHERE bno = #{bno}
+    </select>
+
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">

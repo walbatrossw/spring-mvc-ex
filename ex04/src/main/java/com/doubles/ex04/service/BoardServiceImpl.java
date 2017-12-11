@@ -5,6 +5,8 @@ import com.doubles.ex04.domain.Criteria;
 import com.doubles.ex04.domain.SearchCriteria;
 import com.doubles.ex04.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -21,9 +23,11 @@ public class BoardServiceImpl implements BoardService {
         boardDAO.create(boardVO);
     }
 
-    // 게시글 조회
+    // 게시글 조회 + 조회수 갱신
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public BoardVO read(Integer bno) throws Exception {
+        boardDAO.updateViewCnt(bno);
         return boardDAO.read(bno);
     }
 
@@ -68,9 +72,6 @@ public class BoardServiceImpl implements BoardService {
     public int listSearchCount(SearchCriteria criteria) throws Exception {
         return boardDAO.listSearchCount(criteria);
     }
-
-
-
 
 
 }
