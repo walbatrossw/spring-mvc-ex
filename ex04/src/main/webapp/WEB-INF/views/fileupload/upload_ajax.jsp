@@ -9,7 +9,7 @@
     .fileDrop {
         width: 100%;
         height: 200px;
-        border: 1px dotted #0b58a2;
+        border: 2px dotted #0b58a2;
     }
 
     .small {
@@ -53,7 +53,13 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <div class="fileDrop"></div>
+                        <div class="fileDrop">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p class="text-center">파일을 드래그해주세요.</p>
+                        </div>
                         <div class="uploadedList"></div>
 
                     </div>
