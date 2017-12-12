@@ -2,11 +2,15 @@ package com.doubles.ex04.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -62,4 +66,22 @@ public class UploadController {
         return savedName;
     }
 
+    @RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
+    public String uploadAjaxGET() {
+
+        return "/fileupload/upload_ajax";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<String> uploadAjaxPOST(MultipartFile file) throws Exception {
+
+        logger.info("----------- FILE AJAX UPLOAD -----------");
+        logger.info("original file name : " + file.getOriginalFilename());
+        logger.info("file size : " + file.getSize());
+        logger.info("contentType : " + file.getContentType());
+        logger.info("-----------------------------------------");
+
+        return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.CREATED);
+    }
 }

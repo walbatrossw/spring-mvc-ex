@@ -26,12 +26,12 @@
         <%-- Content Header (Page header) --%>
         <section class="content-header">
             <h1>
-                파일 업로드
+                파일 업로드(일반)
                 <small>스프링연습예제</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> fileupload</a></li>
-                <li class="active">form</li>
+                <li class="active">general form</li>
             </ol>
         </section>
 
@@ -41,7 +41,7 @@
                 <form role="form" id="uploadForm" method="post" action="${path}/fileupload/uploadForm" enctype="multipart/form-data" target="imgFrame">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">파일 업로드 입력폼</h3>
+                            <h3 class="box-title">파일 업로드(일반) 입력폼</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
