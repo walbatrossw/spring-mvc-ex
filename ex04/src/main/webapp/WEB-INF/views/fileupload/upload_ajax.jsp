@@ -60,8 +60,8 @@
                             <br/>
                             <p class="text-center">파일을 드래그해주세요.</p>
                         </div>
+                        <hr/>
                         <div class="uploadedList"></div>
-
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -87,6 +87,7 @@
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
+    
     $(".fileDrop").on("dragenter dragover", function (event) {
         event.preventDefault();
     });
@@ -113,9 +114,24 @@
             type: "POST",
             success: function (data) {
                 alert(data);
+                var str = "";
+                if (checkImageType(data)) {
+                    str = "<div><img src='displayFile?fileName=" + data + "'/>" + data + "</div>";
+                } else {
+                    str = "<div>" + data + "</div>";
+                }
+                $(".uploadedList").append(str);
             }
         });
-    })
+    });
+    
+    function checkImageType(fileName) {
+
+        var pattern = /jpg$|gif$|png$|jpge$/i;
+
+        return fileName.match(pattern);
+    }
+
 </script>
 </body>
 </html>
