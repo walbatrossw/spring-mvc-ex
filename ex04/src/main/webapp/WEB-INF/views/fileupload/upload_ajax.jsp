@@ -116,9 +116,17 @@
                 alert(data);
                 var str = "";
                 if (checkImageType(data)) {
-                    str = "<div><img src='displayFile?fileName=" + data + "'/>" + data + "</div>";
+                    str = "<div>"
+                            + "<a href='displayFile?fileName="+getImageLink(data)+"'>"
+                                + "<img src='displayFile?fileName=" + data + "'/>" + getImageLink(data)
+                            + "</a>"
+                        + "</div>";
                 } else {
-                    str = "<div>" + data + "</div>";
+                    str = "<div>"
+                            + "<a href='displayFile?fileName="+data+"'>"
+                                + getOriginalName(data)
+                            + "</a>"
+                        + "</div>";
                 }
                 $(".uploadedList").append(str);
             }
@@ -130,6 +138,23 @@
         var pattern = /jpg$|gif$|png$|jpge$/i;
 
         return fileName.match(pattern);
+    }
+
+    function getOriginalName(fileName) {
+        if (checkImageType(fileName)) {
+            return;
+        }
+        var idx = fileName.indexOf("_") + 1;
+        return fileName.substr(idx);
+    }
+
+    function getImageLink(fileName) {
+        if (!checkImageType(fileName)) {
+            return;
+        }
+        var front = fileName.substr(0, 12); // /년/월/일 경로 추출
+        var end = fileName.substr(14);      // _s 썸네일 표시 제거
+        return front + end;
     }
 
 </script>
