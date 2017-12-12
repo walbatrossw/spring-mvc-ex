@@ -45,12 +45,20 @@ public class UploadController {
         return "/fileupload/upload_form";
     }
 
+    // 파일 업로드 처리
     private String uploadFile(String originalFileName, byte[] fileData) throws Exception {
 
+        // 고유한 파일명을 위해 UUID 키 값 생성
         UUID uuid = UUID.randomUUID();
+        // UUID + _ + 원본파일명
         String savedName = uuid.toString() + "_" + originalFileName;
+
+        // 업로드 경로, 파일명 : 파일 객체 생성
         File target = new File(uploadPath, savedName);
+
+        // 파일을 경로에 전송
         FileCopyUtils.copy(fileData, target);
+
         return savedName;
     }
 
