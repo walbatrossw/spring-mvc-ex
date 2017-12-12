@@ -45,6 +45,7 @@
                 <ul class="treeview-menu">
                     <li><a href="${path}/board/write"><i class="fa fa-edit"></i> <span> 글쓰기</span></a></li>
                     <li><a href="${path}/board/list"><i class="fa fa-list"></i> <span> 목록</span></a></li>
+                    <li><a href="${path}/fileupload/uploadForm"><i class="fa fa-file-o"></i> <span> 파일업로드 예제</span></a></li>
                 </ul>
             </li>
         </ul>
