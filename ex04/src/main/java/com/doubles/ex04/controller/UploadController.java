@@ -129,8 +129,22 @@ public class UploadController {
         } finally {
             inputStream.close();
         }
-
         return entity;
+    }
 
+    // 파일 데이터 삭제
+    @ResponseBody
+    @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteFile(String fileName) {
+        logger.info("delete file : " + fileName);
+        String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        MediaType mediaType = MediaUtils.getMediaType(formatName);
+        if (mediaType != null) {
+            String front = fileName.substring(0, 12);
+            String end = fileName.substring(14);
+            new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
+        }
+        new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
+        return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 }

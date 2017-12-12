@@ -12,8 +12,8 @@
         border: 2px dotted #0b58a2;
     }
 
-    .small {
-        margin-left: 3;
+    small {
+        margin-left: 3px;
         font-weight: bold;
         color: grey;
     }
@@ -118,14 +118,14 @@
                 if (checkImageType(data)) {
                     str = "<div>"
                             + "<a href='displayFile?fileName="+getImageLink(data)+"'>"
-                                + "<img src='displayFile?fileName=" + data + "'/>" + getImageLink(data)
-                            + "</a>"
+                                + "<img src='displayFile?fileName=" + data + "'/>"
+                            + "</a> <small data-src="+data+">X</small>"
                         + "</div>";
                 } else {
                     str = "<div>"
                             + "<a href='displayFile?fileName="+data+"'>"
                                 + getOriginalName(data)
-                            + "</a>"
+                            + "</a><small data-src="+data+">X</small>"
                         + "</div>";
                 }
                 $(".uploadedList").append(str);
@@ -156,7 +156,24 @@
         var end = fileName.substr(14);      // _s 썸네일 표시 제거
         return front + end;
     }
-
+    
+    $(".uploadedList").on("click", "small", function (event) {
+        var that = $(this);
+        $.ajax({
+            url: "/fileupload/deleteFile",
+            type: "post",
+            data: {fileName:$(this).attr("data-src")},
+            dataType: "text",
+            success: function (result) {
+                if (result == "DELETED") {
+                    alert("삭제되었습니다.");
+                    that.parent("div").remove();
+                }
+                
+            }
+        });
+    })
+    
 </script>
 </body>
 </html>
