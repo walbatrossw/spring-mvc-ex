@@ -1,5 +1,6 @@
 package com.doubles.ex04.controller;
 
+import com.doubles.ex04.commons.util.UploadFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -66,12 +67,14 @@ public class UploadController {
         return savedName;
     }
 
+    // Ajax 파일 업로드 페이지
     @RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
     public String uploadAjaxGET() {
 
         return "/fileupload/upload_ajax";
     }
 
+    // Ajax 파일 업로드 처리
     @ResponseBody
     @RequestMapping(value = "/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> uploadAjaxPOST(MultipartFile file) throws Exception {
@@ -82,6 +85,6 @@ public class UploadController {
         logger.info("contentType : " + file.getContentType());
         logger.info("-----------------------------------------");
 
-        return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.CREATED);
+        return new ResponseEntity<>(UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
     }
 }
