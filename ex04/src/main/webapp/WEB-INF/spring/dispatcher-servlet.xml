@@ -36,4 +36,9 @@
     <aop:config>
     </aop:config>
 
+    <!--파일 업로드 MultipartResolver 설정-->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="10485760"/>
+    </beans:bean>
+
 </beans:beans>
