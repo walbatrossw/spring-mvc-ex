@@ -35,7 +35,7 @@
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">게시글 목록 (게시글 갯수)</h3>
+                        <h3 class="box-title">게시글 목록 (${totalCount})</h3>
                     </div>
                     <div class="box-body">
                         <%--게시글 목록 영역--%>
