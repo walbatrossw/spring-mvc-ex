@@ -3,7 +3,13 @@
 <html>
 <%--head.jsp--%>
 <%@ include file="../include/head.jsp" %>
-
+<style>
+    iframe {
+        width: 0px;
+        height: 0px;
+        border: 0px;
+    }
+</style>
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
@@ -32,14 +38,14 @@
         <%-- Main content --%>
         <section class="content container-fluid">
             <div class="col-lg-12">
-                <form role="form" id="uploadForm" method="post" action="${path}/fileupload/uploadForm"
-                      enctype="multipart/form-data">
+                <form role="form" id="uploadForm" method="post" action="${path}/fileupload/uploadForm" enctype="multipart/form-data" target="imgFrame">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">파일 업로드 입력폼</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
+
                             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                                 <div class="form-control" data-trigger="fileinput">
                                     <i class="glyphicon glyphicon-file fileinput-exists"></i>
@@ -51,6 +57,9 @@
                                     <input type="file" name="file"></span>
                                 <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
                             </div>
+
+                            <iframe name="imgFrame"></iframe>
+
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -76,6 +85,16 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<script>
+    function addFilePath(msg) {
 
+        alert(msg);
+
+        $("#uploadForm").each(function(){
+            this.reset();
+        });
+
+    }
+</script>
 </body>
 </html>

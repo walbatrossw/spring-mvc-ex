@@ -42,7 +42,7 @@ public class UploadController {
         String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
         model.addAttribute("savedName", savedName);
 
-        return "/fileupload/upload_form";
+        return "/fileupload/upload_result";
     }
 
     // 파일 업로드 처리
