@@ -24,6 +24,8 @@
 
     <%--fileupload--%>
     <link rel="stylesheet" media="screen" href="/bower_components/fileupload/css/jasny-bootstrap.min.css">
+    <%--lightbox--%>
+    <link rel="stylesheet" href="/bower_components/lightbox/css/lightbox.css">
 
     <%-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries --%>
     <%-- WARNING: Respond.js doesn't work if you view the page via file:// --%>

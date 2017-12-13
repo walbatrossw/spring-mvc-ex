@@ -55,6 +55,9 @@
                         ${fn:replace(fn:replace(fn:escapeXml(boardVO.content), newLine, "<br/>") , " ", "&nbsp;")}
                     </div>
                     <div class="box-footer">
+                        <ul class="mailbox-attachments clearfix uploadedList"></ul>
+                    </div>
+                    <div class="box-footer">
                         <div class="user-block">
                             <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
                             <span class="username">
@@ -190,6 +193,26 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<script type="text/javascript" src="/resources/dist/js/upload.js"></script>
+
+<%--첨부파일 하나의 영역--%>
+<script id="templatePhotoAttach" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+        <div class="mailbox-attachment-info">
+            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="{{imgsrc}}"><i class="fa fa-paperclip"></i> {{fileName}}</a>
+        </div>
+    </li>
+</script>
+<script id="templateFileAttach" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+        <div class="mailbox-attachment-info">
+            <a href="{{getLink}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
+        </div>
+    </li>
+</script>
+
 <%--댓글 하나의 영역--%>
 <script id="template" type="text/x-handlebars-template">
     {{#each.}}
@@ -227,15 +250,35 @@
     </div>
     {{/each}}
 </script>
+
 <script>
     $(document).ready(function () {
+
+        // 전역변수 선언
+        var bno = ${boardVO.bno}; // 현재 게시글 번호
+
+        /*======================================== 첨부파일 목록 ========================================*/
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
+        
+        $.getJSON("/board/getAttach/" + bno, function (list) {
+           $(list).each(function () {
+               var fileInfo = getFileInfo(this);
+               if (fileInfo.fullName.substr(12, 2) == "s_") {
+                   var html = templatePhotoAttach(fileInfo);
+               } else {
+                   html = templateFileAttach(fileInfo);
+               }
+
+               $(".uploadedList").append(html);
+           }) 
+        });
 
         /*======================================== 댓글 CRUD 관련 ========================================*/
 
         // ---------------------------------------- 댓글 목록, 페이징 ----------------------------------------
 
-        // 전역변수 선언
-        var bno = ${boardVO.bno}; // 게시글 번호
+
         var replyPage = 1; // 댓글 페이지 번호 초기화
 
         // 댓글 내용 줄바꿈 / 공백 처리를 위한 문자열 처리

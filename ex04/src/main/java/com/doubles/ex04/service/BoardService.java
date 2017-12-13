@@ -34,4 +34,7 @@ public interface BoardService {
 
     // 게시글 전체 갯수 or 검색된 게시글의 수
     public int listSearchCount(SearchCriteria criteria) throws Exception;
+
+    // 게시글 첨부파일 조회
+    public List<String> getAttach(Integer bno) throws Exception;
 }

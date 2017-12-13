@@ -96,4 +96,10 @@ public class BoardDAOImpl implements BoardDAO {
     public void addAttach(String fullName) throws Exception {
         sqlSession.insert(NAMESPACE + ".addAttach", fullName);
     }
+
+    // 게시글 첨부파일 조회
+    @Override
+    public List<String> getAttach(Integer bno) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".getAttach", bno);
+    }
 }

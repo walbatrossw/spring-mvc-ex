@@ -140,6 +140,15 @@
         )
     </insert>
 
+    <!--게시글 첨부파일 조회-->
+    <select id="getAttach" resultType="string">
+        SELECT
+            fullname
+        FROM tbl_attach
+        WHERE bno = #{bno}
+        ORDER BY regdate
+    </select>
+
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">

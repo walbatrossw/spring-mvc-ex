@@ -81,5 +81,9 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.listSearchCount(criteria);
     }
 
-
+    // 게시글 첨부파일 조회
+    @Override
+    public List<String> getAttach(Integer bno) throws Exception {
+        return boardDAO.getAttach(bno);
+    }
 }

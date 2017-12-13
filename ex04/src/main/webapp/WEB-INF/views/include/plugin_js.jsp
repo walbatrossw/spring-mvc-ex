@@ -8,3 +8,5 @@
 <script src="/dist/js/adminlte.min.js"></script>
 <%--fileUpload--%>
 <script src="/bower_components/fileupload/js/jasny-bootstrap.min.js"></script>
+<%--lightbox--%>
+<script src="/bower_components/lightbox/js/lightbox.js"></script>

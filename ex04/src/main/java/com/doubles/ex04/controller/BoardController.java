@@ -7,13 +7,11 @@ import com.doubles.ex04.domain.SearchCriteria;
 import com.doubles.ex04.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -113,4 +111,10 @@ public class BoardController {
 
     }
 
+    // 게시글 첨부파일 조회
+    @RequestMapping("/getAttach/{bno}")
+    @ResponseBody
+    public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+        return boardService.getAttach(bno);
+    }
 }
