@@ -156,7 +156,8 @@
         var end = fileName.substr(14);      // _s 썸네일 표시 제거
         return front + end;
     }
-    
+
+    // 파일 삭제 처리
     $(".uploadedList").on("click", "small", function (event) {
         var that = $(this);
         $.ajax({

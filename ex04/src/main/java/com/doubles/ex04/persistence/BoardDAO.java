@@ -40,4 +40,8 @@ public interface BoardDAO {
 
     // 게시글 조회수 갱신
     public void updateViewCnt(Integer bno) throws Exception;
+
+    // 게시글 첨부파일 추가
+    public void addAttach(String fullName) throws Exception;
+
 }

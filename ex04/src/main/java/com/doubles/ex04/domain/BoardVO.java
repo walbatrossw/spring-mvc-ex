@@ -1,5 +1,6 @@
 package com.doubles.ex04.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class BoardVO {
@@ -18,6 +19,8 @@ public class BoardVO {
     private int viewcnt;
     // 댓글 갯수
     private int replycnt;
+    // 게시글 첨부파일
+    private String[] files;
 
     public Integer getBno() {
         return bno;
@@ -75,6 +78,14 @@ public class BoardVO {
         this.replycnt = replycnt;
     }
 
+    public String[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(String[] files) {
+        this.files = files;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
@@ -85,6 +96,7 @@ public class BoardVO {
                 ", regdate=" + regdate +
                 ", viewcnt=" + viewcnt +
                 ", replycnt=" + replycnt +
+                ", files=" + Arrays.toString(files) +
                 '}';
     }
 }

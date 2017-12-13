@@ -90,4 +90,10 @@ public class BoardDAOImpl implements BoardDAO {
     public void updateViewCnt(Integer bno) throws Exception {
         sqlSession.update(NAMESPACE + ".updateViewCnt", bno);
     }
+
+    // 게시글 첨부파일 추가
+    @Override
+    public void addAttach(String fullName) throws Exception {
+        sqlSession.insert(NAMESPACE + ".addAttach", fullName);
+    }
 }

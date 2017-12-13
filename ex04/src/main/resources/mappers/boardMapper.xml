@@ -129,6 +129,17 @@
         WHERE bno = #{bno}
     </select>
 
+    <!--게시글 첨부파일 추가-->
+    <insert id="addAttach">
+        INSERT INTO tbl_attach (
+            fullname
+            , bno
+        ) VALUES (
+            #{fullName}
+            , LAST_INSERT_ID()
+        )
+    </insert>
+
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">

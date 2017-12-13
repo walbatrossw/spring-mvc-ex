@@ -18,9 +18,17 @@ public class BoardServiceImpl implements BoardService {
     private BoardDAO boardDAO;
 
     // 게시글 입력 처리
+    @Transactional
     @Override
     public void write(BoardVO boardVO) throws Exception {
         boardDAO.create(boardVO);
+        String[] files = boardVO.getFiles();
+        if (files == null) {
+            return;
+        }
+        for (String fileName : files) {
+            boardDAO.addAttach(fileName);
+        }
     }
 
     // 게시글 조회 + 조회수 갱신
