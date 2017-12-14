@@ -114,9 +114,9 @@ public class BoardServiceImpl implements BoardService {
         boardDAO.deleteAttach(fullName);
     }
 
-    // 게시글 번호 조회
+    // 게시글 첨부파일 갯수 갱신
     @Override
-    public int getBno(String fullName) throws Exception {
-        return boardDAO.getBno(fullName);
+    public void updateAttachCnt(Integer bno) throws Exception {
+        boardDAO.updateAttachCnt(bno);
     }
 }

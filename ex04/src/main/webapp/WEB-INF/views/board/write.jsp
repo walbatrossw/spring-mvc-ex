@@ -100,10 +100,13 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<%--Handlebars JS--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<%--파일업로드 JS--%>
 <script type="text/javascript" src="/resources/dist/js/upload.js"></script>
 
 <%--첨부파일 하나의 영역--%>
+<%--이미지--%>
 <script id="templatePhotoAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -113,6 +116,7 @@
         </div>
     </li>
 </script>
+<%--일반 파일--%>
 <script id="templateFileAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -122,18 +126,23 @@
         </div>
     </li>
 </script>
-
 <script>
     $(document).ready(function () {
 
         var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
         var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
 
+        // 전체 페이지 파일 끌어 놓기 기본 이벤트 방지 : 지정된 영역외에 파일 드래그 드랍시 페이지 이동방지
+        $(".content-wrapper").on("dragenter dragover drop", function (event) {
+            event.preventDefault();
+        });
+
+        // 파일 끌어 놓기 기본 이벤트 방지
         $(".fileDrop").on("dragenter dragover", function (event) {
             event.preventDefault();
         });
 
-        // 파일 드랍 이벤트
+        // 파일 드랍 이벤트 : 파일 전송 처리
         $(".fileDrop").on("drop", function (event) {
             event.preventDefault();
             var files = event.originalEvent.dataTransfer.files;
@@ -148,23 +157,21 @@
                 contentType: false,
                 type: "POST",
                 success: function (data) {
-                    // var fileInfo = getFileInfo(data);
-                    // var html = template(fileInfo);
-                    // $(".uploadedList").append(html);
-
+                    // 파일정보 가공
                     var fileInfo = getFileInfo(data);
+                    // 이미지 파일일 경우
                     if (fileInfo.fullName.substr(12, 2) == "s_") {
                         var html = templatePhotoAttach(fileInfo);
+                    // 이미지 파일이 아닐 경우
                     } else {
                         html = templateFileAttach(fileInfo);
                     }
-
                     $(".uploadedList").append(html);
                 }
             });
         });
 
-        // 글 저장 버튼 클릭 이벤트
+        // 글 저장 버튼 클릭 이벤트 : 파일명 DB 저장 처리
         $("#regForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
@@ -176,7 +183,7 @@
             that.get(0).submit();
         });
 
-        // 파일 삭제 버튼 클릭 이벤트
+        // 파일 삭제 버튼 클릭 이벤트 : 파일삭제, 파일명 DB 삭제 처리
         $(document).on("click", ".delBtn", function (event) {
             event.preventDefault();
             var that = $(this);

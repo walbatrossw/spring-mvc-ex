@@ -5,8 +5,6 @@
 <html>
 <%--head.jsp--%>
 <%@ include file="../include/head.jsp" %>
-<%--Handlebars.js 추가--%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
@@ -193,9 +191,13 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<%--Handlebars JS--%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<%--업로드 JS--%>
 <script type="text/javascript" src="/resources/dist/js/upload.js"></script>
 
 <%--첨부파일 하나의 영역--%>
+<%--이미지--%>
 <script id="templatePhotoAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -204,6 +206,7 @@
         </div>
     </li>
 </script>
+<%--일반 파일--%>
 <script id="templateFileAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -257,19 +260,22 @@
         // 전역변수 선언
         var bno = ${boardVO.bno}; // 현재 게시글 번호
 
-        /*======================================== 첨부파일 목록 ========================================*/
-        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
-        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
+        /*======================================== 첨부파일 목록 관련 ========================================*/
+
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 template
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());   // 일반파일 template
         
         $.getJSON("/board/getAttach/" + bno, function (list) {
            $(list).each(function () {
+               // 파일정보 가공
                var fileInfo = getFileInfo(this);
+               // 이미지 파일일 경우
                if (fileInfo.fullName.substr(12, 2) == "s_") {
                    var html = templatePhotoAttach(fileInfo);
+               // 이미지 파일이 아닐 경우
                } else {
                    html = templateFileAttach(fileInfo);
                }
-
                $(".uploadedList").append(html);
            }) 
         });
@@ -278,8 +284,9 @@
 
         // ---------------------------------------- 댓글 목록, 페이징 ----------------------------------------
 
-
-        var replyPage = 1; // 댓글 페이지 번호 초기화
+        // 전역변수 선언
+        // 댓글 페이지 번호 초기화
+        var replyPage = 1;
 
         // 댓글 내용 줄바꿈 / 공백 처리를 위한 문자열 처리
         Handlebars.registerHelper("escape", function (text) {

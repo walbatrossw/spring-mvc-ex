@@ -108,18 +108,13 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<%--Handlebars JS--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<%--업로드 JS--%>
 <script type="text/javascript" src="/resources/dist/js/upload.js"></script>
-<script id="templateAttach" type="text/x-handlebars-template">
-    <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-        <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
-        </div>
-    </li>
-</script>
+
 <%--첨부파일 하나의 영역--%>
+<%--이미지--%>
 <script id="templatePhotoAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -129,6 +124,7 @@
         </div>
     </li>
 </script>
+<%--일반 파일--%>
 <script id="templateFileAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -141,15 +137,24 @@
 <script>
     $(document).ready(function () {
 
+        // 전역 변수 선언
         var bno = ${boardVO.bno}; // 현재 게시글 번호
-        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
-        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 Template
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());   // 일반파일 Template
 
+        /*======================================== 첨부파일 입력 처리 ========================================*/
 
+        // 전체 페이지 파일 끌어 놓기 기본 이벤트 방지 : 지정된 영역외에 파일 드래그 드랍시 페이지 이동방지
+        $(".content-wrapper").on("dragenter dragover drop", function (event) {
+            event.preventDefault();
+        });
+
+        // 파일 끌어 놓기 기본 이벤트 방지
         $(".fileDrop").on("dragenter dragover", function (event) {
             event.preventDefault();
         });
 
+        // 파일 드랍 이벤트 : 파일 전송 처리
         $(".fileDrop").on("drop", function (event) {
             event.preventDefault();
             var files = event.originalEvent.dataTransfer.files;
@@ -164,22 +169,22 @@
                 contentType: false,
                 type: "POST",
                 success: function (data) {
-                    // var fileInfo = getFileInfo(data);
-                    // var html = templateAttach(fileInfo);
-                    // $(".uploadedList").append(html);
-
+                    // 파일정보 가공
                     var fileInfo = getFileInfo(data);
+                    // 이미지 파일일 경우
                     if (fileInfo.fullName.substr(12, 2) == "s_") {
                         var html = templatePhotoAttach(fileInfo);
+                    // 이미지 파일이 아닐경우
                     } else {
                         html = templateFileAttach(fileInfo);
                     }
-
+                    // 목록에 출력
                     $(".uploadedList").append(html);
                 }
             });
         });
 
+        // 수정 처리시 파일 정보도 함께 처리
         $("#modForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
@@ -197,7 +202,7 @@
             if (confirm("삭제하시겠습니까? 삭제된 파일은 복구할 수 없습니다.")) {
                 var that = $(this);
                 $.ajax({
-                    url: "/fileupload/deleteFile",
+                    url: "/fileupload/deleteFile/" + bno,
                     type: "post",
                     data: {fileName:$(this).attr("href")},
                     dataType: "text",
@@ -217,8 +222,10 @@
         $.getJSON("/board/getAttach/" + bno, function (list) {
             $(list).each(function () {
                 var fileInfo = getFileInfo(this);
+                // 이미지 파일일 경우
                 if (fileInfo.fullName.substr(12, 2) == "s_") {
                     var html = templatePhotoAttach(fileInfo);
+                // 이미지 파일이 아닐 경우
                 } else {
                     html = templateFileAttach(fileInfo);
                 }

@@ -125,9 +125,9 @@ public class BoardDAOImpl implements BoardDAO {
         sqlSession.delete(NAMESPACE + ".deleteAttach", fullName);
     }
 
-    // 게시글 번호 조회
+    // 특정 게시글의 첨부파일 갯수 갱신
     @Override
-    public int getBno(String fullName) throws Exception {
-        return sqlSession.selectOne(NAMESPACE + ".getBno", fullName);
+    public void updateAttachCnt(Integer bno) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateAttachCnt", bno);
     }
 }

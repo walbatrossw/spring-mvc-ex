@@ -178,12 +178,12 @@
         WHERE fullname = #{fullName}
     </delete>
 
-    <!--게시글 번호 조회-->
-    <select id="getBno" resultType="int">
-        SELECT bno
-        FROM tbl_attach
-        WHERE fullname = #{fullNmae}
-    </select>
+    <!--특정 게시글의 첨부파일 갯수 갱신-->
+    <update id="updateAttachCnt">
+        UPDATE tbl_board
+        SET attachcnt = (SELECT COUNT(fullname) FROM tbl_attach WHERE bno = #{bno})
+        WHERE bno = #{bno}
+    </update>
 
     <sql id="search">
         <if test="searchType != null">
