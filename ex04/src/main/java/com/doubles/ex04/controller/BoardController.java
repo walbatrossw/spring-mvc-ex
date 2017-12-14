@@ -106,7 +106,6 @@ public class BoardController {
         model.addAttribute("list", boardService.list(criteria));
         model.addAttribute("totalCount", boardService.listSearchCount(criteria));
         model.addAttribute("pageMaker", pageMaker);
-
         return "board/list";
 
     }

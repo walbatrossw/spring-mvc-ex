@@ -11,10 +11,12 @@
             title
             , content
             , writer
+            , attachcnt
         ) VALUES (
             #{title}
             , #{content}
             , #{writer}
+            , #{attachcnt}
         )
     </insert>
 
@@ -31,6 +33,7 @@
         SET
             title     = #{title}
             , content = #{content}
+            , attachcnt = #{attachcnt}
         WHERE bno = #{bno}
     </update>
 
@@ -51,6 +54,7 @@
             , regdate
             , viewcnt
             , replycnt
+            , attachcnt
         FROM tbl_board
         WHERE bno > 0
         ORDER BY bno DESC, regdate DESC
@@ -68,6 +72,7 @@
             , regdate
             , viewcnt
             , replycnt
+            , attachcnt
         FROM tbl_board
         WHERE bno > 0
         ORDER BY bno DESC, regdate DESC
@@ -95,6 +100,7 @@
             , regdate
             , viewcnt
             , replycnt
+            , attachcnt
         FROM tbl_board
         WHERE bno > 0
         ]]>
@@ -147,6 +153,36 @@
         FROM tbl_attach
         WHERE bno = #{bno}
         ORDER BY regdate
+    </select>
+
+    <!--게시글 첨부파일 수정-->
+    <insert id="replaceAttach">
+        INSERT INTO tbl_attach (
+            fullname
+            , bno
+        ) VALUES (
+            #{fullName}
+            , #{bno}
+        )
+    </insert>
+
+    <!--특정 게시글 첨부파일 일괄 삭제-->
+    <delete id="deleteAllAttach">
+        DELETE FROM tbl_attach
+        WHERE bno = #{bno}
+    </delete>
+
+    <!--게시글 첨부파일 삭제-->
+    <delete id="deleteAttach">
+        DELETE FROM tbl_attach
+        WHERE fullname = #{fullName}
+    </delete>
+
+    <!--게시글 번호 조회-->
+    <select id="getBno" resultType="int">
+        SELECT bno
+        FROM tbl_attach
+        WHERE fullname = #{fullNmae}
     </select>
 
     <sql id="search">

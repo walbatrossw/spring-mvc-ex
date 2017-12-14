@@ -21,6 +21,8 @@ public class BoardVO {
     private int replycnt;
     // 게시글 첨부파일
     private String[] files;
+    // 게시글 첨부파일 갯수
+    private int attachcnt;
 
     public Integer getBno() {
         return bno;
@@ -86,6 +88,14 @@ public class BoardVO {
         this.files = files;
     }
 
+    public int getAttachcnt() {
+        return attachcnt;
+    }
+
+    public void setAttachcnt(int attachcnt) {
+        this.attachcnt = attachcnt;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
@@ -97,6 +107,7 @@ public class BoardVO {
                 ", viewcnt=" + viewcnt +
                 ", replycnt=" + replycnt +
                 ", files=" + Arrays.toString(files) +
+                ", attachcnt=" + attachcnt +
                 '}';
     }
 }

@@ -37,4 +37,11 @@ public interface BoardService {
 
     // 게시글 첨부파일 조회
     public List<String> getAttach(Integer bno) throws Exception;
+
+    // 게시글 첨부파일 삭제
+    public void deleteAttach(String fullName) throws Exception;
+
+    // 게시글 번호 조회
+    public int getBno(String fullName) throws Exception;
+
 }

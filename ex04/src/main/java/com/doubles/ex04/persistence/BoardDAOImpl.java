@@ -64,7 +64,6 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     // 게시글 목록 + 페이징 + 검색
-
     @Override
     public List<BoardVO> list(SearchCriteria criteria) throws Exception {
         return sqlSession.selectList(NAMESPACE + ".listSearchPaging", criteria);
@@ -101,5 +100,34 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public List<String> getAttach(Integer bno) throws Exception {
         return sqlSession.selectList(NAMESPACE + ".getAttach", bno);
+    }
+
+    // 게시글 첨부파일 수정
+    @Override
+    public void replaceAttach(String fullName, Integer bno) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("fullName", fullName);
+        paramMap.put("bno", bno);
+
+        sqlSession.insert(NAMESPACE + ".replaceAttach", paramMap);
+    }
+
+    // 특정 게시글 첨부파일 일괄 삭제
+    @Override
+    public void deleteAllAttach(Integer bno) throws Exception {
+        sqlSession.delete(NAMESPACE + ".deleteAllAttach", bno);
+    }
+
+    // 게시글 첨부파일 삭제
+    @Override
+    public void deleteAttach(String fullName) throws Exception {
+        sqlSession.delete(NAMESPACE + ".deleteAttach", fullName);
+    }
+
+    // 게시글 번호 조회
+    @Override
+    public int getBno(String fullName) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".getBno", fullName);
     }
 }

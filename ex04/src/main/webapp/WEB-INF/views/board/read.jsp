@@ -200,7 +200,7 @@
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="{{imgsrc}}"><i class="fa fa-paperclip"></i> {{fileName}}</a>
+            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fa fa-camera"></i> {{fileName}}</a>
         </div>
     </li>
 </script>
@@ -488,6 +488,20 @@
 
         // 삭제 버튼 클릭시
         $(".delBtn").on("click", function () {
+            var replyCnt = $(".replyCount").html().replace(/[^0-9]/g,"");
+            if (replyCnt > 0) {
+                alert("댓글이 달린 게시물은 삭제할 수 없습니다.");
+                return;
+            }
+            var arr = [];
+            $(".uploadedList li").each(function (index) {
+                arr.push($(this).attr("data-src"));
+            });
+            if (arr.length > 0) {
+                $.post("/fileupload/deleteAllFiles", {files:arr}, function () {
+                    
+                });
+            }
             formObj.attr("action", "/board/remove");
             formObj.submit();
         });

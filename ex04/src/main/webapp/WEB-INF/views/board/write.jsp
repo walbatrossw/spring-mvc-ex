@@ -3,7 +3,6 @@
 <html>
 <%--head.jsp--%>
 <%@ include file="../include/head.jsp" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <style>
     .fileDrop {
         width: 100%;
@@ -101,25 +100,40 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <script type="text/javascript" src="/resources/dist/js/upload.js"></script>
-<script id="template" type="text/x-handlebars-template">
+
+<%--첨부파일 하나의 영역--%>
+<script id="templatePhotoAttach" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
+            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fa fa-camera"></i> {{fileName}}</a>
             <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
         </div>
     </li>
 </script>
+<script id="templateFileAttach" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+        <div class="mailbox-attachment-info">
+            <a href="{{getLink}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
+        </div>
+    </li>
+</script>
+
 <script>
     $(document).ready(function () {
 
-        var template = Handlebars.compile($("#template").html());
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
 
         $(".fileDrop").on("dragenter dragover", function (event) {
             event.preventDefault();
         });
 
+        // 파일 드랍 이벤트
         $(".fileDrop").on("drop", function (event) {
             event.preventDefault();
             var files = event.originalEvent.dataTransfer.files;
@@ -134,13 +148,23 @@
                 contentType: false,
                 type: "POST",
                 success: function (data) {
+                    // var fileInfo = getFileInfo(data);
+                    // var html = template(fileInfo);
+                    // $(".uploadedList").append(html);
+
                     var fileInfo = getFileInfo(data);
-                    var html = template(fileInfo);
+                    if (fileInfo.fullName.substr(12, 2) == "s_") {
+                        var html = templatePhotoAttach(fileInfo);
+                    } else {
+                        html = templateFileAttach(fileInfo);
+                    }
+
                     $(".uploadedList").append(html);
                 }
             });
         });
 
+        // 글 저장 버튼 클릭 이벤트
         $("#regForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
@@ -152,6 +176,24 @@
             that.get(0).submit();
         });
 
+        // 파일 삭제 버튼 클릭 이벤트
+        $(document).on("click", ".delBtn", function (event) {
+            event.preventDefault();
+            var that = $(this);
+            $.ajax({
+                url: "/fileupload/deleteFile",
+                type: "post",
+                data: {fileName:$(this).attr("href")},
+                dataType: "text",
+                success: function (result) {
+                    if (result == "DELETED") {
+                        alert("삭제되었습니다.");
+                        that.parents("li").remove();
+                    }
+
+                }
+            });
+        });
     });
 </script>
 </body>

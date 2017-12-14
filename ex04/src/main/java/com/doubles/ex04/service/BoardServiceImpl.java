@@ -21,11 +21,13 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public void write(BoardVO boardVO) throws Exception {
-        boardDAO.create(boardVO);
         String[] files = boardVO.getFiles();
         if (files == null) {
+            boardDAO.create(boardVO);
             return;
         }
+        boardVO.setAttachcnt(files.length);
+        boardDAO.create(boardVO);
         for (String fileName : files) {
             boardDAO.addAttach(fileName);
         }
@@ -40,14 +42,33 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 게시글 수정 처리
+    @Transactional
     @Override
     public void modify(BoardVO boardVO) throws Exception {
+
+        Integer bno = boardVO.getBno();
+
+        boardDAO.deleteAllAttach(bno);
+
+        String[] files = boardVO.getFiles();
+
+        if (files == null) {
+            boardVO.setAttachcnt(0);
+            boardDAO.update(boardVO);
+            return;
+        }
+        boardVO.setAttachcnt(files.length);
         boardDAO.update(boardVO);
+        for (String fileName : files) {
+            boardDAO.replaceAttach(fileName, bno);
+        }
     }
 
     // 게시글 삭제
+    @Transactional
     @Override
     public void remove(Integer bno) throws Exception {
+        boardDAO.deleteAllAttach(bno);
         boardDAO.delete(bno);
     }
 
@@ -85,5 +106,17 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<String> getAttach(Integer bno) throws Exception {
         return boardDAO.getAttach(bno);
+    }
+
+    // 게시글 첨부파일 삭제
+    @Override
+    public void deleteAttach(String fullName) throws Exception {
+        boardDAO.deleteAttach(fullName);
+    }
+
+    // 게시글 번호 조회
+    @Override
+    public int getBno(String fullName) throws Exception {
+        return boardDAO.getBno(fullName);
     }
 }

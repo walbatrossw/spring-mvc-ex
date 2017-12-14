@@ -45,21 +45,23 @@
                                 <tr>
                                     <th style="width: 10px">NO</th>
                                     <th>제목</th>
-                                    <th style="width: 100px">작성자</th>
+                                    <th style="width: 120px">작성자</th>
                                     <th style="width: 150px">작성시간</th>
-                                    <th style="width: 50px">조회</th>
+                                    <th style="width: 60px">파일</th>
+                                    <th style="width: 60px">조회</th>
                                 </tr>
                                 <c:forEach var="boardVO" varStatus="i" items="${list}">
                                     <tr>
                                         <td>${boardVO.bno}</td>
                                         <td>
                                             <a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">${boardVO.title}
-                                                <span class="label label-warning">${boardVO.replycnt}</span>
+                                                <span class="badge bg-primary"><i class="fa fa-comment-o"></i> ${boardVO.replycnt}</span>
                                             </a>
                                         </td>
                                         <td>${boardVO.writer}</td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
-                                        <td><span class="badge bg-aqua">${boardVO.viewcnt}</span></td>
+                                        <td><span class="badge bg-yellow"><i class="fa fa-paperclip"></i> ${boardVO.attachcnt}</span></td>
+                                        <td><span class="badge bg-aqua"><i class="fa fa-eye"></i> ${boardVO.viewcnt}</span></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
