@@ -1,3 +1,4 @@
+-- 회원 테이블 생성
 CREATE TABLE tbl_member (
   userid VARCHAR(50) NOT NULL,
   userpw VARCHAR(50) NOT NULL,
