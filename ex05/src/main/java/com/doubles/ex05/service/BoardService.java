@@ -1,6 +1,7 @@
 package com.doubles.ex05.service;
 
 import com.doubles.ex05.domain.BoardVO;
+import com.doubles.ex05.domain.Criteria;
 
 import java.util.List;
 
@@ -21,4 +22,9 @@ public interface BoardService {
     // 게시글 목록
     public List<BoardVO> list() throws Exception;
 
+    // 게시글 목록 + 페이징
+    public List<BoardVO> list(Criteria criteria) throws Exception;
+
+    // 게시글 전체 갯수
+    public int countList(Criteria criteria) throws Exception;
 }

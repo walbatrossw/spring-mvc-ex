@@ -1,6 +1,7 @@
 package com.doubles.ex05.service;
 
 import com.doubles.ex05.domain.BoardVO;
+import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,17 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardVO> list() throws Exception {
         return boardDAO.list();
+    }
+
+    // 게시글 목록 + 페이징
+    @Override
+    public List<BoardVO> list(Criteria criteria) throws Exception {
+        return boardDAO.list(criteria);
+    }
+
+    // 게시글 전체 갯수
+    @Override
+    public int countList(Criteria criteria) throws Exception {
+        return boardDAO.countList(criteria);
     }
 }

@@ -1,6 +1,8 @@
 package com.doubles.ex05.controller;
 
 import com.doubles.ex05.domain.BoardVO;
+import com.doubles.ex05.domain.Criteria;
+import com.doubles.ex05.domain.PageMaker;
 import com.doubles.ex05.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,15 +80,25 @@ public class BoardController {
     }
 
     // 게시글 목록
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) throws Exception {
+//    @RequestMapping(value = "/list", method = RequestMethod.GET)
+//    public String list(Model model) throws Exception {
+//        model.addAttribute("list", boardService.list());
+//        return "board/list";
+//    }
 
-        model.addAttribute("list", boardService.list());
+    // 게시글 목록 + 페이징
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(Criteria criteria, Model model) throws Exception {
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(boardService.countList(criteria));
+
+        model.addAttribute("pageMaker", pageMaker);
+        model.addAttribute("list", boardService.list(criteria));
 
         return "board/list";
     }
-
-    // 게시글 목록 + 페이징
 
     // 게시글 목록 + 페이징 + 검색
 }

@@ -104,4 +104,15 @@ public class BoardControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void testListPaging() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+                .param("page", "10")
+                .param("perPageNum", "5")
+        )
+                .andDo(print())
+                .andExpect(model().attributeExists("list"))
+                .andExpect(status().isOk());
+    }
+
 }

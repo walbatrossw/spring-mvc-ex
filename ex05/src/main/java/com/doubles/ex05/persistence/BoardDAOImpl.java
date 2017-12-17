@@ -1,6 +1,7 @@
 package com.doubles.ex05.persistence;
 
 import com.doubles.ex05.domain.BoardVO;
+import com.doubles.ex05.domain.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -46,4 +47,15 @@ public class BoardDAOImpl implements BoardDAO {
         return sqlSession.selectList(NAMESPACE + ".list");
     }
 
+    // 게시글 목록 + 페이징
+    @Override
+    public List<BoardVO> list(Criteria criteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listPaging", criteria);
+    }
+
+    // 게시글 전체 갯수
+    @Override
+    public int countList(Criteria criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countList", criteria);
+    }
 }
