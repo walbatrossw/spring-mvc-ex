@@ -41,7 +41,8 @@
                         </div>
                         <div class="box-body">
                             <input type="hidden" name="bno" value="${boardVO.bno}">
-
+                            <input type="hidden" name="page" value="${criteria.page}">
+                            <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
                             <div class="form-group">
                                 <label for="title">제목</label>
                                 <input class="form-control"
@@ -118,7 +119,7 @@
 
         // 목록버튼 클릭 이벤트
         $(".listBtn").on("click", function () {
-            self.location = "/board/list";
+            self.location = "/board/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
         });
 
     });
