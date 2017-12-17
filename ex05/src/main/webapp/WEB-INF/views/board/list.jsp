@@ -41,24 +41,28 @@
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
-                                    <th style="width: 30px">#</th>
-                                    <th>제목</th>
-                                    <th style="width: 120px">작성자</th>
-                                    <th style="width: 150px">작성시간</th>
-                                    <th style="width: 60px">파일</th>
-                                    <th style="width: 60px">조회</th>
-                                </tr>
-                                <c:forEach var="boardVO" varStatus="i" items="${list}">
+                            <tr>
+                                <th style="width: 30px">#</th>
+                                <th>제목</th>
+                                <th style="width: 120px">작성자</th>
+                                <th style="width: 150px">작성시간</th>
+                                <th style="width: 60px">파일</th>
+                                <th style="width: 60px">조회</th>
+                            </tr>
+                            <c:forEach var="boardVO" varStatus="i" items="${list}">
                                 <tr>
                                     <td>${boardVO.bno}</td>
-                                    <td><a href="${path}/board/read?bno=${boardVO.bno}">${boardVO.title}</a></td>
+                                    <td>
+                                        <a href="${path}/board/read${pageMaker.makeQuery(pageMaker.criteria.page)}&bno=${boardVO.bno}">
+                                                ${boardVO.title}
+                                        </a>
+                                    </td>
                                     <td>${boardVO.writer}</td>
                                     <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${boardVO.regdate}"/></td>
-                                    <td>${boardVO.attachcnt}</td>
-                                    <td>${boardVO.viewcnt}</td>
+                                    <td><span class="badge bg-blue"><i class="fa fa-file-o"></i> ${boardVO.attachcnt}</span></td>
+                                    <td><span class="badge bg-red"><i class="fa fa-eye"></i> ${boardVO.viewcnt}</span></td>
                                 </tr>
-                                </c:forEach>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -66,15 +70,15 @@
                         <div class="text-center">
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
-                                    <li><a href="${path}/board/list?page=${pageMaker.startPage - 1}">이전</a></li>
+                                    <li><a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                                        <a href="${path}/board/list?page=${idx}">${idx}</a>
+                                        <a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/board/list?page=${pageMaker.endPage + 1}">다음</a></li>
+                                    <li><a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
                                 </c:if>
                             </ul>
                         </div>

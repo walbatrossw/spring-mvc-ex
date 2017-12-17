@@ -1,5 +1,8 @@
 package com.doubles.ex05.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
     // 게시물 전체 갯수
@@ -52,6 +55,14 @@ public class PageMaker {
 
         // 다음 활성/비활성
         next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
+    }
+
+    public String makeQuery(int page) {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+        return uriComponents.toUriString();
     }
 
     public int getStartPage() {
