@@ -5,4 +5,63 @@
 
 <mapper namespace="com.doubles.ex05.mapper.BoardMapper">
 
+    <!--================================================================================================================-->
+
+                                                <!--게시글 기본 CRUD SQL-->
+
+    <!--================================================================================================================-->
+
+    <!--게시글 입력-->
+    <insert id="create">
+        INSERT INTO tbl_board (
+            title
+            , content
+            , writer
+        ) VALUES (
+            #{title}
+            , #{content}
+            , #{writer}
+        )
+    </insert>
+
+    <!--게시글 조회-->
+    <select id="read" resultType="boardVO">
+        SELECT *
+        FROM tbl_board
+        WHERE bno = #{bno}
+    </select>
+
+    <!--게시글 수정-->
+    <update id="update">
+        UPDATE tbl_board
+        SET
+            title = #{title}
+            , content = #{content}
+        WHERE bno = #{bno}
+    </update>
+
+    <!--게시글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_board
+        WHERE bno = #{bno}
+    </delete>
+
+    <!--게시글 목록-->
+    <select id="list" resultType="boardVO">
+        <![CDATA[
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+            , replycnt
+            , attachcnt
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        ]]>
+    </select>
+
 </mapper>

@@ -6,7 +6,7 @@
 
     <!--패키지명 등록-->
     <typeAliases>
-        <package name="com.doubles.ex04.domain"/>
+        <package name="com.doubles.ex05.domain"/>
     </typeAliases>
 
 </configuration>
