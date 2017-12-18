@@ -51,7 +51,6 @@ public class ReplyController {
 
             Map<String, Object> map = new HashMap<>();
             map.put("list", list);
-            map.put("totalCount", totalCount);
             map.put("pageMaker", pageMaker);
 
             entity = new ResponseEntity<>(map, HttpStatus.OK);

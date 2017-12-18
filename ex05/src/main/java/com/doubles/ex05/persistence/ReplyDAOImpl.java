@@ -16,7 +16,7 @@ public class ReplyDAOImpl implements ReplyDAO {
     @Inject
     private SqlSession sqlSession;
 
-    private static final String NAMESPACE = "com.double.ex05.mapper.ReplyMapper";
+    private static final String NAMESPACE = "com.doubles.ex05.mapper.ReplyMapper";
 
     // 댓글 목록
     @Override
