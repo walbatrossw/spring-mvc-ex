@@ -5,4 +5,40 @@
 
 <mapper namespace="com.doubles.ex05.mapper.ReplyMapper">
 
+    <!--댓글 목록-->
+    <select id="list" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+    </select>
+
+    <!--댓글 입력-->
+    <insert id="create">
+        INSERT INTO tbl_reply (
+            bno
+            , replytext
+            , replyer
+        ) VALUES (
+            #{bno}
+            , #{replytext}
+            , #{replyer}
+        )
+    </insert>
+
+    <!--댓글 수정-->
+    <delete id="update">
+        UPDATE tbl_reply
+        SET
+            replytext    = #{replytext}
+            , updatedate = NOW()
+        WHERE rno = #{rno}
+    </delete>
+
+    <!--댓글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_reply
+        WHERE rno = #{rno}
+    </delete>
+
 </mapper>
