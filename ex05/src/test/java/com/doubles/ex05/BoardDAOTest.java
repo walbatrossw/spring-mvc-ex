@@ -104,4 +104,5 @@ public class BoardDAOTest {
         logger.info("/board/read?bno=12&perPageNum=20");
         logger.info(uriComponents.toString());
     }
+
 }

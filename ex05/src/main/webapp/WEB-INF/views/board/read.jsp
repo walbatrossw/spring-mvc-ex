@@ -78,6 +78,8 @@
                             <input type="hidden" name="bno" value="${boardVO.bno}">
                             <input type="hidden" name="page" value="${criteria.page}">
                             <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                            <input type="hidden" name="searchType" value="${criteria.searchType}">
+                            <input type="hidden" name="keyword" value="${criteria.keyword}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                         <div class="pull-right">
@@ -166,8 +168,8 @@
         // 목록 버튼 클릭 이벤트
         $(".listBtn").on("click", function () {
             $("input[name=bno]").remove();
-            formObj.attr("method", "get");
             formObj.attr("action", "/board/list");
+            formObj.attr("method", "get");
             formObj.submit();
         });
 

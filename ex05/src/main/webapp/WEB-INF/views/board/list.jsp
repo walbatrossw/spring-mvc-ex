@@ -36,7 +36,7 @@
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">게시글 목록</h3>
+                        <h3 class="box-title">게시글 목록 (${totalCount}) </h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>${boardVO.bno}</td>
                                     <td>
-                                        <a href="${path}/board/read${pageMaker.makeQuery(pageMaker.criteria.page)}&bno=${boardVO.bno}">
+                                        <a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">
                                                 ${boardVO.title}
                                         </a>
                                     </td>
@@ -70,21 +70,41 @@
                         <div class="text-center">
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
-                                    <li><a href="${path}/board/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+                                    <li><a href="${path}/board/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                                        <a href="${path}/board/list${pageMaker.makeQuery(idx)}">${idx}</a>
+                                        <a href="${path}/board/list${pageMaker.makeSearch(idx)}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/board/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                                    <li><a href="${path}/board/list${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
                                 </c:if>
                             </ul>
                         </div>
                     </div>
                     <div class="box-footer">
-                        <p>검색처리 영역</p>
+                        <div class="form-group col-sm-2">
+                            <select class="form-control" name="searchType" id="searchType">
+                                <option value="n" <c:out value="${criteria.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
+                                <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+                                <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+                                <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+                                <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+                                <option value="cw" <c:out value="${criteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+                                <option value="tcw" <c:out value="${criteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-flat" id="searchBtn">
+                                        <i class="fa fa-search"></i> 검색
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
@@ -131,6 +151,14 @@
         });
 
         /*=================================================게시글 검색=================================================*/
+
+        $("#searchBtn").on("click", function (event) {
+            self.location = "list" + "${pageMaker.makeQuery(1)}"
+                                    + "&searchType="+ $('select option:selected').val()
+                                    + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+
+        });
+
     });
 </script>
 </body>
