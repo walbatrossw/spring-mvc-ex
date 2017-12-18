@@ -13,6 +13,22 @@
         ORDER BY rno DESC
     </select>
 
+    <!--댓글 목록 + 페이징-->
+    <select id="listPaging" resultType="ReplyVO">
+        SELECT *
+        FROM tbl_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
+
+    <!--특정 게시글의 댓글 갯수-->
+    <select id="count" resultType="int">
+        SELECT COUNT(bno)
+        FROM tbl_reply
+        WHERE bno = #{bno}
+    </select>
+
     <!--댓글 입력-->
     <insert id="create">
         INSERT INTO tbl_reply (

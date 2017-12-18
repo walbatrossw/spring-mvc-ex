@@ -1,11 +1,14 @@
 package com.doubles.ex05.persistence;
 
+import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.ReplyVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ReplyDAOImpl implements ReplyDAO {
@@ -19,6 +22,23 @@ public class ReplyDAOImpl implements ReplyDAO {
     @Override
     public List<ReplyVO> list(Integer bno) throws Exception {
         return sqlSession.selectList(NAMESPACE + ".list", bno);
+    }
+
+    // 댓글 목록 + 페이징
+    @Override
+    public List<ReplyVO> list(Integer bno, Criteria criteria) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("bno", bno);
+        paramMap.put("criteria", criteria);
+
+        return sqlSession.selectList(NAMESPACE + ".listPaging", paramMap);
+    }
+
+    // 특정 게시글의 댓글 갯수
+    @Override
+    public int count(Integer bno) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".count", bno);
     }
 
     // 댓글 입력

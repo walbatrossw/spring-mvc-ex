@@ -1,5 +1,7 @@
 package com.doubles.ex05.controller;
 
+import com.doubles.ex05.domain.Criteria;
+import com.doubles.ex05.domain.PageMaker;
 import com.doubles.ex05.domain.ReplyVO;
 import com.doubles.ex05.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -7,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/replies")
@@ -17,11 +21,40 @@ public class ReplyController {
     private ReplyService replyService;
 
     // 댓글 목록
-    @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
-    public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
-        ResponseEntity<List<ReplyVO>> entity = null;
+//    @RequestMapping(value = "/all/{bno}/", method = RequestMethod.GET)
+//    public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
+//        ResponseEntity<List<ReplyVO>> entity = null;
+//        try {
+//            entity = new ResponseEntity<>(replyService.list(bno), HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return entity;
+//    }
+
+    // 댓글 목록 + 페이징
+    @RequestMapping(value = "/{bno}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> list(@PathVariable("bno") Integer bno,
+                                                    @PathVariable("page") Integer page) {
+        ResponseEntity<Map<String, Object>> entity = null;
         try {
-            entity = new ResponseEntity<>(replyService.list(bno), HttpStatus.OK);
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
+
+            List<ReplyVO> list = replyService.list(bno, criteria);
+            int totalCount = replyService.count(bno);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+            pageMaker.setTotalCount(totalCount);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("list", list);
+            map.put("totalCount", totalCount);
+            map.put("pageMaker", pageMaker);
+
+            entity = new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
