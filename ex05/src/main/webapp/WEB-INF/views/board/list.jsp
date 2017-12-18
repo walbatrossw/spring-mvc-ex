@@ -44,10 +44,9 @@
                             <tr>
                                 <th style="width: 30px">#</th>
                                 <th>제목</th>
-                                <th style="width: 120px">작성자</th>
-                                <th style="width: 150px">작성시간</th>
-                                <th style="width: 60px">파일</th>
+                                <th style="width: 100px">작성자</th>
                                 <th style="width: 60px">조회</th>
+                                <th style="width: 150px">작성시간</th>
                             </tr>
                             <c:forEach var="boardVO" varStatus="i" items="${list}">
                                 <tr>
@@ -56,11 +55,12 @@
                                         <a href="${path}/board/read${pageMaker.makeSearch(pageMaker.criteria.page)}&bno=${boardVO.bno}">
                                                 ${boardVO.title}
                                         </a>
+                                        <span class="badge bg-teal"><i class="fa fa-comment-o"></i> ${boardVO.replycnt}</span>
+                                        <span class="badge bg-aqua"><i class="fa fa-paperclip"></i> ${boardVO.attachcnt}</span>
                                     </td>
                                     <td>${boardVO.writer}</td>
+                                    <td><span class="badge bg-light-blue"><i class="fa fa-eye"></i> ${boardVO.viewcnt}</span></td>
                                     <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${boardVO.regdate}"/></td>
-                                    <td><span class="badge bg-blue"><i class="fa fa-file-o"></i> ${boardVO.attachcnt}</span></td>
-                                    <td><span class="badge bg-red"><i class="fa fa-eye"></i> ${boardVO.viewcnt}</span></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

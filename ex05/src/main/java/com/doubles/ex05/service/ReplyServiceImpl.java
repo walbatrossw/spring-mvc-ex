@@ -2,8 +2,10 @@ package com.doubles.ex05.service;
 
 import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.ReplyVO;
+import com.doubles.ex05.persistence.BoardDAO;
 import com.doubles.ex05.persistence.ReplyDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -13,6 +15,9 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Inject
     private ReplyDAO replyDAO;
+
+    @Inject
+    private BoardDAO boardDAO;
 
     // 댓글 목록
     @Override
@@ -33,9 +38,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     // 댓글 입력
+    @Transactional
     @Override
     public void addReply(ReplyVO replyVO) throws Exception {
         replyDAO.create(replyVO);
+        boardDAO.updateReplyCnt(replyVO.getBno(), 1);
     }
 
     // 댓글 수정
@@ -45,8 +52,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     // 댓글 삭제
+    @Transactional
     @Override
     public void removeReply(Integer rno) throws Exception {
+        int bno = replyDAO.getBno(rno);
         replyDAO.delete(rno);
+        boardDAO.updateReplyCnt(bno, -1);
     }
 }

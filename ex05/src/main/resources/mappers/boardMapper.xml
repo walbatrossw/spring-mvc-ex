@@ -31,6 +31,13 @@
         WHERE bno = #{bno}
     </select>
 
+    <!--게시글 조회수 증가-->
+    <update id="updateViewCnt">
+        UPDATE tbl_board
+        SET viewcnt = viewcnt + 1
+        WHERE bno = #{bno}
+    </update>
+
     <!--게시글 수정-->
     <update id="update">
         UPDATE tbl_board
@@ -65,7 +72,7 @@
     </select>
 
     <!--게시글 목록 + 페이징-->
-    <select id="listPaging" resultType="boardVO">
+    <select id="pagingList" resultType="boardVO">
         <![CDATA[
         SELECT
             bno
@@ -84,7 +91,7 @@
     </select>
 
     <!--게시글 전체 갯수-->
-    <select id="listCount" resultType="int">
+    <select id="countList" resultType="int">
         <![CDATA[
         SELECT COUNT(bno)
         FROM tbl_board
@@ -93,7 +100,7 @@
     </select>
 
     <!--게시글 목록 + 페이징 + 검색-->
-    <select id="searchedListPaging" resultType="boardVO">
+    <select id="pagingSearchedList" resultType="boardVO">
         <![CDATA[
         SELECT
             bno
@@ -115,7 +122,7 @@
     </select>
 
     <!--게시글 전체 갯수 or 검색된 게시글 갯수-->
-    <select id="searchedListCount" resultType="int">
+    <select id="countSearchedList" resultType="int">
         <![CDATA[
         SELECT COUNT(bno)
         FROM tbl_board
@@ -157,5 +164,13 @@
             </if>
         </if>
     </sql>
+
+    <!--게시글 댓글 갯수 갱신-->
+    <update id="updateReplyCnt">
+        UPDATE tbl_board
+        SET
+            replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
 
 </mapper>

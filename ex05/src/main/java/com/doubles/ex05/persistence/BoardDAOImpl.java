@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -28,6 +30,12 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public BoardVO read(Integer bno) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".read", bno);
+    }
+
+    // 게시글 조회수 증가
+    @Override
+    public void updateViewCnt(Integer bno) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateViewCnt", bno);
     }
 
     // 게시글 수정
@@ -51,24 +59,34 @@ public class BoardDAOImpl implements BoardDAO {
     // 게시글 목록 + 페이징
     @Override
     public List<BoardVO> list(Criteria criteria) throws Exception {
-        return sqlSession.selectList(NAMESPACE + ".listPaging", criteria);
+        return sqlSession.selectList(NAMESPACE + ".pagingList", criteria);
     }
 
     // 게시글 전체 갯수
     @Override
-    public int listCount(Criteria criteria) throws Exception {
-        return sqlSession.selectOne(NAMESPACE + ".listCount", criteria);
+    public int countList(Criteria criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countList", criteria);
     }
 
     // 게시글 목록 + 페이징 + 검색
     @Override
     public List<BoardVO> list(SearchCriteria criteria) throws Exception {
-        return sqlSession.selectList(NAMESPACE + ".searchedListPaging", criteria);
+        return sqlSession.selectList(NAMESPACE + ".pagingSearchedList", criteria);
     }
 
     // 게시글 전체 갯수 or 검색된 게시글 갯수
     @Override
-    public int searchedListCount(SearchCriteria criteria) throws Exception {
-        return sqlSession.selectOne(NAMESPACE + ".searchedListCount", criteria);
+    public int countSearchedList(SearchCriteria criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countSearchedList", criteria);
     }
+
+    // 게시글 댓글 갯수 갱신
+    @Override
+    public void updateReplyCnt(Integer bno, int amount) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("bno", bno);
+        paramMap.put("amount", amount);
+        sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
+    }
+
 }

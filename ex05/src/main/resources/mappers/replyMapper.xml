@@ -57,4 +57,11 @@
         WHERE rno = #{rno}
     </delete>
 
+    <!--특정 댓글의 게시글 번호-->
+    <select id="getBno" resultType="int">
+        SELECT
+        bno
+        FROM tbl_reply
+        WHERE rno = #{rno}
+    </select>
 </mapper>

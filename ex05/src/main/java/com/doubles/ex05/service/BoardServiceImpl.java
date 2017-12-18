@@ -2,9 +2,13 @@ package com.doubles.ex05.service;
 
 import com.doubles.ex05.domain.BoardVO;
 import com.doubles.ex05.domain.Criteria;
+import com.doubles.ex05.domain.ReplyVO;
 import com.doubles.ex05.domain.SearchCriteria;
 import com.doubles.ex05.persistence.BoardDAO;
+import com.doubles.ex05.persistence.ReplyDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -22,8 +26,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 게시글 조회
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public BoardVO read(Integer bno) throws Exception {
+        boardDAO.updateViewCnt(bno);
         return boardDAO.read(bno);
     }
 
@@ -54,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 전체 갯수
     @Override
     public int listCount(Criteria criteria) throws Exception {
-        return boardDAO.listCount(criteria);
+        return boardDAO.countList(criteria);
     }
 
     // 게시글 목록 + 페이징 + 검색
@@ -66,6 +72,6 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 전체 갯수 or 검색된 게시글 갯수
     @Override
     public int searchedListCount(SearchCriteria criteria) throws Exception {
-        return boardDAO.searchedListCount(criteria);
+        return boardDAO.countSearchedList(criteria);
     }
 }

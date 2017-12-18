@@ -58,4 +58,10 @@ public class ReplyDAOImpl implements ReplyDAO {
     public void delete(Integer rno) throws Exception {
         sqlSession.delete(NAMESPACE + ".delete", rno);
     }
+
+    // 특정 댓글의 게시글 번호
+    @Override
+    public int getBno(Integer rno) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".getBno", rno);
+    }
 }

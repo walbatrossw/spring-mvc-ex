@@ -14,6 +14,9 @@ public interface BoardDAO {
     // 게시글 조회
     public BoardVO read(Integer bno) throws Exception;
 
+    // 게시글 조회수 증가
+    public void updateViewCnt(Integer bno) throws Exception;
+
     // 게시글 수정
     public void update(BoardVO boardVO) throws Exception;
 
@@ -27,11 +30,15 @@ public interface BoardDAO {
     public List<BoardVO> list(Criteria criteria) throws Exception;
 
     // 게시글 전체 갯수
-    public int listCount(Criteria criteria) throws Exception;
+    public int countList(Criteria criteria) throws Exception;
 
     // 게시글 목록 + 페이징 + 검색
     public List<BoardVO> list(SearchCriteria criteria) throws Exception;
 
     // 게시글 전체 갯수 or 검색된 게시글 갯수
-    public int searchedListCount(SearchCriteria criteria) throws Exception;
+    public int countSearchedList(SearchCriteria criteria) throws Exception;
+
+    // 게시글 댓글 갯수 갱신
+    public void updateReplyCnt(Integer bno, int amount) throws Exception;
+
 }

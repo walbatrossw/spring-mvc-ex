@@ -25,4 +25,6 @@ public interface ReplyDAO {
     // 댓글 삭제
     public void delete(Integer rno) throws Exception;
 
+    // 특정 댓글의 게시글 번호
+    public int getBno(Integer rno) throws Exception;
 }
