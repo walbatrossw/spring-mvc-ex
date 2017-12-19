@@ -12,15 +12,17 @@
     <!--================================================================================================================-->
 
     <!--게시글 입력-->
-    <insert id="create">
+    <insert id="create" useGeneratedKeys="true" keyProperty="bno">
         INSERT INTO tbl_board (
             title
             , content
             , writer
+            , attachcnt
         ) VALUES (
             #{title}
             , #{content}
             , #{writer}
+            , #{attachcnt}
         )
     </insert>
 
@@ -44,6 +46,7 @@
         SET
             title = #{title}
             , content = #{content}
+            , attachcnt = #{attachcnt}
         WHERE bno = #{bno}
     </update>
 

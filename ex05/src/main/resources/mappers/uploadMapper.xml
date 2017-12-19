@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex05.mapper.UploadMapper">
+
+    <!--게시글 첨부파일 추가-->
+    <insert id="addAttach">
+        INSERT tbl_attach (
+            fullname
+            , bno
+        ) VALUES (
+            #{fullName}
+            , #{bno}
+        )
+    </insert>
+
+    <!--게시글 첨부파일 조회-->
+    <select id="getAttach" resultType="string">
+        SELECT
+            fullname
+        FROM tbl_attach
+        WHERE bno = #{bno}
+        ORDER BY regdate
+    </select>
+
+    <!--게시글 첨부파일 수정-->
+    <insert id="replaceAttach">
+        INSERT INTO tbl_attach (
+            fullname
+            , bno
+        ) VALUES (
+            #{fullName}
+            , #{bno}
+        )
+    </insert>
+
+    <!--게시글 첨부파일 삭제-->
+    <delete id="deleteAttach">
+        DELETE FROM tbl_attach
+        WHERE fullname = #{fullName}
+    </delete>
+
+    <!--게시글 첨부파일 일괄 삭제-->
+    <delete id="deleteAllAttach">
+        DELETE FROM tbl_attach
+        WHERE bno = #{bno}
+    </delete>
+
+    <!--특정 게시글의 첨부파일 갯수 갱신-->
+    <update id="updateAttachCnt">
+        UPDATE tbl_board
+        SET attachcnt = (SELECT COUNT(fullname) FROM tbl_attach WHERE bno = #{bno})
+        WHERE bno = #{bno}
+    </update>
+
+</mapper>
