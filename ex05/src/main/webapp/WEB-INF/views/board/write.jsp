@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-
 <%--head.jsp--%>
 <%@ include file="../include/head.jsp" %>
 <style>
@@ -57,7 +56,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="writer">작성자</label>
-                                <input class="form-control" id="writer" name="writer" placeholder="작성자를 입력해주세요">
+                                <input class="form-control" id="writer" name="writer" value="${login.uid}" readonly>
                             </div>
                             <div class="form-group">
                                 <div class="fileDrop">

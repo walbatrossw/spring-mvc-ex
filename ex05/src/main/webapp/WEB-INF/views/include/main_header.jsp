@@ -155,10 +155,10 @@
                         <%-- Menu Footer--%>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">프로필</a>
+                                <a href="${path}/user/register" class="btn btn-default btn-flat"><i class="fa fa-user-plus"></i> 회원가입</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">로그아웃</a>
+                                <a href="${path}/user/login" class="btn btn-default btn-flat"><i class="fa fa-sign-in"></i> 로그인</a>
                             </div>
                         </li>
                     </ul>

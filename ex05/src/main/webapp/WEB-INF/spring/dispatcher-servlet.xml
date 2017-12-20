@@ -47,14 +47,36 @@
         </beans:constructor-arg>
     </beans:bean>
 
-    <!--인터셉터 설정-->
-    <beans:bean id="sampleInterceptor" class="com.doubles.ex05.commons.interceptor.SampleInterceptor"/>
+
+    <!--Sample Interceptor 설정-->
+    <!--<beans:bean id="sampleInterceptor" class="com.doubles.ex05.commons.interceptor.SampleInterceptor"/>-->
+    <!--<interceptors>-->
+    <!--<interceptor>-->
+    <!--<mapping path="/doA"/>-->
+    <!--<mapping path="/doB"/>-->
+    <!--<beans:ref bean="sampleInterceptor"/>-->
+    <!--</interceptor>-->
+    <!--</interceptors>-->
+
+    <!--login Interceptor 설정-->
+    <beans:bean id="loginInterceptor" class="com.doubles.ex05.commons.interceptor.LoginInterceptor"/>
+
+    <!--login Interceptor 설정-->
+    <beans:bean id="authInterceptor" class="com.doubles.ex05.commons.interceptor.AuthInterceptor"/>
+
     <interceptors>
         <interceptor>
-            <mapping path="/doA"/>
-            <mapping path="/doB"/>
-            <beans:ref bean="sampleInterceptor"/>
+            <mapping path="/user/loginPost"/>
+            <beans:ref bean="loginInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/board/write"/>
+            <mapping path="/board/modify"/>
+            <mapping path="/board/remove"/>
+            <beans:ref bean="authInterceptor"/>
         </interceptor>
     </interceptors>
+
+
 
 </beans:beans>

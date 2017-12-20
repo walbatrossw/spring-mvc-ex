@@ -82,39 +82,47 @@
                             <input type="hidden" name="keyword" value="${criteria.keyword}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
-                            <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
-                        </div>
+                        <c:if test="${login.uid == boardVO.writer}">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
+                                <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
+                            </div>
+                        </c:if>
                     </div>
 
                 </div>
 
                 <%--댓글 입력 영역--%>
-                <div class="box box-warning">
-                    <div class="box-header with-border">
-                        <a class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글작성</a>
-                    </div>
-                    <div class="box-body">
-                        <form class="form-horizontal">
-                            <div class="form-group margin-bottom-none">
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글을 입력해주세요..." style="resize: none"></textarea>
+                <c:if test="${not empty login}">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <a class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글작성</a>
+                        </div>
+                        <div class="box-body">
+                            <form class="form-horizontal">
+                                <div class="form-group margin-bottom-none">
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글을 입력해주세요..." style="resize: none"></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input class="form-control" id="newReplyWriter" type="text" value="${login.uid}" readonly="readonly">
+                                    </div>
+                                    <hr/>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
+                                    </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input class="form-control" id="newReplyWriter" type="text" placeholder="작성자">
-                                </div>
-                                <hr/>
-                                <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                    <div class="box-footer">
-
+                </c:if>
+                <c:if test="${empty login}">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <p><i class="fa fa-pencil"></i> 댓글 작성을 위해 <a href="${path}/user/login" class="link-black text-lg">로그인</a>해주세요</p>
+                        </div>
                     </div>
-                </div>
+                </c:if>
 
                 <%--댓글 목록 영역--%>
                 <div class="box box-success collapsed-box">
@@ -236,6 +244,7 @@
             <span class="username">
                 <%--작성자 이름--%>
                 <a href="#">{{replyer}}</a>
+                {{#eqReplyer replyer}}
                 <%--댓글 삭제 버튼--%>
                 <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
                     <i class="fa fa-times"> 삭제</i>
@@ -244,6 +253,7 @@
                 <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
                     <i class="fa fa-edit"> 수정</i>
                 </a>
+                {{/eqReplyer}}
             </span>
             <%--댓글 작성일자--%>
             <span class="description">{{prettifyDate regdate}}</span>
@@ -415,7 +425,6 @@
                         alert("댓글이 등록되었습니다.");
                         replyPage = 1;  // 페이지 1로 초기화
                         getPage("/replies/" + bno + "/" + replyPage); // 댓글 목록 호출
-                        replyerObj.val("");     // 작성자 입력창 공백처리
                         replytextObj.val("");   // 댓글 입력창 공백처리
                     }
                 }
@@ -479,6 +488,15 @@
                     }
                 }
             });
+        });
+
+        /*------------------------------------------------5. 댓글 수정, 삭제 버튼 (작성자만)---------------------------------*/
+        Handlebars.registerHelper("eqReplyer", function (replyer, block) {
+            var accum = "";
+            if (replyer == "${login.uid}") {
+                accum += block.fn();
+            }
+            return accum;
         });
 
         /*================================================게시판 페이지 이동관련===========================================*/
