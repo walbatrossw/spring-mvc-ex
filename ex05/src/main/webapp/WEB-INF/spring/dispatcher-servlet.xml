@@ -47,4 +47,14 @@
         </beans:constructor-arg>
     </beans:bean>
 
+    <!--인터셉터 설정-->
+    <beans:bean id="sampleInterceptor" class="com.doubles.ex05.commons.interceptor.SampleInterceptor"/>
+    <interceptors>
+        <interceptor>
+            <mapping path="/doA"/>
+            <mapping path="/doB"/>
+            <beans:ref bean="sampleInterceptor"/>
+        </interceptor>
+    </interceptors>
+
 </beans:beans>

@@ -49,6 +49,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 게시글 수정
+    @Transactional
     @Override
     public void modify(BoardVO boardVO) throws Exception {
         int bno = boardVO.getBno();
