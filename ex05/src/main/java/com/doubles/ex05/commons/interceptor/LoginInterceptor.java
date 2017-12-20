@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         if (userVO != null) {
             logger.info("new login success");
             session.setAttribute(LOGIN, userVO);
+            if (request.getParameter("useCookie") != null) {
+                logger.info("remember me....");
+                Cookie loginCookie = new Cookie("loginCookie", session.getId());
+                loginCookie.setPath("/");
+                loginCookie.setMaxAge(60 * 60 * 24 * 7);
+                response.addCookie(loginCookie);
+            }
             //response.sendRedirect("/");
             Object destination = session.getAttribute("destination");
             response.sendRedirect(destination != null ? (String) destination : "/");

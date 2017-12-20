@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
@@ -45,5 +46,10 @@ public class UserController {
             return;
         }
         model.addAttribute("userVO", userVO);
+        if (loginDTO.isUseCookie()) {
+            int amount = 60 * 60 * 24 * 7;
+            Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+            userService.keepLogin(userVO.getUid(), session.getId(), sessionLimit);
+        }
     }
 }

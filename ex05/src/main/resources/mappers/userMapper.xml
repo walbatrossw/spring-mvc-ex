@@ -5,6 +5,7 @@
 
 <mapper namespace="com.doubles.ex05.mapper.UserMapper">
 
+    <!--로그인 처리-->
     <select id="login" resultType="UserVO">
         SELECT
             uid
@@ -16,4 +17,21 @@
             AND upw = #{upw}
     </select>
 
+    <!--로그인 유지-->
+    <update id="keepLogin">
+        UPDATE tbl_user
+        SET
+            sessionkey     = #{sessionId}
+            , sessionlimit = #{next}
+        WHERE uid = #{uid}
+    </update>
+
+    <!--Session Key 확인-->
+    <select id="checkUserWithSessionKey" resultType="UserVO">
+        SELECT *
+        FROM tbl_user
+        WHERE sessionkey = #{value}
+              AND sessionlimit > NOW()
+
+    </select>
 </mapper>
