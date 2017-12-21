@@ -21,32 +21,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Inject
     private UserService userService;
 
-    private void saveDestination(HttpServletRequest request) {
-
-        String uri = request.getRequestURI();
-
-        String query = request.getQueryString();
-
-        if (query == null || query.equals("null")) {
-            query =  "";
-        } else {
-            query = "?" + query;
-        }
-
-        if (request.getMethod().equals("GET")) {
-            logger.info("destination : " + (uri + query));
-            request.getSession().setAttribute("destination", uri + query);
-        }
-    }
-
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) throws Exception {
         HttpSession session = request.getSession();
-
         if (session.getAttribute("login") == null) {
             logger.info("current user is not logged");
+            // 기존의 페이지
             saveDestination(request);
+            // 쿠키 값
             Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
             if (loginCookie != null) {
                 UserVO userVO = userService.checkLoginBefore(loginCookie.getValue());
@@ -61,6 +45,22 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
 
         return true;
+    }
+
+    // 로그인 페이지 이동 전 페이지 저장
+    private void saveDestination(HttpServletRequest request) {
+        String uri = request.getRequestURI();   // 현재 페이지
+        String query = request.getQueryString(); // 쿼리
+        if (query == null || query.equals("null")) {
+            query =  "";
+        } else {
+            query = "?" + query;
+        }
+        // 현재 페이지 + get 파라미터 저장
+        if (request.getMethod().equals("GET")) {
+            logger.info("destination : " + (uri + query));
+            request.getSession().setAttribute("destination", uri + query);
+        }
     }
 
 }

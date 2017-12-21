@@ -5,6 +5,19 @@
 
 <mapper namespace="com.doubles.ex05.mapper.UserMapper">
 
+    <!--회원가입 처리-->
+    <insert id="register">
+        INSERT INTO tbl_user (
+            uid
+            , upw
+            , uname
+        ) VALUES (
+            #{uid}
+            , #{upw}
+            , #{uname}
+        )
+    </insert>
+
     <!--로그인 처리-->
     <select id="login" resultType="UserVO">
         SELECT

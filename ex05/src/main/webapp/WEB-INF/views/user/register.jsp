@@ -5,56 +5,57 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="${path}/">
+            <b>DoubleS</b><br/>
+            SpringMVC-Examples
+        </a>
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">회원가입 페이지</p>
 
-        <form action="../../index.html" method="post">
+        <form action="${path}/user/register" method="post">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Full name">
+                <input type="text" name="uid" class="form-control" placeholder="아아디">
+                <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" name="uname" class="form-control" placeholder="이름">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" name="upw" class="form-control" placeholder="비밀번호">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Retype password">
+                <input type="password" class="form-control" placeholder="비밀번호 확인">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> I agree to the <a href="#">terms</a>
+                            <input type="checkbox"> 약관에 <a href="#">동의</a>
                         </label>
                     </div>
                 </div>
-                <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">가입</button>
                 </div>
-                <!-- /.col -->
             </div>
         </form>
 
         <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up
-                using
-                Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up
-                using
-                Google+</a>
+            <p>- 또는 -</p>
+            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                <i class="fa fa-facebook"></i> 페이스북으로 로그인
+            </a>
+            <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                <i class="fa fa-google-plus"></i> 구글 계정으로 로그인
+            </a>
         </div>
 
-        <a href="login.html" class="text-center">I already have a membership</a>
+        <a href="${path}/user/login" class="text-center">로그인</a>
     </div>
     <!-- /.form-box -->
 </div>

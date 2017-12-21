@@ -14,6 +14,12 @@ public class UserServiceImpl implements UserService {
     @Inject
     private UserDAO userDAO;
 
+    // 회원가입 처리
+    @Override
+    public void register(UserVO userVO) throws Exception {
+        userDAO.register(userVO);
+    }
+
     // 로그인 처리
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {

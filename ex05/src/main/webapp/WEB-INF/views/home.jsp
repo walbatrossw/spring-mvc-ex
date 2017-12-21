@@ -49,6 +49,11 @@
 
 <%--plugin_js.jsp--%>
 <%@ include file="include/plugin_js.jsp" %>
-
+<script>
+    var msg = "${msg}";
+    if (msg == "SUCCESS") {
+        alert("로그인되었습니다.");
+    }
+</script>
 </body>
 </html>

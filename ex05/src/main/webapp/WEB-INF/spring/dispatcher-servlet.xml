@@ -58,11 +58,19 @@
     <!--</interceptor>-->
     <!--</interceptors>-->
 
-    <!--login Interceptor 설정-->
+    <!--로그인 처리 Interceptor 설정-->
     <beans:bean id="loginInterceptor" class="com.doubles.ex05.commons.interceptor.LoginInterceptor"/>
 
-    <!--login Interceptor 설정-->
+    <!--로그인 페이지 이동 Interceptor 설정-->
+    <beans:bean id="loginAfterInterceptor" class="com.doubles.ex05.commons.interceptor.LoginAfterInterceptor"/>
+
+    <!--글작성, 수정, 삭제 권한 Interceptor 설정-->
     <beans:bean id="authInterceptor" class="com.doubles.ex05.commons.interceptor.AuthInterceptor"/>
+
+    <!--로그인 유지 Interceptor 설정-->
+    <beans:bean id="rememberMeInterceptor" class="com.doubles.ex05.commons.interceptor.RememberMeInterceptor"/>
+
+
 
     <interceptors>
         <interceptor>
@@ -70,10 +78,19 @@
             <beans:ref bean="loginInterceptor"/>
         </interceptor>
         <interceptor>
+            <mapping path="/user/login"/>
+            <mapping path="/user/register"/>
+            <beans:ref bean="loginAfterInterceptor"/>
+        </interceptor>
+        <interceptor>
             <mapping path="/board/write"/>
             <mapping path="/board/modify"/>
             <mapping path="/board/remove"/>
             <beans:ref bean="authInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/**/"/>
+            <beans:ref bean="rememberMeInterceptor"/>
         </interceptor>
     </interceptors>
 
