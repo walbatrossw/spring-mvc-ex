@@ -3,6 +3,7 @@ package com.doubles.ex05.controller;
 import com.doubles.ex05.domain.LoginDTO;
 import com.doubles.ex05.domain.UserVO;
 import com.doubles.ex05.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +36,9 @@ public class UserController {
     // 회원가입 처리
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPOST(UserVO userVO, RedirectAttributes redirectAttributes) throws Exception {
+        // 비밀번호 암호화 처리
+        String hashPw = BCrypt.hashpw(userVO.getUpw(), BCrypt.gensalt());
+        userVO.setUpw(hashPw);
         userService.register(userVO);
         redirectAttributes.addFlashAttribute("msg", "REGISTERED");
         return "redirect:/user/login";
@@ -54,7 +58,7 @@ public class UserController {
         // 아이디 비번 일치 확인
         UserVO userVO = userService.login(loginDTO);
         // 불일치할 경우
-        if (userVO == null) {
+        if (userVO == null || !BCrypt.checkpw(loginDTO.getUpw(), userVO.getUpw())) {
             return;
         }
         // 일치할 경우
