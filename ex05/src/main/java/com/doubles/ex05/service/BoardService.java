@@ -4,6 +4,7 @@ import com.doubles.ex05.domain.BoardVO;
 import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.SearchCriteria;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface BoardService {
@@ -12,7 +13,7 @@ public interface BoardService {
     public void write(BoardVO boardVO) throws Exception;
 
     // 게시글 조회
-    public BoardVO read(Integer bno) throws Exception;
+    public BoardVO read(Integer bno, HttpSession session) throws Exception;
 
     // 게시글 수정
     public void modify(BoardVO boardVO) throws Exception;

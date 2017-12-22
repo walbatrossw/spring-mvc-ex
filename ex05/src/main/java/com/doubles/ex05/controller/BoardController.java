@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -40,9 +41,10 @@ public class BoardController {
     // 게시글 조회
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("bno") Integer bno,
-                       @ModelAttribute("criteria") SearchCriteria criteria, Model model) throws Exception {
+                       @ModelAttribute("criteria") SearchCriteria criteria, Model model,
+                       HttpSession session) throws Exception {
 
-        BoardVO boardVO = boardService.read(bno);
+        BoardVO boardVO = boardService.read(bno, session);
         model.addAttribute("boardVO", boardVO);
 
         return "board/read";
@@ -51,9 +53,10 @@ public class BoardController {
     // 게시글 수정 페이지
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("bno") Integer bno,
-                            @ModelAttribute("criteria") SearchCriteria criteria, Model model) throws Exception {
+                            @ModelAttribute("criteria") SearchCriteria criteria, Model model,
+                            HttpSession session) throws Exception {
 
-        BoardVO boardVO = boardService.read(bno);
+        BoardVO boardVO = boardService.read(bno, session);
         model.addAttribute("boardVO", boardVO);
 
         return "board/modify";
