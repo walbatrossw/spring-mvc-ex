@@ -62,7 +62,21 @@ public class UserController {
 
     // 회원 비밀번호 수정처리
     @RequestMapping(value = "/modify/pw", method = RequestMethod.POST)
-    public String userPwModify(UserVO userVO) {
+    public String userPwModify(@RequestParam("uid") String uid,
+                               @RequestParam("oldPw") String oldPw,
+                               @RequestParam("newPw") String newPw,
+                               HttpSession session,
+                               RedirectAttributes redirectAttributes) throws Exception {
+        UserVO userInfo = userService.getUser(uid);
+        if (!BCrypt.checkpw(oldPw, userInfo.getUpw())) {
+            redirectAttributes.addFlashAttribute("msg", "FAILURE");
+            return "redirect:/user/profile";
+        }
+        String newHashPw = BCrypt.hashpw(newPw, BCrypt.gensalt());
+        userInfo.setUpw(newHashPw);
+        userService.modifyPw(userInfo);
+        session.setAttribute("login", userInfo);
+        redirectAttributes.addFlashAttribute("msg", "SUCCESS");
         return "redirect:/user/profile";
     }
 

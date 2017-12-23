@@ -176,6 +176,7 @@
                         <form action="${path}/user/modify/pw" id="userPwForm" method="post">
                             <div class="form-group has-feedback">
                                 <label for="oldPw">현재 비밀번호</label>
+                                <input type="hidden" name="uid" value="${login.uid}">
                                 <input type="password" name="oldPw" id="oldPw" class="form-control" placeholder="비밀번호">
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
@@ -186,14 +187,14 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <label for="upw">새로운 비밀번호 확인</label>
-                                <input type="password" name="newPwCheck" id="newPwCheck" class="form-control" placeholder="비밀번호확인">
+                                <input type="password" id="newPwCheck" class="form-control" placeholder="비밀번호확인">
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary myInfoModModalBtn">수정</button>
+                        <button type="button" class="btn btn-primary pwModBtn">수정</button>
                     </div>
                 </div>
             </div>
@@ -218,6 +219,12 @@
         $(".infoModBtn").on("click", function () {
             $("#userInfoForm").submit();
         });
+
+        $(".pwModBtn").on("click", function () {
+
+            $("#userPwForm").submit();
+        });
+
     });
 </script>
 </body>
