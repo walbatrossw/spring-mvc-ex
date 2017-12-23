@@ -24,10 +24,34 @@ public class UserDAOImpl implements UserDAO {
         sqlSession.insert(NAMESPACE + ".register", userVO);
     }
 
+    // 회원 비밀번호
+    @Override
+    public UserVO getUser(String uid) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".getUser", uid);
+    }
+
+    // 회원정보 수정처리
+    @Override
+    public void updateUser(UserVO userVO) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateUser", userVO);
+    }
+
+    // 회원비밀번호 수정처리
+    @Override
+    public void updatePw(UserVO userVO) throws Exception {
+        sqlSession.update(NAMESPACE + ".updatePw", userVO);
+    }
+
     // 로그인 처리
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".login", loginDTO);
+    }
+
+    // 로그인 일자 갱신
+    @Override
+    public void updateLoginDate(String uid) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateLoginDate", uid);
     }
 
     // 로그인 유지

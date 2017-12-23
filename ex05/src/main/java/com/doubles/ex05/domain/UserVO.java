@@ -1,11 +1,16 @@
 package com.doubles.ex05.domain;
 
+import java.util.Date;
+
 public class UserVO {
 
     private String uid;
     private String upw;
     private String uname;
+    private String uemail;
     private int upoint;
+    private Date regdate;
+    private Date logdate;
 
     public String getUid() {
         return uid;
@@ -31,6 +36,14 @@ public class UserVO {
         this.uname = uname;
     }
 
+    public String getUemail() {
+        return uemail;
+    }
+
+    public void setUemail(String uemail) {
+        this.uemail = uemail;
+    }
+
     public int getUpoint() {
         return upoint;
     }
@@ -39,13 +52,32 @@ public class UserVO {
         this.upoint = upoint;
     }
 
+    public Date getRegdate() {
+        return regdate;
+    }
+
+    public void setRegdate(Date regdate) {
+        this.regdate = regdate;
+    }
+
+    public Date getLogdate() {
+        return logdate;
+    }
+
+    public void setLogdate(Date logdate) {
+        this.logdate = logdate;
+    }
+
     @Override
     public String toString() {
         return "UserVO{" +
                 "uid='" + uid + '\'' +
                 ", upw='" + upw + '\'' +
                 ", uname='" + uname + '\'' +
+                ", uemail='" + uemail + '\'' +
                 ", upoint=" + upoint +
+                ", regdate=" + regdate +
+                ", logdate=" + logdate +
                 '}';
     }
 }

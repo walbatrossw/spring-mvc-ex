@@ -11,12 +11,38 @@
             uid
             , upw
             , uname
+            , uemail
         ) VALUES (
             #{uid}
             , #{upw}
             , #{uname}
+            , #{uemail}
         )
     </insert>
+
+    <!--회원 정보 수정-->
+    <update id="updateUser">
+        UPDATE tbl_user
+        SET
+            uname = #{uname}
+            , uemail =  #{uemail}
+        WHERE uid = #{uid}
+    </update>
+
+    <!--회원 비밀번호-->
+    <select id="getUser" resultType="UserVO">
+        SELECT *
+        FROM tbl_user
+        WHERE uid = #{uid}
+    </select>
+
+    <!--회원비밀번호 수정-->
+    <update id="updatePw">
+        UPDATE tbl_user
+        SET
+            upw = #{upw}
+        WHERE uid = #{uid}
+    </update>
 
     <!--로그인 처리-->
     <select id="login" resultType="UserVO">
@@ -24,10 +50,20 @@
             uid
             , upw
             , uname
+            , uemail
+            , regdate
+            , logdate
         FROM tbl_user
         WHERE
             uid = #{uid}
     </select>
+
+    <!--로그인 일자 갱신-->
+    <update id="updateLoginDate">
+        UPDATE tbl_user
+        SET logdate = NOW()
+        WHERE uid = #{uid}
+    </update>
 
     <!--로그인 유지-->
     <update id="keepLogin">
@@ -44,6 +80,6 @@
         FROM tbl_user
         WHERE sessionkey = #{value}
               AND sessionlimit > NOW()
-
     </select>
+
 </mapper>

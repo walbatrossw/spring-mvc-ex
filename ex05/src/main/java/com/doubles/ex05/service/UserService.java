@@ -10,6 +10,15 @@ public interface UserService {
     // 회원가입 처리
     public void register(UserVO userVO) throws Exception;
 
+    // 회원정보 수정처리
+    public void modifyUser(UserVO userVO) throws Exception;
+
+    // 회원 정보
+    public UserVO getUser(String uid) throws Exception;
+
+    // 회원비밀번호 수정처리
+    public void modifyPw(UserVO userVO) throws Exception;
+
     // 로그인 처리
     public UserVO login(LoginDTO loginDTO) throws Exception;
 

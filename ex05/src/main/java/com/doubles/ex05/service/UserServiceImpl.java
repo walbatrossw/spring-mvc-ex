@@ -4,6 +4,7 @@ import com.doubles.ex05.domain.LoginDTO;
 import com.doubles.ex05.domain.UserVO;
 import com.doubles.ex05.persistence.UserDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -20,9 +21,29 @@ public class UserServiceImpl implements UserService {
         userDAO.register(userVO);
     }
 
+    // 회원 비밀번호
+    @Override
+    public UserVO getUser(String uid) throws Exception {
+        return userDAO.getUser(uid);
+    }
+
+    // 회원정보 수정처리
+    @Override
+    public void modifyUser(UserVO userVO) throws Exception {
+        userDAO.updateUser(userVO);
+    }
+
+    // 회원비밀번호 수정처리
+    @Override
+    public void modifyPw(UserVO userVO) throws Exception {
+        userDAO.updatePw(userVO);
+    }
+
     // 로그인 처리
+    @Transactional
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {
+        userDAO.updateLoginDate(loginDTO.getUid());
         return userDAO.login(loginDTO);
     }
 

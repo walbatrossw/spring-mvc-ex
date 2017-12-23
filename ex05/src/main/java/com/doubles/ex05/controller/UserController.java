@@ -4,12 +4,11 @@ import com.doubles.ex05.domain.LoginDTO;
 import com.doubles.ex05.domain.UserVO;
 import com.doubles.ex05.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -42,6 +41,29 @@ public class UserController {
         userService.register(userVO);
         redirectAttributes.addFlashAttribute("msg", "REGISTERED");
         return "redirect:/user/login";
+    }
+
+    // 회원정보 수정처리
+    @RequestMapping(value = "/modify/info", method = RequestMethod.POST)
+    public String userInfoModify(UserVO userVO, HttpSession session,
+                                 RedirectAttributes redirectAttributes) throws Exception {
+        UserVO oldUserInfo = userService.getUser(userVO.getUid());
+        if (!BCrypt.checkpw(userVO.getUpw(), oldUserInfo.getUpw())) {
+            redirectAttributes.addFlashAttribute("msg", "FAILURE");
+            return "redirect:/user/profile";
+        }
+        userService.modifyUser(userVO);
+        userVO.setRegdate(oldUserInfo.getRegdate());
+        userVO.setLogdate(oldUserInfo.getLogdate());
+        session.setAttribute("login", userVO);
+        redirectAttributes.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/user/profile";
+    }
+
+    // 회원 비밀번호 수정처리
+    @RequestMapping(value = "/modify/pw", method = RequestMethod.POST)
+    public String userPwModify(UserVO userVO) {
+        return "redirect:/user/profile";
     }
 
     // 로그인 페이지
@@ -102,4 +124,17 @@ public class UserController {
 
         return "user/logout";
     }
+
+    // 회원 정보 페이지
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile() {
+
+        return "user/profile";
+    }
+
+    // 회원 정보 수정 처리
+
+    // 비밀번호 수정 처리
+
+    // 비밀번호 찾기
 }

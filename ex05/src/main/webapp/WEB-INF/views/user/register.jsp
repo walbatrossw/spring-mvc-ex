@@ -24,6 +24,10 @@
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
+                <input type="email" name="uemail" class="form-control" placeholder="이메일">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
                 <input type="password" name="upw" class="form-control" placeholder="비밀번호">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>

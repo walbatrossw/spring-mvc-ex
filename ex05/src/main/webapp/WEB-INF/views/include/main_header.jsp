@@ -28,20 +28,35 @@
                         <li class="user-header">
                             <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
                             <p>
-                                <small>Since : 가입입자/ 최근 로그인일시</small>
+                                <small>
+                                    가입일자 : <fmt:formatDate value="${login.regdate}" pattern="yyyy-MM-dd"/>
+                                </small>
+                                <small>
+                                    최근로그인일자 : <fmt:formatDate value="${login.logdate}" pattern="yyyy-MM-dd a HH:mm"/>
+                                </small>
                             </p>
                         </li>
                         <li class="user-body">
-                            기타 기능 정보 알림
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">게시글</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">추천글</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">북마크</a>
+                                </div>
+                            </div>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="${path}/user/profile" class="btn btn-default btn-flat"><i
-                                        class="fa fa-user-plus"></i><b> 내 프로필</b></a>
+                                        class="fa fa-info-circle"></i><b> 내 프로필</b></a>
                             </div>
                             <div class="pull-right">
                                 <a href="${path}/user/logout" class="btn btn-default btn-flat"><i
-                                        class="fa fa-sign-in"></i><b> 로그아웃</b></a>
+                                        class="glyphicon glyphicon-log-out"></i><b> 로그아웃</b></a>
                             </div>
                         </li>
                     </ul>
@@ -68,7 +83,7 @@
                             </div>
                             <div class="pull-right">
                                 <a href="${path}/user/login" class="btn btn-default btn-flat"><i
-                                        class="fa fa-sign-in"></i><b> 로그인</b></a>
+                                        class="glyphicon glyphicon-log-in"></i><b> 로그인</b></a>
                             </div>
                         </li>
                     </ul>
