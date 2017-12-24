@@ -104,7 +104,7 @@ public class UploadController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResponseEntity<String> boardWriteRemoveFile(String fileName) throws Exception {
         // 파일 삭제
-        removeFile(fileName);
+        UploadFileUtils.removeFile(uploadPath, fileName);
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 
@@ -118,7 +118,7 @@ public class UploadController {
         // 첨부파일 갯수 갱신
         uploadService.updateAttachCnt(bno);
         // 파일 삭제
-        removeFile(fileName);
+        UploadFileUtils.removeFile(uploadPath, fileName);
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 
@@ -133,28 +133,9 @@ public class UploadController {
         // 파일이 존재할 경우 반복문 수행
         for (String fileName : files) {
             // 파일 삭제
-            removeFile(fileName);
+            UploadFileUtils.removeFile(uploadPath, fileName);
         }
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 
-    // 파일 삭제처리 메서드
-    private void removeFile(String fileName) {
-        // 파일 확장자 추출
-        String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-        // 파일 확장자를 통해 이미지 파일인지 판별
-        MediaType mediaType = MediaUtils.getMediaType(formatName);
-        // 이미지 파일일 경우, 원본파일 삭제
-        if (mediaType != null) {
-            // 원본 이미지의 경로 + 파일명 추출
-            // 날짜 경로 추출
-            String front = fileName.substring(0, 12);
-            // UUID + 파일명 추출
-            String end = fileName.substring(14);
-            // 원본 이미지 파일 삭제(구분자 변환)
-            new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
-        }
-        // 파일 삭제(일반 파일 or 썸네일 이미지 파일 삭제)
-        new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
-    }
 }

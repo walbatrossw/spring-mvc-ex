@@ -3,6 +3,7 @@ package com.doubles.ex05.commons.utils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 
 import javax.imageio.ImageIO;
@@ -101,5 +102,25 @@ public class UploadFileUtils {
         // 아이콘 파일명 = 기본 저장경로 + 날짜경로 + 구분자 + 파일명
         String iconName = uploadPath + savedPath + File.separator + fileName;
         return iconName.substring(uploadPath.length()).replace(File.separatorChar, '/');
+    }
+
+    // 파일 삭제처리 메서드
+    public static void removeFile(String uploadPath, String fileName) {
+        // 파일 확장자 추출
+        String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        // 파일 확장자를 통해 이미지 파일인지 판별
+        MediaType mediaType = MediaUtils.getMediaType(formatName);
+        // 이미지 파일일 경우, 원본파일 삭제
+        if (mediaType != null) {
+            // 원본 이미지의 경로 + 파일명 추출
+            // 날짜 경로 추출
+            String front = fileName.substring(0, 12);
+            // UUID + 파일명 추출
+            String end = fileName.substring(14);
+            // 원본 이미지 파일 삭제(구분자 변환)
+            new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
+        }
+        // 파일 삭제(일반 파일 or 썸네일 이미지 파일 삭제)
+        new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
     }
 }
