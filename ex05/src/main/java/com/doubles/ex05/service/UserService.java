@@ -19,6 +19,9 @@ public interface UserService {
     // 회원비밀번호 수정처리
     public void modifyPw(UserVO userVO) throws Exception;
 
+    // 회원 프로필 사진 수정
+    public void modifyUimage(String uid, String uimage) throws Exception;
+
     // 로그인 처리
     public UserVO login(LoginDTO loginDTO) throws Exception;
 

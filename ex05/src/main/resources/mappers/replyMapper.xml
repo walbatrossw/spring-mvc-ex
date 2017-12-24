@@ -6,17 +6,35 @@
 <mapper namespace="com.doubles.ex05.mapper.ReplyMapper">
 
     <!--댓글 목록-->
-    <select id="list" resultType="ReplyVO">
-        SELECT *
-        FROM tbl_reply
+    <select id="list" resultMap="replyVOResultMap">
+        SELECT
+            r.rno
+            , r.bno
+            , r.replytext
+            , r.replyer
+            , r.regdate
+            , r.updatedate
+            , u.uimage
+        FROM tbl_reply r
+            LEFT OUTER JOIN tbl_user u
+                ON u.uid = r.replyer
         WHERE bno = #{bno}
         ORDER BY rno DESC
     </select>
 
     <!--댓글 목록 + 페이징-->
-    <select id="listPaging" resultType="ReplyVO">
-        SELECT *
-        FROM tbl_reply
+    <select id="listPaging" resultMap="replyVOResultMap">
+        SELECT
+            r.rno
+            , r.bno
+            , r.replytext
+            , r.replyer
+            , r.regdate
+            , r.updatedate
+            , u.uimage
+        FROM tbl_reply r
+            LEFT OUTER JOIN tbl_user u
+                ON u.uid = r.replyer
         WHERE bno = #{bno}
         ORDER BY rno DESC
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
@@ -64,4 +82,28 @@
         FROM tbl_reply
         WHERE rno = #{rno}
     </select>
+
+    <resultMap id="replyVOResultMap" type="ReplyVO">
+        <id property="rno" column="rno"/>
+        <result property="bno" column="bno"/>
+        <result property="replytext" column="replytext"/>
+        <result property="replyer" column="replyer"/>
+        <result property="regdate" column="regdate"/>
+        <result property="updatedate" column="updatedate"/>
+        <association property="userVO" resultMap="userVOResultMap"/>
+    </resultMap>
+    
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="uid" column="uid"/>
+        <result property="upw" column="upw"/>
+        <result property="uname" column="uname"/>
+        <result property="upoint" column="upoint"/>
+        <result property="sessionkey" column="sessionkey"/>
+        <result property="sessionlimit" column="sessionlimit"/>
+        <result property="uemail" column="uemail"/>
+        <result property="regdate" column="regdate"/>
+        <result property="logdate" column="logdate"/>
+        <result property="uimage" column="uimage"/>
+    </resultMap>
+    
 </mapper>

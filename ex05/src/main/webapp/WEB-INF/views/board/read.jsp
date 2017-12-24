@@ -64,7 +64,7 @@
                     <%--작성자 정보 영역--%>
                     <div class="box-footer">
                         <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
+                            <img class="img-circle img-bordered-sm" src="${path}/dist/img/profile${boardVO.userVO.uimage}" alt="user image">
                             <span class="username">
                                 <a href="#">${boardVO.writer}</a>
                             </span>
@@ -239,7 +239,7 @@
     <div class="post replyDiv" data-rno={{rno}}>
         <div class="user-block">
             <%--댓글 작성자 프로필사진 : 추후 이미지 업로드기능 구현 예정--%>
-            <img class="img-circle img-bordered-sm" src="/dist/img/default-user-image.jpg" alt="user image">
+            <img class="img-circle img-bordered-sm" src="${path}/dist/img/profile{{userVO.uimage}}" alt="user image">
             <%--댓글 작성자--%>
             <span class="username">
                 <%--작성자 이름--%>

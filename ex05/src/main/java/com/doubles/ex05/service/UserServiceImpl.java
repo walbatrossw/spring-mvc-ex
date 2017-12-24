@@ -39,6 +39,12 @@ public class UserServiceImpl implements UserService {
         userDAO.updatePw(userVO);
     }
 
+    // 회원 프로필 사진 수정
+    @Override
+    public void modifyUimage(String uid, String uimage) throws Exception {
+        userDAO.updateUimage(uid, uimage);
+    }
+
     // 로그인 처리
     @Transactional
     @Override

@@ -12,6 +12,8 @@ public class ReplyVO {
     private String replytext;
     // 댓글 작성자
     private String replyer;
+    // 댓글 작성자 정보
+    private UserVO userVO;
     // 댓글 등록일자
     private Date regdate;
     // 댓글 수정일자
@@ -49,6 +51,14 @@ public class ReplyVO {
         this.replyer = replyer;
     }
 
+    public UserVO getUserVO() {
+        return userVO;
+    }
+
+    public void setUserVO(UserVO userVO) {
+        this.userVO = userVO;
+    }
+
     public Date getRegdate() {
         return regdate;
     }
@@ -72,6 +82,7 @@ public class ReplyVO {
                 ", bno=" + bno +
                 ", replytext='" + replytext + '\'' +
                 ", replyer='" + replyer + '\'' +
+                ", userVO=" + userVO +
                 ", regdate=" + regdate +
                 ", updatedate=" + updatedate +
                 '}';

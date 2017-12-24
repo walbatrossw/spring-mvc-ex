@@ -20,7 +20,7 @@
             </c:if>
             <c:if test="${not empty login}">
                 <div class="pull-left image">
-                    <img src="/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                    <img src="${path}/dist/img/profile${login.uimage}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>${login.uname}</p>

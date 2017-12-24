@@ -11,6 +11,7 @@ public class UserVO {
     private int upoint;
     private Date regdate;
     private Date logdate;
+    private String uimage;
 
     public String getUid() {
         return uid;
@@ -68,6 +69,14 @@ public class UserVO {
         this.logdate = logdate;
     }
 
+    public String getUimage() {
+        return uimage;
+    }
+
+    public void setUimage(String uimage) {
+        this.uimage = uimage;
+    }
+
     @Override
     public String toString() {
         return "UserVO{" +
@@ -78,6 +87,7 @@ public class UserVO {
                 ", upoint=" + upoint +
                 ", regdate=" + regdate +
                 ", logdate=" + logdate +
+                ", uimage='" + uimage + '\'' +
                 '}';
     }
 }

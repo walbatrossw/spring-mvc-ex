@@ -27,9 +27,20 @@
     </insert>
 
     <!--게시글 조회-->
-    <select id="read" resultType="boardVO">
-        SELECT *
-        FROM tbl_board
+    <select id="read" resultMap="boardVOResultMap">
+        SELECT
+            b.bno
+            , b.title
+            , b.content
+            , b.writer
+            , b.regdate
+            , b.viewcnt
+            , b.replycnt
+            , b.attachcnt
+            , u.uimage
+        FROM tbl_board b
+            LEFT OUTER JOIN tbl_user u
+                ON u.uid = b.writer
         WHERE bno = #{bno}
     </select>
 
@@ -57,7 +68,7 @@
     </delete>
 
     <!--게시글 목록-->
-    <select id="list" resultType="boardVO">
+    <select id="list" resultType="BoardVO">
         <![CDATA[
         SELECT
             bno
@@ -75,7 +86,7 @@
     </select>
 
     <!--게시글 목록 + 페이징-->
-    <select id="pagingList" resultType="boardVO">
+    <select id="pagingList" resultType="BoardVO">
         <![CDATA[
         SELECT
             bno
@@ -103,7 +114,7 @@
     </select>
 
     <!--게시글 목록 + 페이징 + 검색-->
-    <select id="pagingSearchedList" resultType="boardVO">
+    <select id="pagingSearchedList" resultType="BoardVO">
         <![CDATA[
         SELECT
             bno
@@ -175,5 +186,30 @@
             replycnt = replycnt + #{amount}
         WHERE bno = #{bno}
     </update>
+
+    <resultMap id="boardVOResultMap" type="BoardVO">
+        <id property="bno" column="bno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regdate" column="regdate"/>
+        <result property="viewcnt" column="viewcnt"/>
+        <result property="replycnt" column="replycnt"/>
+        <result property="attachcnt" column="attachcnt"/>
+        <association property="userVO" resultMap="userVOResultMap"/>
+    </resultMap>
+
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="uid" column="uid"/>
+        <result property="upw" column="upw"/>
+        <result property="uname" column="uname"/>
+        <result property="upoint" column="upoint"/>
+        <result property="sessionkey" column="sessionkey"/>
+        <result property="sessionlimit" column="sessionlimit"/>
+        <result property="uemail" column="uemail"/>
+        <result property="regdate" column="regdate"/>
+        <result property="logdate" column="logdate"/>
+        <result property="uimage" column="uimage"/>
+    </resultMap>
 
 </mapper>

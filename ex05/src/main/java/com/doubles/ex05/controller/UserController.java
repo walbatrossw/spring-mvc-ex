@@ -1,22 +1,28 @@
 package com.doubles.ex05.controller;
 
+import com.doubles.ex05.commons.utils.UploadFileUtils;
 import com.doubles.ex05.domain.LoginDTO;
 import com.doubles.ex05.domain.UserVO;
 import com.doubles.ex05.service.UserService;
+import org.apache.commons.fileupload.FileUploadException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 
 @Controller
@@ -25,6 +31,9 @@ public class UserController {
 
     @Inject
     private UserService userService;
+
+    @Resource(name = "uimagePath")
+    private String uimagePath;
 
     // 회원가입 페이지
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -43,6 +52,29 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+    // 회원 프로파일 이미지 수정처리
+    @RequestMapping(value = "/modify/image", method = RequestMethod.POST)
+    public String userImgModify(String uid,
+                                MultipartFile file,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) throws Exception {
+        if (file == null) {
+            redirectAttributes.addFlashAttribute("msg", "FAIL");
+            return "redirect:/user/profile";
+        }
+        String uploadFile = UploadFileUtils.uploadFile(uimagePath, file.getOriginalFilename(), file.getBytes());
+        String front = uploadFile.substring(0, 12);
+        String end = uploadFile.substring(14);
+        String uimage = front + end;
+        userService.modifyUimage(uid, uimage);
+        Object userObj = session.getAttribute("login");
+        UserVO userVO = (UserVO) userObj;
+        userVO.setUimage(uimage);
+        session.setAttribute("login", userVO);
+        redirectAttributes.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/user/profile";
+    }
+
     // 회원정보 수정처리
     @RequestMapping(value = "/modify/info", method = RequestMethod.POST)
     public String userInfoModify(UserVO userVO, HttpSession session,
@@ -55,6 +87,7 @@ public class UserController {
         userService.modifyUser(userVO);
         userVO.setRegdate(oldUserInfo.getRegdate());
         userVO.setLogdate(oldUserInfo.getLogdate());
+        userVO.setUimage(oldUserInfo.getUimage());
         session.setAttribute("login", userVO);
         redirectAttributes.addFlashAttribute("msg", "SUCCESS");
         return "redirect:/user/profile";

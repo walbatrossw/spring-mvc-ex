@@ -42,6 +42,15 @@ public class UserDAOImpl implements UserDAO {
         sqlSession.update(NAMESPACE + ".updatePw", userVO);
     }
 
+    // 회원 프로필 사진 수정
+    @Override
+    public void updateUimage(String uid, String uimage) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("uid", uid);
+        paramMap.put("uimage", uimage);
+        sqlSession.update(NAMESPACE + ".updateUimage", paramMap);
+    }
+
     // 로그인 처리
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {

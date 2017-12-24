@@ -36,10 +36,14 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
-                                 src="/dist/img/default-user-image.jpg" alt="User profile picture">
+                                 src="${path}/dist/img/profile/${login.uimage}" alt="User profile picture">
 
                             <h3 class="profile-username text-center">${login.uname}</h3>
-
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userPhotoModal">
+                                    <i class="fa fa-photo"> 프로필사진 수정</i>
+                                </a>
+                            </div>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <b>아이디</b> <a class="pull-right">${login.uid}</a>
@@ -62,14 +66,14 @@
                             </ul>
                         </div>
                         <div class="box-footer text-center">
-                            <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userPhotoModal">
-                                <i class="fa fa-photo"> 프로필사진 수정</i>
-                            </a>
                             <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userInfoModal">
                                 <i class="fa fa-info-circle"> 회원정보 수정</i>
                             </a>
                             <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userPwModal">
                                 <i class="fa fa-question-circle"> 비밀번호 수정</i>
+                            </a>
+                            <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#userOutModal">
+                                <i class="fa fa-user-times"> 회원 탈퇴</i>
                             </a>
                         </div>
                     </div>
@@ -111,14 +115,30 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">프로필 사진 수정</h4>
+                        <h4 class="modal-title">프로필 사진을 수정하시겠습니까?</h4>
                     </div>
-                    <div class="modal-body" data-rno>
-                        회원 프로필 사진 수정
+                    <div class="modal-body" align="center">
+                        <form action="${path}/user/modify/image" id="userImageForm" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="uid" value="${login.uid}">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 210px;">
+                                    <img src="${path}/dist/img/profile${login.uimage}" >
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;"></div>
+                                <div>
+                                <span class="btn btn-default btn-file">
+                                    <span class="fileinput-new">이미지 선택</span>
+                                    <span class="fileinput-exists">변경</span>
+                                    <input type="file" name="file" id="file">
+                                </span>
+                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary myInfoModModalBtn">수정</button>
+                        <button type="button" class="btn btn-primary imgModBtn">수정 저장</button>
                     </div>
                 </div>
             </div>
@@ -130,7 +150,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">회원정보 수정</h4>
+                        <h4 class="modal-title">회원정보를 수정하시겠습니까?</h4>
                     </div>
                     <div class="modal-body" data-rno>
                         <form action="${path}/user/modify/info" id="userInfoForm" method="post">
@@ -158,7 +178,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary infoModBtn">수정</button>
+                        <button type="button" class="btn btn-primary infoModBtn">수정 저장</button>
                     </div>
                 </div>
             </div>
@@ -170,7 +190,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">비밀번호 수정</h4>
+                        <h4 class="modal-title">비밀번호를 수정하시겠습니까?</h4>
                     </div>
                     <div class="modal-body" data-rno>
                         <form action="${path}/user/modify/pw" id="userPwForm" method="post">
@@ -194,7 +214,26 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary pwModBtn">수정</button>
+                        <button type="button" class="btn btn-primary pwModBtn">수정 저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="userOutModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">회원을 탈퇴하시겠습니까?</h4>
+                    </div>
+                    <div class="modal-body" data-rno>
+                        모든정보를 삭제합니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">아니요.</button>
+                        <button type="button" class="btn btn-primary myInfoModModalBtn">예 탈퇴하겠습니다.</button>
                     </div>
                 </div>
             </div>
@@ -212,18 +251,32 @@
 
         if (msg == "FAILURE") {
             alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요");
+        } else if (msg == "FAIL") {
+            alert("이미지가 존재하지 않습니다.");
         } else if (msg == "SUCCESS") {
             alert("수정되었습니다.");
         }
 
+        // 회원정보 수정
         $(".infoModBtn").on("click", function () {
             $("#userInfoForm").submit();
         });
 
+        // 회원비밀번호 수정
         $(".pwModBtn").on("click", function () {
-
             $("#userPwForm").submit();
         });
+
+        // 회원 프로필 이미지 수정
+        $(".imgModBtn").on("click", function () {
+            var file = $("#file").val();
+            if (file == "") {
+                alert("파일을 선택해주세요.");
+                return;
+            }
+            $("#userImageForm").submit();
+        });
+
 
     });
 </script>

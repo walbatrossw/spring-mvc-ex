@@ -44,15 +44,17 @@
         WHERE uid = #{uid}
     </update>
 
+    <!--회원 프로필 이미지 변경-->
+    <update id="updateUimage">
+        UPDATE tbl_user
+        SET
+            uimage = #{uimage}
+        WHERE uid = #{uid}
+    </update>
+
     <!--로그인 처리-->
     <select id="login" resultType="UserVO">
-        SELECT
-            uid
-            , upw
-            , uname
-            , uemail
-            , regdate
-            , logdate
+        SELECT *
         FROM tbl_user
         WHERE
             uid = #{uid}

@@ -41,9 +41,15 @@
         <beans:property name="maxUploadSize" value="10485760"/>
     </beans:bean>
 
-    <!--서버 파일 저장 경로 설정-->
+    <!--게시글 첨부 파일 저장 경로 설정-->
     <beans:bean id="uploadPath" class="java.lang.String">
         <beans:constructor-arg value="D:\\workspace\\intellij\\spring-mvc-ex\\ex05\\src\\main\\webapp\\resources\\dist\\img\\upload_files">
+        </beans:constructor-arg>
+    </beans:bean>
+
+    <!--프로필 이미지 파일 저장 경로 설정-->
+    <beans:bean id="uimagePath" class="java.lang.String">
+        <beans:constructor-arg value="D:\\workspace\\intellij\\spring-mvc-ex\\ex05\\src\\main\\webapp\\resources\\dist\\img\\profile">
         </beans:constructor-arg>
     </beans:bean>
 

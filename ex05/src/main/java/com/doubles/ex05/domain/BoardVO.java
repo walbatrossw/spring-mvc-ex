@@ -13,6 +13,8 @@ public class BoardVO {
     private String content;
     // 작성자
     private String writer;
+    // 작성자 정보
+    private UserVO userVO;
     // 작성일자
     private Date regdate;
     // 조회수
@@ -54,6 +56,14 @@ public class BoardVO {
 
     public void setWriter(String writer) {
         this.writer = writer;
+    }
+
+    public UserVO getUserVO() {
+        return userVO;
+    }
+
+    public void setUserVO(UserVO userVO) {
+        this.userVO = userVO;
     }
 
     public Date getRegdate() {
@@ -103,6 +113,7 @@ public class BoardVO {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
+                ", userVO=" + userVO +
                 ", regdate=" + regdate +
                 ", viewcnt=" + viewcnt +
                 ", replycnt=" + replycnt +
