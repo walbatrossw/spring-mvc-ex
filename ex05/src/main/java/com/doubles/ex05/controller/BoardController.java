@@ -1,10 +1,9 @@
 package com.doubles.ex05.controller;
 
-import com.doubles.ex05.domain.BoardVO;
-import com.doubles.ex05.domain.Criteria;
-import com.doubles.ex05.domain.PageMaker;
-import com.doubles.ex05.domain.SearchCriteria;
+import com.doubles.ex05.domain.*;
 import com.doubles.ex05.service.BoardService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -130,5 +129,22 @@ public class BoardController {
 
         return "board/list";
     }
+
+    // 게시글 추천하기
+    @ResponseBody
+    @RequestMapping(value = "/like/{bno}/{uid}", method = RequestMethod.POST)
+    public ResponseEntity<String> createLike(@RequestBody BoardLikeVO boardLikeVO) {
+        ResponseEntity<String> entity = null;
+        try {
+            boardService.createLike(boardLikeVO);
+            entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+        } catch (Exception e) {
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    // 게시글 추천수
+
 
 }

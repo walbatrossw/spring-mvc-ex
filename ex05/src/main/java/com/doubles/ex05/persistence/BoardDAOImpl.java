@@ -1,5 +1,6 @@
 package com.doubles.ex05.persistence;
 
+import com.doubles.ex05.domain.BoardLikeVO;
 import com.doubles.ex05.domain.BoardVO;
 import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.SearchCriteria;
@@ -89,4 +90,9 @@ public class BoardDAOImpl implements BoardDAO {
         sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
     }
 
+    // 게시글 추천하기
+    @Override
+    public void createLike(BoardLikeVO boardLikeVO) throws Exception {
+        sqlSession.insert(NAMESPACE + ".createLike", boardLikeVO);
+    }
 }

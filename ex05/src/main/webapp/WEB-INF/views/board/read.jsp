@@ -46,7 +46,7 @@
                         <ul class="list-inline pull-right">
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-share margin-r-5"></i>공유</a></li>
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-bookmark-o margin-r-5"></i>북마크</a></li>
-                            <li><a href="#" class="link-black text-lg"><i class="fa fa-thumbs-o-up margin-r-5"></i>추천 (0)</a></li>
+                            <li><a href="#" class="link-black text-lg boardLike"><i class="fa fa-thumbs-o-up margin-r-5"></i>추천 (0)</a></li>
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-eye margin-r-5"></i>조회수 (${boardVO.viewcnt})</a></li>
                         </ul>
                     </div>
@@ -279,6 +279,43 @@
 
         // 전역변수
         var bno = ${boardVO.bno}; // 현재 게시글 번호
+
+        /*================================================게시글 추천 관련==================================*/
+
+        $(".boardLike").on("click", function () {
+            var that = $(this);
+            var uid = "${login.uid}";
+            if (uid == "") {
+                alert("로그인 후에 추천할 수 있습니다.");
+                location.href = "/user/login";
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/board/like",
+                headers: {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "POST"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                    bno:bno,
+                    uid:uid
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result == "SUCCESS") {
+                        alert("게시글이 추천되었습니다.");
+                        that.find("i").attr("class", "fa fa-thumbs-up margin-r-5");
+                    }
+                }
+            });
+
+        });
+
+        $.getJSON("/board/likes" + bno, function (result) {
+
+        });
 
         /*================================================게시판 첨부파일 업로드 목록 관련==================================*/
         var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 template

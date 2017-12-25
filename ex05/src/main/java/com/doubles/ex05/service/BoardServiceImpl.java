@@ -1,9 +1,6 @@
 package com.doubles.ex05.service;
 
-import com.doubles.ex05.domain.BoardVO;
-import com.doubles.ex05.domain.Criteria;
-import com.doubles.ex05.domain.ReplyVO;
-import com.doubles.ex05.domain.SearchCriteria;
+import com.doubles.ex05.domain.*;
 import com.doubles.ex05.persistence.BoardDAO;
 import com.doubles.ex05.persistence.ReplyDAO;
 import com.doubles.ex05.persistence.UploadDAO;
@@ -119,5 +116,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int searchedListCount(SearchCriteria criteria) throws Exception {
         return boardDAO.countSearchedList(criteria);
+    }
+
+    // 게시글 추천하기
+    @Override
+    public void createLike(BoardLikeVO boardLikeVO) throws Exception {
+        boardDAO.createLike(boardLikeVO);
     }
 }

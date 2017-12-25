@@ -1,5 +1,6 @@
 package com.doubles.ex05.service;
 
+import com.doubles.ex05.domain.BoardLikeVO;
 import com.doubles.ex05.domain.BoardVO;
 import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.SearchCriteria;
@@ -35,4 +36,7 @@ public interface BoardService {
 
     // 게시글 전체 갯수
     public int searchedListCount(SearchCriteria criteria) throws Exception;
+
+    // 게시글 추천하기
+    public void createLike(BoardLikeVO boardLikeVO) throws Exception;
 }

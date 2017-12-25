@@ -1,5 +1,6 @@
 package com.doubles.ex05.persistence;
 
+import com.doubles.ex05.domain.BoardLikeVO;
 import com.doubles.ex05.domain.BoardVO;
 import com.doubles.ex05.domain.Criteria;
 import com.doubles.ex05.domain.SearchCriteria;
@@ -40,5 +41,8 @@ public interface BoardDAO {
 
     // 게시글 댓글 갯수 갱신
     public void updateReplyCnt(Integer bno, int amount) throws Exception;
+
+    // 게시글 추천하기
+    public void createLike(BoardLikeVO boardLikeVO) throws Exception;
 
 }
