@@ -187,16 +187,6 @@
         WHERE bno = #{bno}
     </update>
 
-    <!--게시글 추천하기-->
-    <insert id="createLike">
-        INSERT INTO tbl_likes (
-            bno
-            , uid
-        ) VALUES (
-            #{bno}
-            , #{uid}
-        )
-    </insert>
 
     <resultMap id="boardVOResultMap" type="BoardVO">
         <id property="bno" column="bno"/>

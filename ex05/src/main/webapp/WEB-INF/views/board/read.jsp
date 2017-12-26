@@ -46,7 +46,7 @@
                         <ul class="list-inline pull-right">
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-share margin-r-5"></i>공유</a></li>
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-bookmark-o margin-r-5"></i>북마크</a></li>
-                            <li><a href="#" class="link-black text-lg boardLike"><i class="fa fa-thumbs-o-up margin-r-5"></i>추천 (0)</a></li>
+                            <li><a href="#" class="link-black text-lg boardLike"><i class='fa fa-thumbs-o-up margin-r-5'></i> 추천 <span class="boardLikeTotalCount"></span></a></li>
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-eye margin-r-5"></i>조회수 (${boardVO.viewcnt})</a></li>
                         </ul>
                     </div>
@@ -279,42 +279,66 @@
 
         // 전역변수
         var bno = ${boardVO.bno}; // 현재 게시글 번호
+        var uid = "${login.uid}";
 
         /*================================================게시글 추천 관련==================================*/
+        // 게시글 추천여부 확인
+        var checkBoardLike = function () {
+            $.getJSON("/like/check/" + bno + "/" + uid, function (result) {
+                console.log(result.likeCheck);
+                if (result.likeCheck) {
+                    $(".boardLike").find("i").attr("class", "fa fa-thumbs-up margin-r-5");
+                    return;
+                }
+                $(".boardLike").find("i").attr("class", "fa fa-thumbs-o-up margin-r-5");
+                return result.likeCheck;
+            });
+        };
 
+        var likeCheck = checkBoardLike();
+        console.log(likeCheck);
+
+        // 게시글 추천갯수
+        var getBoardLikeTotalCount  = function () {
+            $.getJSON("/like/count/" + bno, function (result) {
+                console.log(result);
+                $(".boardLikeTotalCount").html("(" +result.likeTotalCount + ")");
+            });
+        };
+
+        getBoardLikeTotalCount();
+
+        // 게시글 추천하기
         $(".boardLike").on("click", function () {
-            var that = $(this);
-            var uid = "${login.uid}";
             if (uid == "") {
                 alert("로그인 후에 추천할 수 있습니다.");
                 location.href = "/user/login";
                 return;
             }
-            $.ajax({
-                type: "post",
-                url: "/board/like",
-                headers: {
-                    "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "POST"
-                },
-                dataType: "text",
-                data: JSON.stringify({
-                    bno:bno,
-                    uid:uid
-                }),
-                success: function (result) {
-                    console.log("result : " + result);
-                    if (result == "SUCCESS") {
-                        alert("게시글이 추천되었습니다.");
-                        that.find("i").attr("class", "fa fa-thumbs-up margin-r-5");
+            if (!likeCheck) {
+                alert("이미 추천하셨습니다.");
+                return;
+            }
+            if (confirm("이 게시글을 추천하시겠습니까?")) {
+                var that = $(this);
+                $.ajax({
+                    type: "post",
+                    url: "/like/create/" + bno + "/" + uid,
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "X-HTTP-Method-Override" : "POST"
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("result : " + result);
+                        if (result == "BOARD LIKE CREATED") {
+                            alert("게시글이 추천되었습니다.");
+                            that.find("i").attr("class", "fa fa-thumbs-up margin-r-5");
+                            getBoardLikeTotalCount();
+                        }
                     }
-                }
-            });
-
-        });
-
-        $.getJSON("/board/likes" + bno, function (result) {
-
+                });
+            }
         });
 
         /*================================================게시판 첨부파일 업로드 목록 관련==================================*/

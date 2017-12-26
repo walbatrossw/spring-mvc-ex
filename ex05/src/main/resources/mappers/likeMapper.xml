@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex05.mapper.LikeMapper">
+
+    <!--게시글 추천 하기-->
+    <insert id="createBoardLike">
+        INSERT INTO tbl_board_likes (
+            bno
+            , uid
+        ) VALUES (
+            #{bno}
+            , #{uid}
+        )
+    </insert>
+
+    <!--게시글 추천 취소-->
+    <delete id="deleteBoardLike">
+        DELETE FROM tbl_board_likes
+        WHERE bno = #{bno}
+              AND uid = #{uid}
+    </delete>
+
+    <!--게시글 추천수-->
+    <select id="countBoardLikes" resultType="int">
+        SELECT COUNT(blno)
+        FROM tbl_board_likes
+        WHERE bno = #{bno}
+    </select>
+
+    <!--게시글 추천 여부 확인-->
+    <select id="checkBoardLike" resultType="boolean">
+        SELECT COUNT(blno)
+        FROM tbl_board_likes
+        WHERE bno = #{bno}
+              AND uid = #{uid}
+    </select>
+
+    <!--댓글 추천 하기-->
+    <insert id="createReplyLike">
+        INSERT INTO tbl_reply_likes (
+            bno
+            , rno
+            , uid
+        ) VALUES (
+            bno
+            , rno
+            , uid
+        )
+    </insert>
+
+    <!--댓글 추천 취소-->
+    <delete id="deleteReplyLike">
+        DELETE FROM tbl_reply_likes
+        WHERE rno = #{rno}
+              AND uid = #{uid}
+    </delete>
+
+    <!--댓글 추천수-->
+    <select id="countReplyLikes" resultType="int">
+        SELECT COUNT(rlno)
+        FROM tbl_reply_likes
+        WHERE rno = #{rno}
+    </select>
+
+    <!--댓글 추천 여부 확인-->
+    <select id="checkReplyLike" resultType="boolean">
+        SELECT rlno
+        FROM tbl_reply_likes
+        WHERE EXISTS
+        (SELECT rlno
+         FROM tbl_reply_likes
+         WHERE rno = #{rno}
+               AND uid = #{uid});
+    </select>
+
+</mapper>

@@ -44,4 +44,14 @@ public class BoardLikeVO {
     public void setLikedate(Date likedate) {
         this.likedate = likedate;
     }
+
+    @Override
+    public String toString() {
+        return "BoardLikeVO{" +
+                "blno=" + blno +
+                ", bno=" + bno +
+                ", uid='" + uid + '\'' +
+                ", likedate=" + likedate +
+                '}';
+    }
 }
