@@ -77,9 +77,9 @@ public class LikeController {
                                                               @PathVariable("uid") String uid) {
         ResponseEntity<Map<String, Object>> entity = null;
         try {
-            boolean likeCheck = likeService.checkBoardLike(bno, uid);
+            boolean checkBoardLike = likeService.checkBoardLike(bno, uid);
             Map<String, Object> map = new HashMap<>();
-            map.put("likeCheck", likeCheck);
+            map.put("checkBoardLike", checkBoardLike);
             entity = new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

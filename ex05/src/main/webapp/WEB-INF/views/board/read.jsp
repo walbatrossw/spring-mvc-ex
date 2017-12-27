@@ -44,10 +44,10 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">글제목 : ${boardVO.title}</h3>
                         <ul class="list-inline pull-right">
-                            <li><a href="#" class="link-black text-lg"><i class="fa fa-share margin-r-5"></i>공유</a></li>
-                            <li><a href="#" class="link-black text-lg"><i class="fa fa-bookmark-o margin-r-5"></i>북마크</a></li>
-                            <li><a href="#" class="link-black text-lg boardLike"><i class='fa fa-thumbs-o-up margin-r-5'></i> 추천 <span class="boardLikeTotalCount"></span></a></li>
-                            <li><a href="#" class="link-black text-lg"><i class="fa fa-eye margin-r-5"></i>조회수 (${boardVO.viewcnt})</a></li>
+                            <li><a href="#" class="link-black text-lg"><i class="fa fa-share"></i>공유</a></li>
+                            <li><a href="#" class="link-black text-lg"><i class="fa fa-bookmark-o"></i> 북마크</a></li>
+                            <li><a href="#" class="link-black text-lg boardLike"><i class="fa"></i> 추천 <span></span></a></li>
+                            <li><a href="#" class="link-black text-lg"><i class="fa fa-eye"></i>조회수 (${boardVO.viewcnt})</a></li>
                         </ul>
                     </div>
 
@@ -282,66 +282,87 @@
         var uid = "${login.uid}";
 
         /*================================================게시글 추천 관련==================================*/
+
+        var boardLike = $(".boardLike");
+
+        // 게시글 추천 개수
+        var totalCountBoardLike = function () {
+            $.getJSON("/like/count/" + bno, function (result) {
+               console.log(result.likeTotalCount);
+               boardLike.find("span").html("(" + result.likeTotalCount + ")");
+            });
+        };
+        totalCountBoardLike();
+
         // 게시글 추천여부 확인
         var checkBoardLike = function () {
+            boardLike.find("i").attr("class", "fa fa-thumbs-o-up");
             $.getJSON("/like/check/" + bno + "/" + uid, function (result) {
-                console.log(result.likeCheck);
-                if (result.likeCheck) {
-                    $(".boardLike").find("i").attr("class", "fa fa-thumbs-up margin-r-5");
-                    return;
+                var likeCheck = result.checkBoardLike;
+                if (likeCheck) {
+                    boardLike.find("i").attr("class", "fa fa-thumbs-up");
                 }
-                $(".boardLike").find("i").attr("class", "fa fa-thumbs-o-up margin-r-5");
-                return result.likeCheck;
             });
         };
+        checkBoardLike();
 
-        var likeCheck = checkBoardLike();
-        console.log(likeCheck);
-
-        // 게시글 추천갯수
-        var getBoardLikeTotalCount  = function () {
-            $.getJSON("/like/count/" + bno, function (result) {
-                console.log(result);
-                $(".boardLikeTotalCount").html("(" +result.likeTotalCount + ")");
-            });
-        };
-
-        getBoardLikeTotalCount();
-
-        // 게시글 추천하기
-        $(".boardLike").on("click", function () {
+        // 게시글 추천하기 or 취소하기
+        boardLike.on("click", function () {
             if (uid == "") {
                 alert("로그인 후에 추천할 수 있습니다.");
                 location.href = "/user/login";
                 return;
             }
-            if (!likeCheck) {
-                alert("이미 추천하셨습니다.");
+            // 추천여부 확인
+            var isBoardLike = boardLike.find("i").hasClass("fa-thumbs-o-up");
+            // 미추천일 경우
+            if (isBoardLike) {
+                if (confirm("추천하시겠습니까?")) {
+                    $.ajax({
+                        type: "post",
+                        url: "/like/create/" + bno + "/" + uid,
+                        headers: {
+                            "Content-Type" : "application/json",
+                            "X-HTTP-Method-Override" : "POST"
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            console.log("result : " + result);
+                            if (result == "BOARD LIKE CREATED") {
+                                alert("게시글이 추천되었습니다.");
+                                checkBoardLike();
+                                totalCountBoardLike();
+                            }
+                        }
+                    });
+                }
                 return;
             }
-            if (confirm("이 게시글을 추천하시겠습니까?")) {
-                var that = $(this);
+            // 추천했을 경우
+            if (confirm("추천을 취소하시겠습니까?")) {
                 $.ajax({
-                    type: "post",
-                    url: "/like/create/" + bno + "/" + uid,
+                    type: "delete",
+                    url: "/like/remove/" + bno + "/" + uid,
                     headers: {
                         "Content-Type" : "application/json",
-                        "X-HTTP-Method-Override" : "POST"
+                        "X-HTTP-Method-Override" : "DELETE"
                     },
                     dataType: "text",
                     success: function (result) {
                         console.log("result : " + result);
-                        if (result == "BOARD LIKE CREATED") {
-                            alert("게시글이 추천되었습니다.");
-                            that.find("i").attr("class", "fa fa-thumbs-up margin-r-5");
-                            getBoardLikeTotalCount();
+                        if (result == "BOARD LIKE REMOVED") {
+                            alert("게시글 추천이 취소되었습니다.");
+                            checkBoardLike();
+                            totalCountBoardLike();
                         }
                     }
                 });
             }
         });
 
+
         /*================================================게시판 첨부파일 업로드 목록 관련==================================*/
+
         var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 template
         var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());   // 일반파일 template
 
@@ -406,6 +427,7 @@
                 printPaging(data.pageMaker, $(".pagination"))
             });
         };
+
         // 1. 댓글 갯수 : 댓글 유무에 따라 댓글 보기버튼 활성/비활성
         var printReplyCount = function (totalCount) {
             var replyCount = $(".replyCount");
@@ -497,7 +519,6 @@
         // 댓글 수정을 위해 modal창에 선택한 댓글의 값들을 세팅
         $(".repliesDiv").on("click", ".replyDiv", function (event) {
             var reply = $(this);
-            console.log(reply);
             $(".rno").val(reply.attr("data-rno"));
             $("#replytext").val(reply.find(".oldReplytext").text());
         });
