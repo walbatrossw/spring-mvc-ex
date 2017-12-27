@@ -18,6 +18,8 @@ public class ReplyVO {
     private Date regdate;
     // 댓글 수정일자
     private Date updatedate;
+    // 댓글 추천수
+    private Integer rlnocount;
 
     public Integer getRno() {
         return rno;
@@ -75,6 +77,14 @@ public class ReplyVO {
         this.updatedate = updatedate;
     }
 
+    public Integer getRlnocount() {
+        return rlnocount;
+    }
+
+    public void setRlnocount(Integer rlnocount) {
+        this.rlnocount = rlnocount;
+    }
+
     @Override
     public String toString() {
         return "ReplyVO{" +
@@ -85,6 +95,7 @@ public class ReplyVO {
                 ", userVO=" + userVO +
                 ", regdate=" + regdate +
                 ", updatedate=" + updatedate +
+                ", rlnocount=" + rlnocount +
                 '}';
     }
 }

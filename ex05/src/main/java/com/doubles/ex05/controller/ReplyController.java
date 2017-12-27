@@ -43,6 +43,7 @@ public class ReplyController {
             criteria.setPage(page);
 
             List<ReplyVO> list = replyService.list(bno, criteria);
+            System.out.println(list+"=====================================================================");
             int totalCount = replyService.count(bno);
 
             PageMaker pageMaker = new PageMaker();

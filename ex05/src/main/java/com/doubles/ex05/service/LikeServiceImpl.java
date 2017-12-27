@@ -35,21 +35,21 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void createReplyLike(ReplyLikeVO replyLikeVO) throws Exception {
-
+        likeDAO.createReplyLike(replyLikeVO);
     }
 
     @Override
     public void removeReplyLike(ReplyLikeVO replyLikeVO) throws Exception {
-
+        likeDAO.deleteReplyLike(replyLikeVO);
     }
 
     @Override
     public int countReplyLikes(Integer rno) throws Exception {
-        return 0;
+        return likeDAO.countReplyLikes(rno);
     }
 
     @Override
     public boolean checkReplyLike(Integer rno, String uid) throws Exception {
-        return false;
+        return likeDAO.checkReplyLike(rno, uid);
     }
 }

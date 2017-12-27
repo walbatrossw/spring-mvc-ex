@@ -54,7 +54,7 @@ public class LikeDAOImpl implements LikeDAO {
 
     @Override
     public int countReplyLikes(Integer rno) throws Exception {
-        return sqlSession.selectOne(".countReplyLikes", rno);
+        return sqlSession.selectOne(NAMESPACE + ".countReplyLikes", rno);
     }
 
     @Override

@@ -264,8 +264,8 @@
         <%--댓글 추천 버튼--%>
         <ul class="list-inline">
             <li>
-                <a href="#" class="link-black text-sm">
-                    <i class="fa fa-thumbs-o-up margin-r-5"></i> 댓글 추천(0)
+                <a href="#" class="link-black text-sm replyLike">
+                    <i class="fa fa-thumbs-o-up"></i> 추천<span>({{rlnocount}})</span>
                 </a>
             </li>
         </ul>
@@ -274,7 +274,7 @@
 </script>
 
 <script>
-    
+
     $(document).ready(function () {
 
         // 전역변수
@@ -285,7 +285,7 @@
 
         var boardLike = $(".boardLike");
 
-        // 게시글 추천 개수
+        // 게시글 추천수
         var totalCountBoardLike = function () {
             $.getJSON("/like/count/" + bno, function (result) {
                console.log(result.likeTotalCount);
@@ -361,6 +361,87 @@
         });
 
 
+        /*================================================댓글 추천 관련==================================*/
+
+        // 댓글 추천여부 확인
+        var checkReplyLike = function (rno, replyLike) {
+            replyLike.find("i").attr("class", "fa fa-thumbs-o-up");
+            $.getJSON("/like/check/" + bno + "/" + uid + "/" + rno, function (result) {
+                var likeCheck = result.checkReplyLike;
+                console.log(likeCheck);
+                if (likeCheck) {
+                    replyLike.find("i").attr("class", "fa fa-thumbs-up");
+                }
+            });
+        };
+
+        // 댓글 추천하기
+        $(".repliesDiv").on("click", ".replyLike", function (event) {
+            event.preventDefault();
+            var replyLike = $(this);
+            var rno = replyLike.closest(".replyDiv").attr("data-rno");
+            var isReplyLike = replyLike.find("i").hasClass("fa-thumbs-o-up");
+            if (uid == "") {
+                alert("로그인 후에 추천할 수 있습니다.");
+                location.href = "/user/login";
+                return;
+            }
+            if (isReplyLike) {
+                if (confirm("댓글을 추천하시겠습니까?")) {
+                    $.ajax({
+                        type: "post",
+                        url: "/like/create/" + bno + "/" + uid + "/"+ rno,
+                        headers: {
+                            "Content-Type" : "application/json",
+                            "X-HTTP-Method-Override" : "POST"
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == "REPLY LIKE CREATED") {
+                                alert("댓글이 추천되었습니다.");
+                                checkReplyLike(rno, replyLike);
+                                totalCountReplyLike(rno, replyLike);
+                            }
+                        }
+                    });
+                }
+                return;
+            }
+            if (confirm("댓글추천을 취소하시겠습니까?")) {
+                $.ajax({
+                    type: "delete",
+                    url: "/like/delete/" + bno + "/" + uid + "/"+ rno,
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "X-HTTP-Method-Override" : "DELETE"
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        if (result == "REPLY LIKE DELETED") {
+                            alert("댓글추천이 취소되었습니다.");
+                            checkReplyLike(rno, replyLike);
+                            totalCountReplyLike(rno, replyLike);
+                        }
+                    }
+                });
+            }
+        });
+
+        // 댓글 추천수 갱신
+        var totalCountReplyLike = function (rno, replyLike) {
+            console.log(rno);
+            console.log(replyLike);
+            $.getJSON("/like/count/" + bno + "/" + rno, function (result) {
+                console.log(result.replyLikeTotalCount);
+                replyLike.find("span").html("(" + result.replyLikeTotalCount + ")");
+            });
+        };
+
+
+        // 댓글 추천 여부
+
+        // 댓글 추천취소
+
         /*================================================게시판 첨부파일 업로드 목록 관련==================================*/
 
         var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 template
@@ -424,7 +505,13 @@
                 // 2. 댓글 목록
                 printReplyList(data.list, $(".repliesDiv"), $("#replyTemplate"));
                 // 3. 댓글 페이징
-                printPaging(data.pageMaker, $(".pagination"))
+                printPaging(data.pageMaker, $(".pagination"));
+                // 4. 댓글 추천여부 확인
+                $(".replyDiv").each(function () {
+                    var replyLike = $(this).find(".replyLike");
+                    var rno = $(this).attr("data-rno");
+                    checkReplyLike(rno, replyLike);
+                })
             });
         };
 
@@ -581,6 +668,7 @@
             return accum;
         });
 
+
         /*================================================게시판 페이지 이동관련===========================================*/
 
         // 페이지 이동 form 선택자
@@ -613,9 +701,7 @@
         if (result == "UPDATED") {
             alert("게시글이 수정되었습니다.");
         }
-
     });
-    
 </script>
 </body>
 </html>

@@ -45,9 +45,9 @@
             , rno
             , uid
         ) VALUES (
-            bno
-            , rno
-            , uid
+            #{bno}
+            , #{rno}
+            , #{uid}
         )
     </insert>
 
@@ -67,13 +67,10 @@
 
     <!--댓글 추천 여부 확인-->
     <select id="checkReplyLike" resultType="boolean">
-        SELECT rlno
+        SELECT COUNT(rlno)
         FROM tbl_reply_likes
-        WHERE EXISTS
-        (SELECT rlno
-         FROM tbl_reply_likes
-         WHERE rno = #{rno}
-               AND uid = #{uid});
+        WHERE rno = #{rno}
+              AND uid = #{uid}
     </select>
 
 </mapper>

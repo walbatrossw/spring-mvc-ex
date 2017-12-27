@@ -32,6 +32,7 @@
             , r.regdate
             , r.updatedate
             , u.uimage
+            , (SELECT COUNT(rlno) FROM tbl_reply_likes WHERE rno = r.rno) as rlnocount
         FROM tbl_reply r
             LEFT OUTER JOIN tbl_user u
                 ON u.uid = r.replyer
@@ -90,6 +91,7 @@
         <result property="replyer" column="replyer"/>
         <result property="regdate" column="regdate"/>
         <result property="updatedate" column="updatedate"/>
+        <result property="rlnocount" column="rlnocount"/>
         <association property="userVO" resultMap="userVOResultMap"/>
     </resultMap>
     
