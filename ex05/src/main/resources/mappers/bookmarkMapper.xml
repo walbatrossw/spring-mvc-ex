@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.ex05.mapper.BookmarkMapper">
+
+    <!--북마크 등록-->
+    <insert id="create">
+        INSERT tbl_bookmark (
+            bno
+            , uid
+        ) VALUES (
+            #{bno}
+            , #{uid}
+        )
+    </insert>
+
+    <!--북마크 목록-->
+    <select id="list">
+        SELECT
+            *
+        FROM tbl_bookmark
+        WHERE uid = #{uid}
+    </select>
+
+    <!--북마크 확인-->
+    <select id="checkBookmark">
+        SELECT
+            COUNT(bmno)
+        FROM tbl_bookmark
+        WHERE uid = #{uid}
+              AND bno = #{bno}
+    </select>
+
+    <!--북마크 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_bookmark
+        WHERE bno = #{bno}
+              AND uid = #{uid}
+    </delete>
+
+</mapper>

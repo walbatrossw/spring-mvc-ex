@@ -130,21 +130,4 @@ public class BoardController {
         return "board/list";
     }
 
-    // 게시글 추천하기
-    @ResponseBody
-    @RequestMapping(value = "/like/{bno}/{uid}", method = RequestMethod.POST)
-    public ResponseEntity<String> createLike(@RequestBody BoardLikeVO boardLikeVO) {
-        ResponseEntity<String> entity = null;
-        try {
-            boardService.createLike(boardLikeVO);
-            entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-        } catch (Exception e) {
-            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return entity;
-    }
-
-    // 게시글 추천수
-
-
 }
