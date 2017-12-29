@@ -27,4 +27,7 @@ public interface ReplyDAO {
 
     // 특정 댓글의 게시글 번호
     public int getBno(Integer rno) throws Exception;
+
+    // 회원이 작성한 댓글 목록
+    public List<ReplyVO> userReplies(String uid) throws Exception;
 }

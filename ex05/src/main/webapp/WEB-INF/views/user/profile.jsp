@@ -88,13 +88,60 @@
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="myPosts">
-                                나의 게시물 리스트
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <th style="width: 20px">번호</th>
+                                        <th>제목</th>
+                                        <th style="width: 150px">작성시간</th>
+                                    </tr>
+                                    <c:forEach var="boardVO" varStatus="i" items="${userBoardList}">
+                                    <tr>
+                                        <td>${i.index + 1}</td>
+                                        <td>${boardVO.title}</td>
+                                        <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${boardVO.regdate}"/></td>
+                                    </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="tab-pane" id="myReplies">
-                                나의 댓글 리스트
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <th style="width: 10px">번호</th>
+                                        <th>게시글 제목</th>
+                                        <th>내용</th>
+                                        <th style="width: 150px">작성시간</th>
+                                    </tr>
+                                    <c:forEach var="userReply" varStatus="i" items="${userReplies}">
+                                        <tr>
+                                            <td>${i.index + 1}</td>
+                                            <td>${userReply.boardVO.title}</td>
+                                            <td>${userReply.replytext}</td>
+                                            <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${userReply.regdate}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="tab-pane" id="myBookmarks">
-                                나의 스크랩 리스트
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 10px">번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                        </tr>
+                                        <c:forEach var="bookmark" varStatus="i" items="${bookmarkList}">
+                                        <tr>
+                                            <td>${i.index + 1}</td>
+                                            <td>${bookmark.boardVO.title}</td>
+                                            <td>${bookmark.boardVO.writer}</td>
+                                        </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -241,12 +288,10 @@
 
 </div>
 <%-- ./wrapper --%>
-
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
-
         var msg = "${msg}";
 
         if (msg == "FAILURE") {

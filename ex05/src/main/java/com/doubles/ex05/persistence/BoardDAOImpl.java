@@ -90,9 +90,9 @@ public class BoardDAOImpl implements BoardDAO {
         sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
     }
 
-    // 게시글 추천하기
+    // 회원이 작성한 게시글 목록
     @Override
-    public void createLike(BoardLikeVO boardLikeVO) throws Exception {
-        sqlSession.insert(NAMESPACE + ".createLike", boardLikeVO);
+    public List<BoardVO> userBoardList(String uid) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".userBoardList", uid);
     }
 }

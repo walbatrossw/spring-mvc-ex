@@ -84,6 +84,18 @@
         WHERE rno = #{rno}
     </select>
 
+    <!--회원이 작성한 댓글 목록-->
+    <select id="userReplies" resultMap="replyVOResultMap">
+        SELECT
+            r.replytext
+            , r.regdate
+            , b.title
+        FROM tbl_reply r
+            LEFT OUTER JOIN tbl_board b
+                ON b.bno = r.bno
+        WHERE replyer = #{uid}
+    </select>
+
     <resultMap id="replyVOResultMap" type="ReplyVO">
         <id property="rno" column="rno"/>
         <result property="bno" column="bno"/>
@@ -93,8 +105,21 @@
         <result property="updatedate" column="updatedate"/>
         <result property="rlnocount" column="rlnocount"/>
         <association property="userVO" resultMap="userVOResultMap"/>
+        <association property="boardVO" resultMap="boardVOResultMap"/>
     </resultMap>
-    
+
+    <resultMap id="boardVOResultMap" type="BoardVO">
+        <id property="bno" column="bno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regdate" column="regdate"/>
+        <result property="viewcnt" column="viewcnt"/>
+        <result property="replycnt" column="replycnt"/>
+        <result property="attachcnt" column="attachcnt"/>
+        <association property="userVO" resultMap="userVOResultMap"/>
+    </resultMap>
+
     <resultMap id="userVOResultMap" type="UserVO">
         <id property="uid" column="uid"/>
         <result property="upw" column="upw"/>

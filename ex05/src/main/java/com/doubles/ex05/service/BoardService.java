@@ -37,6 +37,6 @@ public interface BoardService {
     // 게시글 전체 갯수
     public int searchedListCount(SearchCriteria criteria) throws Exception;
 
-    // 게시글 추천하기
-    public void createLike(BoardLikeVO boardLikeVO) throws Exception;
+    // 회원이 작성한 게시글 목록
+    public List<BoardVO> userBoardList(String uid) throws Exception;
 }

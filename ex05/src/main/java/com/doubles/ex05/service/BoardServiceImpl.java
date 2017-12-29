@@ -118,9 +118,9 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.countSearchedList(criteria);
     }
 
-    // 게시글 추천하기
+    // 회원이 작성한 게시글 목록
     @Override
-    public void createLike(BoardLikeVO boardLikeVO) throws Exception {
-        boardDAO.createLike(boardLikeVO);
+    public List<BoardVO> userBoardList(String uid) throws Exception {
+        return boardDAO.userBoardList(uid);
     }
 }

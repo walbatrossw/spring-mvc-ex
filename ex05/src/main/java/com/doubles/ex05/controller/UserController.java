@@ -1,8 +1,10 @@
 package com.doubles.ex05.controller;
 
 import com.doubles.ex05.commons.utils.UploadFileUtils;
-import com.doubles.ex05.domain.LoginDTO;
-import com.doubles.ex05.domain.UserVO;
+import com.doubles.ex05.domain.*;
+import com.doubles.ex05.service.BoardService;
+import com.doubles.ex05.service.BookmarkService;
+import com.doubles.ex05.service.ReplyService;
 import com.doubles.ex05.service.UserService;
 import org.apache.commons.fileupload.FileUploadException;
 import org.mindrot.jbcrypt.BCrypt;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -31,6 +34,16 @@ public class UserController {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private BoardService boardService;
+
+    @Inject
+    private ReplyService replyService;
+
+    @Inject
+    private BookmarkService bookmarkService;
+
 
     @Resource(name = "uimagePath")
     private String uimagePath;
@@ -52,7 +65,7 @@ public class UserController {
         return "redirect:/user/login";
     }
 
-    // 회원 프로파일 이미지 수정처리
+    // 회원 프로필 이미지 수정처리
     @RequestMapping(value = "/modify/image", method = RequestMethod.POST)
     public String userImgModify(String uid,
                                 MultipartFile file,
@@ -174,7 +187,18 @@ public class UserController {
 
     // 회원 정보 페이지
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile() {
+    public String profile(HttpSession session, Model model) throws Exception {
+
+        Object userObj = session.getAttribute("login");
+        UserVO userVO = (UserVO) userObj;
+        String uid = userVO.getUid();
+        List<BoardVO> userBoardList = boardService.userBoardList(uid);
+        List<ReplyVO> userReplies = replyService.userReplies(uid);
+        List<BookmarkVO> bookmarkList = bookmarkService.list(uid);
+
+        model.addAttribute("userBoardList", userBoardList);
+        model.addAttribute("userReplies", userReplies);
+        model.addAttribute("bookmarkList", bookmarkList);
 
         return "user/profile";
     }

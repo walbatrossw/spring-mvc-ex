@@ -17,11 +17,18 @@
     </insert>
 
     <!--북마크 목록-->
-    <select id="list">
+    <select id="list" resultMap="bookmarkVOResultMap">
         SELECT
-            *
-        FROM tbl_bookmark
+            bm.bmno
+            , bm.bno
+            , bm.uid
+            , b.title
+            , b.writer
+        FROM tbl_bookmark bm
+            LEFT OUTER JOIN tbl_board b
+                ON b.bno = bm.bno
         WHERE uid = #{uid}
+        ORDER BY bm.regdate desc
     </select>
 
     <!--북마크 확인-->
@@ -40,4 +47,22 @@
               AND uid = #{uid}
     </delete>
 
+    <resultMap id="bookmarkVOResultMap" type="BookmarkVO">
+        <id property="bmno" column="bmno"/>
+        <result property="bno" column="bno"/>
+        <result property="uid" column="uid"/>
+        <result property="regdate" column="regdate"/>
+        <association property="boardVO" resultMap="boardVOResultMap"/>
+    </resultMap>
+
+    <resultMap id="boardVOResultMap" type="BoardVO">
+        <id property="bno" column="bno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regdate" column="regdate"/>
+        <result property="viewcnt" column="viewcnt"/>
+        <result property="replycnt" column="replycnt"/>
+        <result property="attachcnt" column="attachcnt"/>
+    </resultMap>
 </mapper>

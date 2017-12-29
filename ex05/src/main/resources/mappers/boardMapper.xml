@@ -187,6 +187,14 @@
         WHERE bno = #{bno}
     </update>
 
+    <!--회원이 작성한 게시글 목록-->
+    <select id="userBoardList" resultType="BoardVO">
+        SELECT
+            *
+        FROM tbl_board
+        WHERE writer = #{uid}
+        ORDER BY bno DESC, regdate DESC
+    </select>
 
     <resultMap id="boardVOResultMap" type="BoardVO">
         <id property="bno" column="bno"/>

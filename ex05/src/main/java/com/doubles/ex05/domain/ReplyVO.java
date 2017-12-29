@@ -20,6 +20,8 @@ public class ReplyVO {
     private Date updatedate;
     // 댓글 추천수
     private Integer rlnocount;
+    // 게시글
+    private BoardVO boardVO;
 
     public Integer getRno() {
         return rno;
@@ -85,6 +87,14 @@ public class ReplyVO {
         this.rlnocount = rlnocount;
     }
 
+    public BoardVO getBoardVO() {
+        return boardVO;
+    }
+
+    public void setBoardVO(BoardVO boardVO) {
+        this.boardVO = boardVO;
+    }
+
     @Override
     public String toString() {
         return "ReplyVO{" +
@@ -96,6 +106,7 @@ public class ReplyVO {
                 ", regdate=" + regdate +
                 ", updatedate=" + updatedate +
                 ", rlnocount=" + rlnocount +
+                ", boardVO=" + boardVO +
                 '}';
     }
 }

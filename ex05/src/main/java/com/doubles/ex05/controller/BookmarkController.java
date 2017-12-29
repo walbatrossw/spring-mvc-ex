@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 @RestController
@@ -27,22 +27,6 @@ public class BookmarkController {
             entity = new ResponseEntity<>("BOOKMARK INSERTED", HttpStatus.OK);
         } catch (Exception e) {
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return entity;
-    }
-
-    // 북마크 목록
-    @RequestMapping(value = "/list/{uid}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> list(@PathVariable("uid") String uid) {
-        ResponseEntity<Map<String, Object>> entity = null;
-        try {
-            List<BookmarkVO> bookmarkList = bookmarkService.list(uid);
-            Map<String, Object> map = new HashMap<>();
-            map.put("bookmarkList", bookmarkList);
-            entity = new ResponseEntity<>(map, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return entity;
     }

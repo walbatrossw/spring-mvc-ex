@@ -59,4 +59,10 @@ public class ReplyServiceImpl implements ReplyService {
         replyDAO.delete(rno);
         boardDAO.updateReplyCnt(bno, -1);
     }
+
+    // 회원이 작성한 댓글 목록
+    @Override
+    public List<ReplyVO> userReplies(String uid) throws Exception {
+        return replyDAO.userReplies(uid);
+    }
 }
