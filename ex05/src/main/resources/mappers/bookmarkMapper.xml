@@ -25,7 +25,7 @@
     </select>
 
     <!--북마크 확인-->
-    <select id="checkBookmark">
+    <select id="checkBookmark" resultType="boolean">
         SELECT
             COUNT(bmno)
         FROM tbl_bookmark

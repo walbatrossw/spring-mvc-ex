@@ -45,7 +45,7 @@
                         <h3 class="box-title">글제목 : ${boardVO.title}</h3>
                         <ul class="list-inline pull-right">
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-share"></i>공유</a></li>
-                            <li><a href="#" class="link-black text-lg"><i class="fa fa-bookmark-o"></i> 북마크</a></li>
+                            <li><a href="#" class="link-black text-lg boardBookmark"><i class="fa fa-bookmark-o"></i> 북마크</a></li>
                             <li><a href="#" class="link-black text-lg boardLike"><i class="fa"></i> 추천 <span></span></a></li>
                             <li><a href="#" class="link-black text-lg"><i class="fa fa-eye"></i>조회수 (${boardVO.viewcnt})</a></li>
                         </ul>
@@ -281,6 +281,75 @@
         var bno = ${boardVO.bno}; // 현재 게시글 번호
         var uid = "${login.uid}";
 
+        /*================================================게시글 북마크 관련==================================*/
+        var boardBookmark = $(".boardBookmark");
+
+        // 게시글 북마크 여부확인
+        var checkBookmark = function () {
+            boardBookmark.find("i").attr("class", "fa fa-bookmark-o");
+            $.getJSON("/bookmark/check/" + bno + "/" + uid, function (result) {
+                var bookmarkCheck = result.isBookmarkCheck;
+                if (bookmarkCheck) {
+                    boardBookmark.find("i").attr("class", "fa fa-bookmark");
+                }
+            });
+        };
+        checkBookmark();
+
+        // 게시글 북마크 등록 or 취소
+        boardBookmark.on("click", function () {
+            if (uid == "") {
+                alert("로그인 후에 북마크 등록할 수 있습니다.");
+                location.href = "/user/login";
+                return;
+            }
+            var isBoardBookmark = boardBookmark.find("i").hasClass("fa-bookmark-o");
+            if (isBoardBookmark) {
+                if (confirm("북마크 등록하시겠습니까?")) {
+                    $.ajax({
+                        type: "post",
+                        url: "/bookmark/create/",
+                        headers: {
+                            "Content-Type" : "application/json",
+                            "X-HTTP-Method-Override" : "POST"
+                        },
+                        data: JSON.stringify({
+                            bno:bno,
+                            uid:uid
+                        }),
+                        dataType: "text",
+                        success: function (result) {
+                            console.log("result : " + result);
+                            if (result == "BOOKMARK INSERTED") {
+                                alert("북마크 등록되었습니다.");
+                                checkBookmark();
+                            }
+                        }
+                    });
+                }
+                return;
+            }
+            if (confirm("북마크를 취소하시겠습니까?")) {
+                $.ajax({
+                    type: "delete",
+                    url: "/bookmark/remove/" + bno + "/" + uid,
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "X-HTTP-Method-Override" : "DELETE"
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("result : " + result);
+                        if (result == "BOOKMARK DELETED") {
+                            alert("북마크가 취소되었습니다.");
+                            checkBookmark();
+                        }
+                    }
+                });
+            }
+        });
+
+
         /*================================================게시글 추천 관련==================================*/
 
         var boardLike = $(".boardLike");
@@ -436,11 +505,6 @@
                 replyLike.find("span").html("(" + result.replyLikeTotalCount + ")");
             });
         };
-
-
-        // 댓글 추천 여부
-
-        // 댓글 추천취소
 
         /*================================================게시판 첨부파일 업로드 목록 관련==================================*/
 
