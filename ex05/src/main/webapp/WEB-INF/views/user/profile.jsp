@@ -98,7 +98,16 @@
                                     <c:forEach var="boardVO" varStatus="i" items="${userBoardList}">
                                     <tr>
                                         <td>${i.index + 1}</td>
-                                        <td>${boardVO.title}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${fn:length(boardVO.title) > 30}">
+                                                    <c:out value="${fn:substring(boardVO.title, 0, 29)}"/>....
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="${boardVO.title}"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${boardVO.regdate}"/></td>
                                     </tr>
                                     </c:forEach>
@@ -110,15 +119,33 @@
                                     <tbody>
                                     <tr>
                                         <th style="width: 10px">번호</th>
-                                        <th>게시글 제목</th>
-                                        <th>내용</th>
+                                        <th style="width: 250px">게시글 제목</th>
+                                        <th style="width: 250px">내용</th>
                                         <th style="width: 150px">작성시간</th>
                                     </tr>
                                     <c:forEach var="userReply" varStatus="i" items="${userReplies}">
                                         <tr>
                                             <td>${i.index + 1}</td>
-                                            <td>${userReply.boardVO.title}</td>
-                                            <td>${userReply.replytext}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(userReply.boardVO.title) > 14}">
+                                                        <c:out value="${fn:substring(userReply.boardVO.title, 0, 13)}"/>....
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${userReply.boardVO.title}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(userReply.replytext) > 14}">
+                                                        <c:out value="${fn:substring(userReply.replytext, 0, 13)}"/>....
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${userReply.replytext}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${userReply.regdate}"/></td>
                                         </tr>
                                     </c:forEach>
@@ -136,7 +163,16 @@
                                         <c:forEach var="bookmark" varStatus="i" items="${bookmarkList}">
                                         <tr>
                                             <td>${i.index + 1}</td>
-                                            <td>${bookmark.boardVO.title}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(bookmark.boardVO.title) > 30}">
+                                                        <c:out value="${fn:substring(bookmark.boardVO.title, 0, 29)}"/>....
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${bookmark.boardVO.title}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${bookmark.boardVO.writer}</td>
                                         </tr>
                                         </c:forEach>
