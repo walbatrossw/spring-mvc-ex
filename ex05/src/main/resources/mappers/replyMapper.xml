@@ -90,6 +90,7 @@
             r.replytext
             , r.regdate
             , b.title
+            , b.bno
         FROM tbl_reply r
             LEFT OUTER JOIN tbl_board b
                 ON b.bno = r.bno

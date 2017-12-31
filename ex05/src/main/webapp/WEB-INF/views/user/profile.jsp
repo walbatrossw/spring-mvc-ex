@@ -99,14 +99,16 @@
                                     <tr>
                                         <td>${i.index + 1}</td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${fn:length(boardVO.title) > 30}">
-                                                    <c:out value="${fn:substring(boardVO.title, 0, 29)}"/>....
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:out value="${boardVO.title}"/>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <a href="${path}/board/read?bno=${boardVO.bno}">
+                                                <c:choose>
+                                                    <c:when test="${fn:length(boardVO.title) > 30}">
+                                                        <c:out value="${fn:substring(boardVO.title, 0, 29)}"/>....
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${boardVO.title}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a>
                                         </td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${boardVO.regdate}"/></td>
                                     </tr>
@@ -127,19 +129,21 @@
                                         <tr>
                                             <td>${i.index + 1}</td>
                                             <td>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(userReply.boardVO.title) > 14}">
-                                                        <c:out value="${fn:substring(userReply.boardVO.title, 0, 13)}"/>....
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:out value="${userReply.boardVO.title}"/>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <a href="${path}/board/read?bno=${userReply.boardVO.bno}">
+                                                    <c:choose>
+                                                        <c:when test="${fn:length(userReply.boardVO.title) > 10}">
+                                                            <c:out value="${fn:substring(userReply.boardVO.title, 0, 9)}"/>....
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:out value="${userReply.boardVO.title}"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </a>
                                             </td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${fn:length(userReply.replytext) > 14}">
-                                                        <c:out value="${fn:substring(userReply.replytext, 0, 13)}"/>....
+                                                    <c:when test="${fn:length(userReply.replytext) > 10}">
+                                                        <c:out value="${fn:substring(userReply.replytext, 0, 9)}"/>....
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:out value="${userReply.replytext}"/>
@@ -164,14 +168,16 @@
                                         <tr>
                                             <td>${i.index + 1}</td>
                                             <td>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(bookmark.boardVO.title) > 30}">
-                                                        <c:out value="${fn:substring(bookmark.boardVO.title, 0, 29)}"/>....
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:out value="${bookmark.boardVO.title}"/>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <a href="${path}/board/read?bno=${bookmark.boardVO.bno}">
+                                                    <c:choose>
+                                                        <c:when test="${fn:length(bookmark.boardVO.title) > 30}">
+                                                            <c:out value="${fn:substring(bookmark.boardVO.title, 0, 29)}"/>....
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:out value="${bookmark.boardVO.title}"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </a>
                                             </td>
                                             <td>${bookmark.boardVO.writer}</td>
                                         </tr>
