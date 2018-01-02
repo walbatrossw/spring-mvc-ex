@@ -88,13 +88,15 @@
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="myPosts">
-                                <table class="table table-striped">
+                                <table id="myPostsTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20px">번호</th>
+                                            <th>제목</th>
+                                            <th style="width: 150px">작성시간</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <th style="width: 20px">번호</th>
-                                        <th>제목</th>
-                                        <th style="width: 150px">작성시간</th>
-                                    </tr>
                                     <c:forEach var="boardVO" varStatus="i" items="${userBoardList}">
                                     <tr>
                                         <td>${i.index + 1}</td>
@@ -117,14 +119,16 @@
                                 </table>
                             </div>
                             <div class="tab-pane" id="myReplies">
-                                <table class="table table-striped">
+                                <table id="myRepliesTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">번호</th>
+                                            <th style="width: 250px">게시글 제목</th>
+                                            <th style="width: 250px">내용</th>
+                                            <th style="width: 150px">작성시간</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <th style="width: 10px">번호</th>
-                                        <th style="width: 250px">게시글 제목</th>
-                                        <th style="width: 250px">내용</th>
-                                        <th style="width: 150px">작성시간</th>
-                                    </tr>
                                     <c:forEach var="userReply" varStatus="i" items="${userReplies}">
                                         <tr>
                                             <td>${i.index + 1}</td>
@@ -157,13 +161,15 @@
                                 </table>
                             </div>
                             <div class="tab-pane" id="myBookmarks">
-                                <table class="table table-striped">
-                                    <tbody>
+                                <table id="myBookmarksTable" class="table table-bordered table-striped">
+                                    <thead>
                                         <tr>
                                             <th style="width: 10px">번호</th>
                                             <th>제목</th>
                                             <th>작성자</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach var="bookmark" varStatus="i" items="${bookmarkList}">
                                         <tr>
                                             <td>${i.index + 1}</td>
@@ -363,6 +369,27 @@
             }
             $("#userImageForm").submit();
         });
+
+        var param = {
+            "language": {
+                "lengthMenu": "_MENU_ 개씩 보기",
+                "zeroRecords": "내용이 없습니다.",
+                "info": "현재 _PAGE_ 페이지 / 전체 _PAGES_ 페이지",
+                "infoEmpty": "내용이 없습니다.",
+                "infoFiltered": "( _MAX_개의 전체 목록 중에서 검색된 결과)",
+                "search": "검색:",
+                "paginate": {
+                    "first": "처음",
+                    "last": "마지막",
+                    "next": "다음",
+                    "previous": "이전"
+                }
+            }
+        };
+
+        $("#myPostsTable").DataTable(param);
+        $("#myRepliesTable").DataTable(param);
+        $("#myBookmarksTable").DataTable(param);
 
 
     });
