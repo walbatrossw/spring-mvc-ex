@@ -6,3 +6,7 @@ CREATE TABLE tbl_likes (
   likedate TIMESTAMP   NOT NULL DEFAULT NOW(),
   PRIMARY KEY (blno)
 );
+
+-- 외래키 설정
+ALTER TABLE tbl_likes ADD CONSTRAINT fk_board_likes
+FOREIGN KEY (bno) REFERENCES tbl_board (bno);

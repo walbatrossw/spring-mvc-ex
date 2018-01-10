@@ -6,3 +6,7 @@ CREATE TABLE tbl_bookmark (
   regdate TIMESTAMP   NOT NULL DEFAULT NOW(),
   PRIMARY KEY (bmno)
 );
+
+-- 외래키 설정
+ALTER TABLE tbl_bookmark ADD CONSTRAINT fk_board_bookmark
+FOREIGN KEY (bno) REFERENCES tbl_board (bno);

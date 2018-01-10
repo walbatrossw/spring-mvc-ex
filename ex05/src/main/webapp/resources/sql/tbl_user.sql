@@ -24,4 +24,4 @@ ALTER TABLE tbl_user ADD COLUMN regdate TIMESTAMP NOT NULL DEFAULT NOW();
 ALTER TABLE tbl_user ADD COLUMN logdate TIMESTAMP NOT NULL DEFAULT NOW();
 
 -- uimage (회원프로필 사진파일명) 추가
-ALTER TABLE tbl_user ADD COLUMN uimage VARCHAR(100) NOT NULL DEFAULT 'default-user-image.jpg';
+ALTER TABLE tbl_user ADD COLUMN uimage VARCHAR(100) NOT NULL DEFAULT '/default-user-image.jpg';
