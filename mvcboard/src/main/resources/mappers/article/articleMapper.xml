@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.mvcboard.mappers.article.ArticleMapper">
+
+    <insert id="create">
+        INSERT INTO tbl_article (
+            article_no
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        ) VALUES (
+            #{articleNo}
+            , #{title}
+            , #{content}
+            , #{writer}
+            , #{regDate}
+            , #{viewCnt}
+        )
+    </insert>
+
+    <select id="read" resultType="ArticleVO">
+        SELECT
+            article_no AS articleNo
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM
+            tbl_article
+        WHERE article_no = #{articleNo}
+    </select>
+
+    <update id="update">
+        UPDATE tbl_article
+        SET
+            title = #{title}
+            , content = #{content}
+        WHERE
+            article_no = #{articleNo}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tbl_article
+        WHERE article_no = #{articleNo}
+    </delete>
+
+    <select id="listAll" resultType="ArticleVO">
+        <![CDATA[
+        SELECT
+            article_no,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        FROM tbl_article
+        WHERE article_no > 0
+        ORDER BY article_no DESC, regdate DESC
+        ]]>
+    </select>
+
+    <resultMap id="ArticleResultMap" type="ArticleVO">
+        <id property="articleNo" column="article_no"/>
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="writer" column="writer" />
+        <result property="regDate" column="regdate" />
+        <result property="viewCnt" column="viewcnt" />
+    </resultMap>
+
+</mapper>
