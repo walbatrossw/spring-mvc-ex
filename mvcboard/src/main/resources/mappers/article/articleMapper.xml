@@ -23,9 +23,9 @@
         )
     </insert>
 
-    <select id="read" resultType="ArticleVO">
+    <select id="read" resultMap="ArticleResultMap">
         SELECT
-            article_no AS articleNo
+            article_no
             , title
             , content
             , writer

@@ -1,10 +1,10 @@
-package com.doubles.mvcboard.article.persistence;
+package com.doubles.mvcboard.article.service;
 
 import com.doubles.mvcboard.article.domain.ArticleVO;
 
 import java.util.List;
 
-public interface ArticleDAO {
+public interface ArticleService {
 
     void create(ArticleVO articleVO) throws Exception;
 
