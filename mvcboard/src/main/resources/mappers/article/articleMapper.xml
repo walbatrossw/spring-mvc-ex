@@ -50,7 +50,7 @@
         WHERE article_no = #{articleNo}
     </delete>
 
-    <select id="listAll" resultType="ArticleVO">
+    <select id="listAll" resultMap="ArticleResultMap">
         <![CDATA[
         SELECT
             article_no,
