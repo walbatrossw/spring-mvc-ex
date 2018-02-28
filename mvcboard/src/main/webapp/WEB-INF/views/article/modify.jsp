@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>입력페이지</small>
+                <small>수정페이지</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/write"> write</a></li>
+                <li class="active"><a href="${path}/article/write"> modify</a></li>
             </ol>
         </section>
 
@@ -34,7 +34,7 @@
                 <form role="form" id="writeForm" method="post" action="${path}/article/modify">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">게시글 작성</h3>
+                            <h3 class="box-title">게시글 수정</h3>
                         </div>
                         <div class="box-body">
                             <input type="hidden" name="articleNo" value="${article.articleNo}">

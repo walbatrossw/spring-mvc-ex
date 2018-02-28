@@ -35,14 +35,14 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String writePOST(ArticleVO articleVO, RedirectAttributes redirectAttributes) throws Exception {
+    public String writePOST(ArticleVO articleVO,
+                            RedirectAttributes redirectAttributes) throws Exception {
 
         logger.info("write POST...");
         logger.info(articleVO.toString());
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
-        //return "/article/success";
         return "redirect:/article/list";
     }
 
@@ -56,7 +56,8 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
+    public String read(@RequestParam("articleNo") int articleNo,
+                       Model model) throws Exception {
 
         logger.info("read ...");
         model.addAttribute("article", articleService.read(articleNo));
@@ -65,7 +66,8 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
+    public String modifyGET(@RequestParam("articleNo") int articleNo,
+                            Model model) throws Exception {
 
         logger.info("modifyGet ...");
         model.addAttribute("article", articleService.read(articleNo));
@@ -74,7 +76,8 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyPOST(ArticleVO articleVO, RedirectAttributes redirectAttributes) throws Exception {
+    public String modifyPOST(ArticleVO articleVO,
+                             RedirectAttributes redirectAttributes) throws Exception {
 
         logger.info("modifyPOST ...");
         articleService.update(articleVO);
@@ -93,7 +96,5 @@ public class ArticleController {
 
         return "redirect:/article/list";
     }
-
-
 
 }
