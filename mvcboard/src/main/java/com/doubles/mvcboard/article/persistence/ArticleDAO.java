@@ -1,6 +1,7 @@
 package com.doubles.mvcboard.article.persistence;
 
 import com.doubles.mvcboard.article.domain.ArticleVO;
+import com.doubles.mvcboard.commons.paging.Criteria;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface ArticleDAO {
 
     List<ArticleVO> listAll() throws Exception;
 
+    List<ArticleVO> listPaging(int page) throws Exception;
+
+    List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 }

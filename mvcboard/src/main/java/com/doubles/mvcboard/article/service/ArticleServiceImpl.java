@@ -2,6 +2,7 @@ package com.doubles.mvcboard.article.service;
 
 import com.doubles.mvcboard.article.domain.ArticleVO;
 import com.doubles.mvcboard.article.persistence.ArticleDAO;
+import com.doubles.mvcboard.commons.paging.Criteria;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -40,5 +41,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleVO> listAll() throws Exception {
         return articleDAO.listAll();
+    }
+
+    @Override
+    public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+        return articleDAO.listCriteria(criteria);
     }
 }

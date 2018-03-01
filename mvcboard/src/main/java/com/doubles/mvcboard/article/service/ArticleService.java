@@ -1,6 +1,7 @@
 package com.doubles.mvcboard.article.service;
 
 import com.doubles.mvcboard.article.domain.ArticleVO;
+import com.doubles.mvcboard.commons.paging.Criteria;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface ArticleService {
 
     List<ArticleVO> listAll() throws Exception;
 
+    List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 }
