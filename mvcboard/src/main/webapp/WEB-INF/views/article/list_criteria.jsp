@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>목록페이지</small>
+                <small>목록페이지(페이징)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/list"> list</a></li>
+                <li class="active"><a href="${path}/article/list"> list_criteria</a></li>
             </ol>
         </section>
 

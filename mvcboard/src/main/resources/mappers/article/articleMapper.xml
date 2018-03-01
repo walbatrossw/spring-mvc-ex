@@ -97,6 +97,15 @@
         ]]>
     </select>
 
+    <select id="countArticles" resultType="int">
+        <![CDATA[
+        SELECT
+            COUNT(article_no)
+        FROM tbl_article
+        WHERE article_no > 0
+        ]]>
+    </select>
+
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="articleNo" column="article_no"/>
         <result property="title" column="title" />
