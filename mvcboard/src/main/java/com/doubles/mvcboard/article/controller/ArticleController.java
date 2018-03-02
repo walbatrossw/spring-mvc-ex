@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,6 +89,16 @@ public class ArticleController {
         return "/article/read";
     }
 
+    @RequestMapping(value = "/readPaging", method = RequestMethod.GET)
+    public String readPaging(@RequestParam("articleNo") int articleNo,
+                             @ModelAttribute("criteria") Criteria criteria,
+                             Model model) throws Exception {
+
+        model.addAttribute("article", articleService.read(articleNo));
+
+        return "/article/read_paging";
+    }
+
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("articleNo") int articleNo,
                             Model model) throws Exception {
@@ -98,6 +109,18 @@ public class ArticleController {
         return "/article/modify";
     }
 
+    @RequestMapping(value = "/modifyPaging", method = RequestMethod.GET)
+    public String modifyGETPaging(@RequestParam("articleNo") int articleNo,
+                                  @ModelAttribute("criteria") Criteria criteria,
+                                  Model model) throws Exception {
+
+        logger.info("modifyGetPaging ...");
+        model.addAttribute("article", articleService.read(articleNo));
+
+        return "/article/modify_paging";
+    }
+
+
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(ArticleVO articleVO,
                              RedirectAttributes redirectAttributes) throws Exception {
@@ -106,7 +129,21 @@ public class ArticleController {
         articleService.update(articleVO);
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/article/list";
+        return "redirect:/article/listPaging";
+    }
+
+    @RequestMapping(value = "/modifyPaging", method = RequestMethod.POST)
+    public String modifyPOSTPaging(ArticleVO articleVO,
+                                   Criteria criteria,
+                                   RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("modifyPOSTPaging ...");
+        articleService.update(articleVO);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg", "modSuccess");
+
+        return "redirect:/article/listPaging";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
@@ -117,7 +154,21 @@ public class ArticleController {
         articleService.delete(articleNo);
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "redirect:/article/list";
+        return "redirect:/article/listPaging";
+    }
+
+    @RequestMapping(value = "/removePaging", method = RequestMethod.POST)
+    public String removePaging(@RequestParam("articleNo") int articleNo,
+                               Criteria criteria,
+                               RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("remove ...");
+        articleService.delete(articleNo);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg", "delSuccess");
+
+        return "redirect:/article/listPaging";
     }
 
 }
