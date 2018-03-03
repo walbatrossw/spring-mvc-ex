@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 
 <body class="hold-transition skin-blue sidebar-mini">
 
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@ include file="../include/main_header.jsp"%>
+    <%@ include file="../../include/main_header.jsp"%>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@ include file="../include/left_column.jsp"%>
+    <%@ include file="../../include/left_column.jsp"%>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -31,7 +31,7 @@
         <section class="content container-fluid">
 
             <div class="col-lg-12">
-                <form role="form" id="modifyForm" method="post" action="${path}/article/modifyPaging">
+                <form role="form" id="modifyForm" method="post" action="${path}/article/paging/modify">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 수정</h3>
@@ -73,11 +73,11 @@
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@ include file="../include/main_footer.jsp"%>
+    <%@ include file="../../include/main_footer.jsp"%>
 
 </div>
 <!-- ./wrapper -->
-<%@ include file="../include/plugin_js.jsp"%>
+<%@ include file="../../include/plugin_js.jsp"%>
 <script>
     $(document).ready(function () {
 
@@ -93,7 +93,7 @@
         });
 
         $(".listBtn").on("click", function () {
-            self.location = "/article/listPaging?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
+            self.location = "/article/paging/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
         });
 
     });

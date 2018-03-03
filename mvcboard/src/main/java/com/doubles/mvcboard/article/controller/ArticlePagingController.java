@@ -17,24 +17,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.inject.Inject;
 
 @Controller
-@RequestMapping("/article")
-public class ArticleController {
+@RequestMapping("/article/paging")
+public class ArticlePagingController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArticlePagingController.class);
 
     private final ArticleService articleService;
 
     @Inject
-    public ArticleController(ArticleService articleService) {
+    public ArticlePagingController(ArticleService articleService) {
         this.articleService = articleService;
     }
+
 
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() {
 
         logger.info("write GET...");
 
-        return "/article/normal/write";
+        return "article/paging/write";
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
@@ -42,70 +43,74 @@ public class ArticleController {
                             RedirectAttributes redirectAttributes) throws Exception {
 
         logger.info("write POST...");
-        logger.info(articleVO.toString());
+
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
-        return "redirect:/article/normal/list";
+        return "redirect:/article/paging/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) throws Exception {
+    public String listPaging(Model model, Criteria criteria) throws Exception {
+        logger.info("listPaging ...");
 
-        logger.info("list ...");
-        model.addAttribute("articles", articleService.listAll());
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(articleService.countArticles(criteria));
 
-        return "/article/normal/list";
-    }
-
-    @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
-    public String listCriteria(Model model, Criteria criteria) throws Exception {
-        logger.info("listCriteria ...");
         model.addAttribute("articles", articleService.listCriteria(criteria));
-        return "/article/normal/list_criteria";
+        model.addAttribute("pageMaker", pageMaker);
+
+        return "article/paging/list";
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("articleNo") int articleNo,
-                       Model model) throws Exception {
+    public String readPaging(@RequestParam("articleNo") int articleNo,
+                             @ModelAttribute("criteria") Criteria criteria,
+                             Model model) throws Exception {
 
-        logger.info("read ...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "/article/normal/read";
+        return "article/paging/read";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(@RequestParam("articleNo") int articleNo,
-                            Model model) throws Exception {
+    public String modifyGETPaging(@RequestParam("articleNo") int articleNo,
+                                  @ModelAttribute("criteria") Criteria criteria,
+                                  Model model) throws Exception {
 
-        logger.info("modifyGet ...");
+        logger.info("modifyGetPaging ...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "/article/normal/modify";
+        return "article/paging/modify";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyPOST(ArticleVO articleVO,
-                             RedirectAttributes redirectAttributes) throws Exception {
+    public String modifyPOSTPaging(ArticleVO articleVO,
+                                   Criteria criteria,
+                                   RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("modifyPOST ...");
+        logger.info("modifyPOSTPaging ...");
         articleService.update(articleVO);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/article/list";
+        return "redirect:/article/paging/list";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String remove(@RequestParam("articleNo") int articleNo,
-                         RedirectAttributes redirectAttributes) throws Exception {
+    public String removePaging(@RequestParam("articleNo") int articleNo,
+                               Criteria criteria,
+                               RedirectAttributes redirectAttributes) throws Exception {
 
         logger.info("remove ...");
         articleService.delete(articleNo);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "redirect:/article/list";
+        return "redirect:/article/paging/list";
     }
-
 
 }
