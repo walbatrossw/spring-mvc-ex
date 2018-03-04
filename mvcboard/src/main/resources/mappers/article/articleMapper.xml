@@ -106,6 +106,68 @@
         ]]>
     </select>
 
+    <select id="listSearch" resultMap="ArticleResultMap">
+        <![CDATA[
+        SELECT
+            article_no,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        FROM tbl_article
+        WHERE article_no > 0
+        ]]>
+          <include refid="search"/>
+        <![CDATA[
+        ORDER BY article_no DESC, regdate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <select id="countSearchedArticles" resultType="int">
+        <![CDATA[
+        SELECT
+            COUNT(article_no)
+        FROM tbl_article
+        WHERE article_no > 0
+        ]]>
+        <include refid="search"/>
+    </select>
+
+    <sql id="search">
+        <if test="searchType != null">
+            <if test="searchType == 't'.toString()">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'c'.toString()">
+                AND content LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'w'.toString()">
+                AND writer LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'tc'.toString()">
+                AND (
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'cw'.toString()">
+                AND (
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'tcw'.toString()">
+                AND (
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%'
+                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+        </if>
+    </sql>
+
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="articleNo" column="article_no"/>
         <result property="title" column="title" />

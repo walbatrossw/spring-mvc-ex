@@ -32,16 +32,16 @@ public class ArticleController {
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() {
 
-        logger.info("write GET...");
+        logger.info("normal writeGET() called...");
 
-        return "/article/normal/write";
+        return "article/normal/write";
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public String writePOST(ArticleVO articleVO,
                             RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("write POST...");
+        logger.info("normal writePOST() called...");
         logger.info(articleVO.toString());
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
@@ -52,44 +52,44 @@ public class ArticleController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) throws Exception {
 
-        logger.info("list ...");
+        logger.info("normal list() called ...");
         model.addAttribute("articles", articleService.listAll());
 
-        return "/article/normal/list";
+        return "article/normal/list";
     }
 
     @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
     public String listCriteria(Model model, Criteria criteria) throws Exception {
-        logger.info("listCriteria ...");
+        logger.info("normal listCriteria() ...");
         model.addAttribute("articles", articleService.listCriteria(criteria));
-        return "/article/normal/list_criteria";
+        return "article/normal/list_criteria";
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("articleNo") int articleNo,
                        Model model) throws Exception {
 
-        logger.info("read ...");
+        logger.info("normal read() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "/article/normal/read";
+        return "article/normal/read";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("articleNo") int articleNo,
                             Model model) throws Exception {
 
-        logger.info("modifyGet ...");
+        logger.info("normal modifyGet() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "/article/normal/modify";
+        return "article/normal/modify";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(ArticleVO articleVO,
                              RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("modifyPOST ...");
+        logger.info("normal modifyPOST() called ...");
         articleService.update(articleVO);
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
@@ -100,12 +100,11 @@ public class ArticleController {
     public String remove(@RequestParam("articleNo") int articleNo,
                          RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("remove ...");
+        logger.info("normal remove() ...");
         articleService.delete(articleNo);
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
         return "redirect:/article/list";
     }
-
 
 }

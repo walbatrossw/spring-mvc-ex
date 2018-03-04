@@ -2,6 +2,7 @@ package com.doubles.mvcboard.article.persistence;
 
 import com.doubles.mvcboard.article.domain.ArticleVO;
 import com.doubles.mvcboard.commons.paging.Criteria;
+import com.doubles.mvcboard.commons.paging.SearchCriteria;
 
 import java.util.List;
 
@@ -22,4 +23,9 @@ public interface ArticleDAO {
     List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 
     int countArticles(Criteria criteria) throws Exception;
+
+    List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception;
+
+    int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
+
 }

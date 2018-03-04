@@ -61,7 +61,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="#"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
-                    <li><a href="#"><i class="fa fa-list"></i> 게시글 목록</a></li>
+                    <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
                 </ul>
             </li>
         </ul>

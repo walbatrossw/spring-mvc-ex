@@ -50,6 +50,10 @@
                     <div class="box-footer">
                         <form role="form" method="post">
                             <input type="hidden" name="articleNo" value="${article.articleNo}">
+                            <input type="hidden" name="page" value="${searchCriteria.page}">
+                            <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                         <div class="pull-right">
@@ -78,18 +82,20 @@
         console.log(formObj);
 
         $(".modBtn").on("click", function () {
-            formObj.attr("action", "/article/modify");
+            formObj.attr("action", "/article/search/modify");
             formObj.attr("method", "get");
             formObj.submit();
         });
 
         $(".delBtn").on("click", function () {
-           formObj.attr("action", "/article/remove");
-           formObj.submit();
+            formObj.attr("action", "/article/search/remove");
+            formObj.submit();
         });
 
         $(".listBtn").on("click", function () {
-           self.location = "/article/list"
+            formObj.attr("action", "/article/search/list");
+            formObj.attr("method", "get");
+            formObj.submit();
         });
 
     });

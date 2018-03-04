@@ -33,7 +33,7 @@ public class ArticlePagingController {
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() {
 
-        logger.info("write GET...");
+        logger.info("paging writeGET() called...");
 
         return "article/paging/write";
     }
@@ -42,7 +42,7 @@ public class ArticlePagingController {
     public String writePOST(ArticleVO articleVO,
                             RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("write POST...");
+        logger.info("paging writePOST() called...");
 
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
@@ -51,8 +51,9 @@ public class ArticlePagingController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listPaging(Model model, Criteria criteria) throws Exception {
-        logger.info("listPaging ...");
+    public String list(Model model, Criteria criteria) throws Exception {
+
+        logger.info("paging list() called ...");
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
@@ -65,32 +66,33 @@ public class ArticlePagingController {
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String readPaging(@RequestParam("articleNo") int articleNo,
-                             @ModelAttribute("criteria") Criteria criteria,
-                             Model model) throws Exception {
+    public String read(@RequestParam("articleNo") int articleNo,
+                       @ModelAttribute("criteria") Criteria criteria,
+                       Model model) throws Exception {
 
+        logger.info("paging read() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/paging/read";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGETPaging(@RequestParam("articleNo") int articleNo,
-                                  @ModelAttribute("criteria") Criteria criteria,
-                                  Model model) throws Exception {
+    public String modifyGET(@RequestParam("articleNo") int articleNo,
+                            @ModelAttribute("criteria") Criteria criteria,
+                            Model model) throws Exception {
 
-        logger.info("modifyGetPaging ...");
+        logger.info("paging modifyGet() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/paging/modify";
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyPOSTPaging(ArticleVO articleVO,
+    public String modifyPOST(ArticleVO articleVO,
                                    Criteria criteria,
                                    RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("modifyPOSTPaging ...");
+        logger.info("paging modifyPOST() called ...");
         articleService.update(articleVO);
         redirectAttributes.addAttribute("page", criteria.getPage());
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
@@ -100,11 +102,11 @@ public class ArticlePagingController {
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String removePaging(@RequestParam("articleNo") int articleNo,
+    public String remove(@RequestParam("articleNo") int articleNo,
                                Criteria criteria,
                                RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("remove ...");
+        logger.info("paging remove() called ...");
         articleService.delete(articleNo);
         redirectAttributes.addAttribute("page", criteria.getPage());
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
