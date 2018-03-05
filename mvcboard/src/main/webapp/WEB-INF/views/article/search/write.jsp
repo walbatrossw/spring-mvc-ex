@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>입력페이지</small>
+                <small>입력페이지(페이징+검색)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/write"> write</a></li>
+                <li class="active"> write</li>
             </ol>
         </section>
 
@@ -31,7 +31,7 @@
         <section class="content container-fluid">
 
             <div class="col-lg-12">
-                <form role="form" id="writeForm" method="post" action="${path}/article/paging/write">
+                <form role="form" id="writeForm" method="post" action="${path}/article/paging/search/write">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 작성</h3>

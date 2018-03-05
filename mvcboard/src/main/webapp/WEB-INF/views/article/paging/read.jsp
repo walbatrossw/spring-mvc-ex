@@ -19,7 +19,7 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>조회페이지</small>
+                <small>조회페이지(페이징)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>

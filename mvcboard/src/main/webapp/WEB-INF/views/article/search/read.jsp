@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>조회페이지</small>
+                <small>조회페이지(페이징+검색)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/write"> read</a></li>
+                <li class="active"> read</li>
             </ol>
         </section>
 
@@ -82,18 +82,18 @@
         console.log(formObj);
 
         $(".modBtn").on("click", function () {
-            formObj.attr("action", "/article/search/modify");
+            formObj.attr("action", "/article/paging/search/modify");
             formObj.attr("method", "get");
             formObj.submit();
         });
 
         $(".delBtn").on("click", function () {
-            formObj.attr("action", "/article/search/remove");
+            formObj.attr("action", "/article/paging/search/remove");
             formObj.submit();
         });
 
         $(".listBtn").on("click", function () {
-            formObj.attr("action", "/article/search/list");
+            formObj.attr("action", "/article/paging/search/list");
             formObj.attr("method", "get");
             formObj.submit();
         });

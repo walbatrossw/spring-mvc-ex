@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>목록페이지</small>
+                <small>목록페이지(페이징+검색)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/list"> list</a></li>
+                <li class="active"> list</li>
             </ol>
         </section>
 
@@ -33,7 +33,7 @@
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">게시글 목록</h3>
+                        <h3 class="box-title">게시글 목록(페이징+검색)</h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -48,7 +48,7 @@
                             <c:forEach items="${articles}" var="article">
                             <tr>
                                 <td>${article.articleNo}</td>
-                                <td><a href="${path}/article/paging/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
+                                <td><a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
                                 <td>${article.writer}</td>
                                 <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                 <td><span class="badge bg-red">${article.viewCnt}</span></td>

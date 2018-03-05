@@ -161,7 +161,7 @@
             <if test="searchType == 'tcw'.toString()">
                 AND (
                     title LIKE CONCAT('%', #{keyword}, '%')
-                    OR content LIKE CONCAT('%', #{keyword}, '%'
+                    OR content LIKE CONCAT('%', #{keyword}, '%')
                     OR writer LIKE CONCAT('%', #{keyword}, '%')
                 )
             </if>

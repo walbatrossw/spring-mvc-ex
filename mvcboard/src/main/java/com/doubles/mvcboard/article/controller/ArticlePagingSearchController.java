@@ -51,7 +51,7 @@ public class ArticlePagingSearchController {
     public String list(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
                        Model model) throws Exception {
 
-        logger.info("list ...");
+        logger.info("search list() called ...");
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(searchCriteria);
@@ -80,6 +80,7 @@ public class ArticlePagingSearchController {
                             Model model) throws Exception {
 
         logger.info("search modifyGet() called ...");
+        logger.info(searchCriteria.toString());
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/search/modify";
@@ -98,7 +99,7 @@ public class ArticlePagingSearchController {
         redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/article/search/list";
+        return "redirect:/article/paging/search/list";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
@@ -114,6 +115,6 @@ public class ArticlePagingSearchController {
         redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "redirect:/article/search/list";
+        return "redirect:/article/paging/search/list";
     }
 }

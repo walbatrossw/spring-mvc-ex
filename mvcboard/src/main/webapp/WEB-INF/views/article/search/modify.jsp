@@ -19,11 +19,11 @@
         <section class="content-header">
             <h1>
                 게시판
-                <small>수정페이지</small>
+                <small>수정페이지(페이징+검색)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/modifyPaging"> modify</a></li>
+                <li class="active">modify</li>
             </ol>
         </section>
 
@@ -31,7 +31,7 @@
         <section class="content container-fluid">
 
             <div class="col-lg-12">
-                <form role="form" id="modifyForm" method="post" action="${path}/article/paging/modify">
+                <form role="form" id="modifyForm" method="post" action="${path}/article/paging/search/modify">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 수정</h3>
@@ -62,7 +62,7 @@
                             <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                             <div class="pull-right">
                                 <button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
-                                <button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
+                                <button type="button" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
         });
 
         $(".listBtn").on("click", function () {
-            self.location = "/article/paging/list?page=${searchCriteria.page}"
+            self.location = "/article/paging/search/list?page=${searchCriteria.page}"
                 + "&perPageNum=${searchCriteria.perPageNum}"
                 + "&searchType=${searchCriteria.searchType}"
                 + "&keyword=${searchCriteria.keyword}";
