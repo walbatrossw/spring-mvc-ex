@@ -96,8 +96,6 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
                         <div class="pull-right">
                             <button type="button" class="btn btn-success btn-flat" id="writeBtn">
                                 <i class="fa fa-pencil"></i> 글쓰기
