@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.mvcboard.mappers.reply.ReplyMapper">
+
+    <select id="list" resultMap="ReplyResultMap">
+        SELECT
+          reply_no
+          , article_no
+          , reply_text
+          , reply_writer
+          , reg_date
+          , update_date
+        FROM tbl_reply
+        WHERE article_no = #{articleNo}
+        ORDER BY reply_no
+    </select>
+
+    <insert id="create">
+        INSERT INTO tbl_reply (
+            article_no
+            , reply_text
+            , reply_writer
+        ) VALUES (
+            #{articleNo}
+            , #{replyText}
+            , #{replyWriter}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE tbl_reply
+        SET
+            reply_text = #{replyText}
+            , update_date = NOW()
+        WHERE reply_no = #{replyNo}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tbl_reply
+        WHERE reply_no = #{replyNo}
+    </delete>
+
+    <resultMap id="ReplyResultMap" type="ReplyVO">
+        <id property="replyNo" column="reply_no"/>
+        <result property="ArticleNo" column="article_no"/>
+        <result property="replyText" column="reply_text"/>
+        <result property="replyWriter" column="reply_writer"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <resultMap id="ArticleResultMap" type="ArticleVO">
+        <id property="articleNo" column="article_no"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regDate" column="regdate"/>
+        <result property="viewCnt" column="viewcnt"/>
+    </resultMap>
+
+</mapper>
