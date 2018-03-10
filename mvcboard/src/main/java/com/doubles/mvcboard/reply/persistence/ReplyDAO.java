@@ -1,5 +1,6 @@
 package com.doubles.mvcboard.reply.persistence;
 
+import com.doubles.mvcboard.commons.paging.Criteria;
 import com.doubles.mvcboard.reply.domain.ReplyVO;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface ReplyDAO {
 
     void delete(Integer replyNo) throws Exception;
 
+    List<ReplyVO> listPaging(Integer articleNo, Criteria criteria) throws Exception;
+
+    int countReplies(Integer articleNo) throws Exception;
 }

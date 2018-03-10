@@ -43,6 +43,27 @@
         WHERE reply_no = #{replyNo}
     </delete>
 
+    <select id="listPaging" resultMap="ReplyResultMap">
+        SELECT
+            reply_no
+            , article_no
+            , reply_text
+            , reply_writer
+            , reg_date
+            , update_date
+        FROM tbl_reply
+        WHERE article_no = #{articleNo}
+        ORDER BY reply_no
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
+
+    <select id="countReplies" resultType="int">
+        SELECT
+            COUNT(article_no)
+        FROM tbl_reply
+        WHERE article_no = #{articleNo}
+    </select>
+
     <resultMap id="ReplyResultMap" type="ReplyVO">
         <id property="replyNo" column="reply_no"/>
         <result property="ArticleNo" column="article_no"/>
