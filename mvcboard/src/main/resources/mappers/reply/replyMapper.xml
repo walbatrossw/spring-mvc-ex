@@ -15,7 +15,7 @@
           , update_date
         FROM tbl_reply
         WHERE article_no = #{articleNo}
-        ORDER BY reply_no
+        ORDER BY reply_no DESC
     </select>
 
     <insert id="create">
@@ -53,7 +53,7 @@
             , update_date
         FROM tbl_reply
         WHERE article_no = #{articleNo}
-        ORDER BY reply_no
+        ORDER BY reply_no DESC
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
     </select>
 
