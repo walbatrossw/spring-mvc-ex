@@ -42,8 +42,6 @@
                             <label for="newReplyWriter">댓글 작성자</label>
                             <input class="form-control" id="newReplyWriter" name="replyWriter" placeholder="댓글 작성자를 입력해주세요">
                         </div>
-                    </div>
-                    <div class="box-footer">
                         <div class="pull-right">
                             <button type="button" id="replyAddBtn" class="btn btn-primary"><i class="fa fa-save"></i> 댓글 저장</button>
                         </div>
@@ -65,8 +63,6 @@
 
             <div class="modal fade" id="modifyModal" role="dialog">
                 <div class="modal-dialog">
-
-                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -92,7 +88,6 @@
                             <button type="button" class="btn btn-danger modalDelBtn">삭제</button>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -108,15 +103,15 @@
 <!-- ./wrapper -->
 <%@ include file="../include/plugin_js.jsp"%>
 <script>
-    
-    var articleNo = 1000;
 
     var replyPageNum = 1;
+    var articleNo = 1000;
 
+    //getReplies();
     getRepliesPaging(replyPageNum);
-    //getAllList();
 
-    function getAllList() {
+    function getReplies() {
+
         $.getJSON("/replies/all/" + articleNo, function (data) {
 
             console.log(data);
@@ -127,7 +122,7 @@
                 str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
                     +   "<p class='replyText'>" + this.replyText + "</p>"
                     +   "<p class='replyWriter'>" + this.replyWriter + "</p>"
-                    +   "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                    +   "<button type='button' class='btn btn-xs btn-success modifyModal' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
                     + "</li>"
                     + "<hr/>";
 
@@ -136,11 +131,16 @@
             $("#replies").html(str);
 
         });
+
     }
 
     $("#replyAddBtn").on("click", function () {
-        var replyText = $("#newReplyText").val();
-        var replyWriter = $("#newReplyWriter").val();
+
+        var replyText = $("#newReplyText");
+        var replyWriter = $("#newReplyWriter");
+
+        var replyTextVal = replyText.val();
+        var replyWriterVal = replyWriter.val();
 
         $.ajax({
             type : "post",
@@ -152,21 +152,25 @@
             dataType : "text",
             data : JSON.stringify({
                 articleNo : articleNo,
-                replyText : replyText,
-                replyWriter : replyWriter
+                replyText : replyTextVal,
+                replyWriter : replyWriterVal
             }),
             success : function (result) {
                 if (result == "regSuccess") {
                     alert("댓글 등록 완료!");
                 }
-                getAllList();
+                //getReplies();
+                getRepliesPaging(replyPageNum);
+                replyText.val("");
+                replyWriter.val("");
             }
         });
     });
 
-    $("#replies").on("click", ".replyLi button", function () {
-        var reply = $(this).parent();
 
+    $("#replies").on("click", ".replyLi button", function () {
+
+        var reply = $(this).parent();
         var replyNo = reply.attr("data-replyNo");
         var replyText = reply.find(".replyText").text();
         var replyWriter = reply.find(".replyWriter").text();
@@ -194,7 +198,8 @@
                 if (result == "delSuccess") {
                     alert("댓글 삭제 완료!");
                     $("#modifyModal").modal("hide");
-                    getAllList();
+                    //getReplies();
+                    getRepliesPaging(replyPageNum);
                 }
             }
         });
@@ -223,15 +228,17 @@
                 if (result == "modSuccess") {
                     alert("댓글 수정 완료!");
                     $("#modifyModal").modal("hide");
-                    getAllList();
+                    //getReplies();
+                    getRepliesPaging(replyPageNum);
                 }
             }
         });
 
     });
 
+
     function getRepliesPaging(page) {
-        
+
         $.getJSON("/replies/" + articleNo + "/" + page, function (data) {
            console.log(data);
 
@@ -253,7 +260,7 @@
         });
 
     }
-    
+
     function printPageNumbers(pageMaker) {
 
         var str = "";
