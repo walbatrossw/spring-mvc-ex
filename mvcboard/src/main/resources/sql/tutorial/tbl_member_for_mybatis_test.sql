@@ -1,4 +1,5 @@
--- MyBatis 예제 sql
+-- MyBatis 테스트 예제 SQL
+
 -- 회원테이블
 CREATE TABLE tbl_member (
   userid     VARCHAR(50) NOT NULL, -- 회원아이디

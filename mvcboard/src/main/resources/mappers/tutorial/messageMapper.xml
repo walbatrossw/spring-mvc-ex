@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.mvcboard.mappers.tutorial.MessageMapper">
+
+    <insert id="create">
+        INSERT INTO tbl_message (
+        receiver, sender, message
+        ) VALUES (
+        #{receiver}
+        , #{sender}
+        , #{message}
+        )
+    </insert>
+
+    <select id="readMessage" resultMap="messageResultMap">
+        SELECT
+        message_no
+        , receiver
+        , sender
+        , message
+        , open_date
+        , send_date
+        FROM tbl_message
+        WHERE message_no = #{messageNo}
+    </select>
+
+    <update id="updateState">
+        UPDATE tbl_message
+        SET open_date = NOW()
+        WHERE message_no = #{messageNo}
+    </update>
+
+    <resultMap id="messageResultMap" type="MessageVO">
+        <id property="messageNo" column="message_no"/>
+        <result property="receiver" column="receiver"/>
+        <result property="sender" column="sender"/>
+        <result property="message" column="message"/>
+        <result property="openDate" column="open_date"/>
+        <result property="sendDate" column="send_date"/>
+    </resultMap>
+
+</mapper>

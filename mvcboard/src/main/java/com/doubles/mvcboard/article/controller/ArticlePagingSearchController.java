@@ -34,8 +34,6 @@ public class ArticlePagingSearchController {
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() throws Exception {
 
-        logger.info("search writeGET() called ...");
-
         return "article/search/write";
     }
 
@@ -43,7 +41,6 @@ public class ArticlePagingSearchController {
     public String writePOST(ArticleVO articleVO,
                             RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("search writePOST() called ...");
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
@@ -53,8 +50,6 @@ public class ArticlePagingSearchController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
                        Model model) throws Exception {
-
-        logger.info("search list() called ...");
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(searchCriteria);
@@ -71,7 +66,6 @@ public class ArticlePagingSearchController {
                        @ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
                        Model model) throws Exception {
 
-        logger.info("search read() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/search/read";
@@ -82,7 +76,6 @@ public class ArticlePagingSearchController {
                             @ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
                             Model model) throws Exception {
 
-        logger.info("search modifyGet() called ...");
         logger.info(searchCriteria.toString());
         model.addAttribute("article", articleService.read(articleNo));
 
@@ -94,7 +87,6 @@ public class ArticlePagingSearchController {
                              SearchCriteria searchCriteria,
                              RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("search modifyPOST() called ...");
         articleService.update(articleVO);
         redirectAttributes.addAttribute("page", searchCriteria.getPage());
         redirectAttributes.addAttribute("perPageNum", searchCriteria.getPerPageNum());
@@ -110,7 +102,6 @@ public class ArticlePagingSearchController {
                          SearchCriteria searchCriteria,
                          RedirectAttributes redirectAttributes) throws Exception {
 
-        logger.info("search remove() called ...");
         articleService.delete(articleNo);
         redirectAttributes.addAttribute("page", searchCriteria.getPage());
         redirectAttributes.addAttribute("perPageNum", searchCriteria.getPerPageNum());

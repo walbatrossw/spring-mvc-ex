@@ -189,7 +189,7 @@
             <span class="description">{{prettifyDate regDate}}</span>
         </div>
         <%--댓글 내용--%>
-        <div class="oldReplyText">{{{replyText}}}</div>
+        <div class="oldReplyText">{{{escape replyText}}}</div>
         <br/>
     </div>
     {{/each}}
@@ -200,7 +200,15 @@
     $(document).ready(function () {
 
         var articleNo = "${article.articleNo}";  // 현재 게시글 번호
-        var replyPageNum = 1;
+        var replyPageNum = 1; // 댓글 페이지 번호 초기화
+
+        // 댓글 내용 : 줄바꿈/공백처리
+        Handlebars.registerHelper("escape", function (replyText) {
+            var text = Handlebars.Utils.escapeExpression(replyText);
+            text = text.replace(/(\r\n|\n|\r)/gm, "<br/>");
+            text = text.replace(/( )/gm, "&nbsp;");
+            return new Handlebars.SafeString(text);
+        });
 
         // 댓글 등록일자 : 날짜/시간 2자리로 맞추기
         Handlebars.registerHelper("prettifyDate", function (timeValue) {
@@ -218,8 +226,10 @@
             return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
         });
 
+        // 댓글 목록 함수 호출
         getReplies("/replies/" + articleNo + "/" + replyPageNum);
 
+        // 댓글 목록 함수
         function getReplies(repliesUri) {
             $.getJSON(repliesUri, function (data) {
                 printReplyCount(data.pageMaker.totalCount);
@@ -230,14 +240,18 @@
 
         // 댓글 갯수 출력 함수
         function printReplyCount(totalCount) {
+
             var replyCount = $(".replyCount");
             var collapsedBox = $(".collapsed-box");
 
-            if (totalCount <= 0) {
+            // 댓글이 없으면
+            if (totalCount === 0) {
                 replyCount.html(" 댓글이 없습니다. 의견을 남겨주세요");
                 collapsedBox.find(".btn-box-tool").remove();
                 return;
             }
+
+            // 댓글이 존재하면
             replyCount.html(" 댓글목록 (" + totalCount + ")");
             collapsedBox.find(".box-tools").html(
                 "<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
@@ -247,7 +261,7 @@
 
         }
 
-        // 댓글 출력 함수
+        // 댓글 목록 출력 함수
         function printReplies(replyArr, targetArea, templateObj) {
             var replyTemplate = Handlebars.compile(templateObj.html());
             var html = replyTemplate(replyArr);
@@ -278,12 +292,15 @@
             getReplies("/replies/" + articleNo + "/" + replyPageNum);
         });
 
+        // 댓글 저장 버튼 클릭 이벤트
         $(".replyAddBtn").on("click", function () {
+
             // 입력 form 선택자
             var replyWriterObj = $("#newReplyWriter");
             var replyTextObj = $("#newReplyText");
             var replyWriter = replyWriterObj.val();
             var replyText = replyTextObj.val();
+
             // 댓글 입력처리 수행
             $.ajax({
                 type : "post",
@@ -300,7 +317,7 @@
                 }),
                 success: function (result) {
                     console.log("result : " + result);
-                    if (result == "regSuccess") {
+                    if (result === "regSuccess") {
                         alert("댓글이 등록되었습니다.");
                         replyPageNum = 1;  // 페이지 1로 초기화
                         getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
@@ -335,7 +352,7 @@
                 }),
                 success: function (result) {
                     console.log("result : " + result);
-                    if (result == "modSuccess") {
+                    if (result === "modSuccess") {
                         alert("댓글이 수정되었습니다.");
                         getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
                         $("#modModal").modal("hide"); // modal 창 닫기
@@ -344,6 +361,7 @@
             })
         });
 
+        // modal 창의 댓글 삭제버튼 클릭 이벤트
         $(".modalDelBtn").on("click", function () {
             var replyNo = $(".replyNo").val();
             $.ajax({
@@ -356,7 +374,7 @@
                 dataType: "text",
                 success: function (result) {
                     console.log("result : " + result);
-                    if (result == "delSuccess") {
+                    if (result === "delSuccess") {
                         alert("댓글이 삭제되었습니다.");
                         getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
                         $("#delModal").modal("hide"); // modal 창 닫기

@@ -7,6 +7,8 @@
     <typeAliases>
         <typeAlias type="com.doubles.mvcboard.article.domain.ArticleVO" alias="ArticleVO"/>
         <typeAlias type="com.doubles.mvcboard.reply.domain.ReplyVO" alias="ReplyVO"/>
+        <typeAlias type="com.doubles.mvcboard.tutorial.domain.MessageVO" alias="MessageVO"/>
+        <typeAlias type="com.doubles.mvcboard.tutorial.domain.UserVO" alias="UserVO"/>
     </typeAliases>
 
 </configuration>
