@@ -5,16 +5,12 @@ import java.util.Date;
 public class ArticleVO {
 
     private Integer articleNo;
-
     private String title;
-
     private String content;
-
     private String writer;
-
     private Date regDate;
-
     private int viewCnt;
+    private int replyCnt;
 
     public Integer getArticleNo() {
         return articleNo;
@@ -64,6 +60,14 @@ public class ArticleVO {
         this.viewCnt = viewCnt;
     }
 
+    public int getReplyCnt() {
+        return replyCnt;
+    }
+
+    public void setReplyCnt(int replyCnt) {
+        this.replyCnt = replyCnt;
+    }
+
     @Override
     public String toString() {
         return "ArticleVO{" +
@@ -73,6 +77,7 @@ public class ArticleVO {
                 ", writer='" + writer + '\'' +
                 ", regDate=" + regDate +
                 ", viewCnt=" + viewCnt +
+                ", replyCnt=" + replyCnt +
                 '}';
     }
 }

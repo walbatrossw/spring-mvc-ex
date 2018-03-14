@@ -3,6 +3,7 @@ package com.doubles.mvcboard.reply;
 import com.doubles.mvcboard.commons.paging.Criteria;
 import com.doubles.mvcboard.reply.domain.ReplyVO;
 import com.doubles.mvcboard.reply.persistence.ReplyDAO;
+import com.doubles.mvcboard.reply.service.ReplyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,6 +22,21 @@ public class ReplyDAOTest {
 
     @Inject
     private ReplyDAO replyDAO;
+
+    @Inject
+    private ReplyService replyService;
+
+    @Test
+    public void testReplyCreateService() throws Exception {
+        for (int i = 1; i <= 100; i++) {
+            ReplyVO replyVO = new ReplyVO();
+            replyVO.setArticleNo(999);
+            replyVO.setReplyText(i+"번째 댓글입니다..");
+            replyVO.setReplyWriter("user0"+(i%10));
+
+            replyService.addReply(replyVO);
+        }
+    }
 
     @Test
     public void testReplyCreate() throws Exception {

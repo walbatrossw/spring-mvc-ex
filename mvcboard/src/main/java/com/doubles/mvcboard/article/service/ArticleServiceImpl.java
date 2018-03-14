@@ -5,6 +5,8 @@ import com.doubles.mvcboard.article.persistence.ArticleDAO;
 import com.doubles.mvcboard.commons.paging.Criteria;
 import com.doubles.mvcboard.commons.paging.SearchCriteria;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -24,8 +26,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleDAO.create(articleVO);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ArticleVO read(Integer articleNo) throws Exception {
+        articleDAO.updateViewCnt(articleNo);
         return articleDAO.read(articleNo);
     }
 

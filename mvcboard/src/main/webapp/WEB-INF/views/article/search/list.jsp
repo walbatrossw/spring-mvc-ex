@@ -39,16 +39,21 @@
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <th style="width: 30px">#</th>
+                                <th style="width: 30px">번호</th>
                                 <th>제목</th>
                                 <th style="width: 100px">작성자</th>
-                                <th style="width: 150px">작성시간</th>
+                                <th style="width: 100px">작성시간</th>
                                 <th style="width: 60px">조회</th>
                             </tr>
                             <c:forEach items="${articles}" var="article">
                             <tr>
                                 <td>${article.articleNo}</td>
-                                <td><a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
+                                <td>
+                                    <a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+                                            ${article.title}
+                                    </a>
+                                    <span class="badge bg-teal"><i class="fa fa-comment-o"></i> + ${article.replyCnt}</span>
+                                </td>
                                 <td>${article.writer}</td>
                                 <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                 <td><span class="badge bg-red">${article.viewCnt}</span></td>
@@ -69,7 +74,7 @@
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/article/paging/search/list?${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
+                                    <li><a href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
                                 </c:if>
                             </ul>
                         </div>

@@ -28,4 +28,7 @@ public interface ArticleDAO {
 
     int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
 
+    void updateReplyCnt(Integer articleNo, int amount) throws Exception;
+
+    void updateViewCnt(Integer articleNo) throws Exception;
 }
