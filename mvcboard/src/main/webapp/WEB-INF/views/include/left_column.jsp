@@ -21,21 +21,35 @@
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search...">
                 <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </form>
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">메뉴</li>
+            <li class="header">테스트 예제</li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-folder"></i> <span>예제</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 </a></li>
+                    <li><a href="${path}/file/form/upload"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
+                    <li><a href="${path}"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
+                </ul>
+            </li>
+            <li class="header">게시판</li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-edit"></i> <span>게시판(기본)</span>
                     <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
@@ -45,8 +59,8 @@
             <li class="treeview">
                 <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징)</span>
                     <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/article/paging/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
@@ -56,24 +70,15 @@
             <li class="treeview">
                 <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징+검색)</span>
                     <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/article/paging/search/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
                     <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-check-circle-o"></i> <span>AJAX 댓글 테스트</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 테스트</a></li>
-                </ul>
-            </li>
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>
