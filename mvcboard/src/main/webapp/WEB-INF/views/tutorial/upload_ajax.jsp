@@ -99,14 +99,14 @@
 
         var file = files[0];
 
-        //console.log(file);
+        console.log(file);
 
         var formData = new FormData();
 
         formData.append("file", file);
 
         $.ajax({
-            url: "/fileupload/uploadAjax",
+            url: "/file/ajax/upload",
             data: formData,
             dataType: "text",
             processData: false,
@@ -114,66 +114,66 @@
             type: "POST",
             success: function (data) {
                 alert(data);
-                var str = "";
-                if (checkImageType(data)) {
-                    str = "<div>"
-                            + "<a href='displayFile?fileName="+getImageLink(data)+"'>"
-                                + "<img src='displayFile?fileName=" + data + "'/>"
-                            + "</a> <small data-src="+data+">X</small>"
-                        + "</div>";
-                } else {
-                    str = "<div>"
-                            + "<a href='displayFile?fileName="+data+"'>"
-                                + getOriginalName(data)
-                            + "</a><small data-src="+data+">X</small>"
-                        + "</div>";
-                }
-                $(".uploadedList").append(str);
+                // var str = "";
+                // if (checkImageType(data)) {
+                //     str = "<div>"
+                //             + "<a href='display?fileName="+getImageLink(data)+"'>"
+                //                 + "<img src='display?fileName=" + data + "'/>"
+                //             + "</a> <small data-src="+data+">X</small>"
+                //         + "</div>";
+                // } else {
+                //     str = "<div>"
+                //             + "<a href='display?fileName="+data+"'>"
+                //                 + getOriginalName(data)
+                //             + "</a><small data-src="+data+">X</small>"
+                //         + "</div>";
+                // }
+                // $(".uploadedList").append(str);
             }
         });
     });
     
-    function checkImageType(fileName) {
+    // function checkImageType(fileName) {
+    //
+    //     var pattern = /jpg$|gif$|png$|jpge$/i;
+    //
+    //     return fileName.match(pattern);
+    // }
+    //
+    // function getOriginalName(fileName) {
+    //     if (checkImageType(fileName)) {
+    //         return;
+    //     }
+    //     var idx = fileName.indexOf("_") + 1;
+    //     return fileName.substr(idx);
+    // }
+    //
+    // function getImageLink(fileName) {
+    //     if (!checkImageType(fileName)) {
+    //         return;
+    //     }
+    //     var front = fileName.substr(0, 12); // /년/월/일 경로 추출
+    //     var end = fileName.substr(14);      // _s 썸네일 표시 제거
+    //     return front + end;
+    // }
 
-        var pattern = /jpg$|gif$|png$|jpge$/i;
-
-        return fileName.match(pattern);
-    }
-
-    function getOriginalName(fileName) {
-        if (checkImageType(fileName)) {
-            return;
-        }
-        var idx = fileName.indexOf("_") + 1;
-        return fileName.substr(idx);
-    }
-
-    function getImageLink(fileName) {
-        if (!checkImageType(fileName)) {
-            return;
-        }
-        var front = fileName.substr(0, 12); // /년/월/일 경로 추출
-        var end = fileName.substr(14);      // _s 썸네일 표시 제거
-        return front + end;
-    }
-
-    // 파일 삭제 처리
-    $(".uploadedList").on("click", "small", function (event) {
-        var that = $(this);
-        $.ajax({
-            url: "/fileupload/deleteFile",
-            type: "post",
-            data: {fileName:$(this).attr("data-src")},
-            dataType: "text",
-            success: function (result) {
-                if (result == "DELETED") {
-                    alert("삭제되었습니다.");
-                    that.parent("div").remove();
-                }
-                
-            }
-        });
-    })
+    // // 파일 삭제 처리
+    // $(".uploadedList").on("click", "small", function (event) {
+    //     var that = $(this);
+    //     $.ajax({
+    //         url: "/fileupload/deleteFile",
+    //         type: "post",
+    //         data: {fileName:$(this).attr("data-src")},
+    //         dataType: "text",
+    //         success: function (result) {
+    //             if (result == "DELETED") {
+    //                 alert("삭제되었습니다.");
+    //                 that.parent("div").remove();
+    //             }
+    //
+    //         }
+    //     });
+    // })
     
 </script>
 </body>
