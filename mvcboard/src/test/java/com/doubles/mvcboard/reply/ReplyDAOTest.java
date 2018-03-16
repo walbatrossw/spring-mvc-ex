@@ -30,7 +30,7 @@ public class ReplyDAOTest {
     public void testReplyCreateService() throws Exception {
         for (int i = 1; i <= 100; i++) {
             ReplyVO replyVO = new ReplyVO();
-            replyVO.setArticleNo(999);
+            replyVO.setArticleNo(997);
             replyVO.setReplyText(i+"번째 댓글입니다..");
             replyVO.setReplyWriter("user0"+(i%10));
 

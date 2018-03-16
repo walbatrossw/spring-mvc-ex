@@ -35,7 +35,7 @@ public class FormUploadController {
         logger.info("============================================================");
 
         //String uploadPath = getRealUploadPath(request);
-        String uploadPath = getLocalUploadPath();
+        String uploadPath = getRealUploadPath(request);
 
         String savedFileName = uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
         model.addAttribute("savedFileName", savedFileName);
@@ -44,12 +44,7 @@ public class FormUploadController {
 
     }
 
-    // 로컬 업로드 디렉토리
-    private String getLocalUploadPath() {
-        return "/home/doubles/workspace/intellij-workspace/spring-mvc-ex/mvcboard/src/main/webapp/resources/upload";
-    }
-
-    // 서버업로드 디렉토리
+    // 업로드 디렉토리
     private String getRealUploadPath(HttpServletRequest request) {
         return request.getSession().getServletContext().getRealPath("/resources/upload/");
     }

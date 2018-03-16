@@ -17,8 +17,8 @@ public class MediaUtils {
     }
 
 
-    public static MediaType getMediaType(String type) {
-        return mediaTypeMap.get(type.toUpperCase());
+    public static MediaType getMediaType(String fileExt) {
+        return mediaTypeMap.get(fileExt.toUpperCase());
     }
 
 }
