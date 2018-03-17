@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
@@ -51,20 +52,21 @@ public class AjaxUploadController {
 
     // 파일 출력
     @RequestMapping(value = "/display", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) {
+    public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws IOException {
 
         ResponseEntity<byte[]> entity = null;
         InputStream inputStream = null;
 
         try {
-            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
             HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName);
-            String uploadRootPath = UploadFileUtils.getUploadRootPath(fileExt, request);
+            String uploadRootPath = UploadFileUtils.getUploadRootPath(fileName, request);
             inputStream = new FileInputStream(uploadRootPath + fileName);
             entity = new ResponseEntity<>(IOUtils.toByteArray(inputStream), httpHeaders, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } finally {
+            inputStream.close();
         }
 
         return entity;
