@@ -36,6 +36,7 @@
 
         <%-- Main content --%>
         <section class="content container-fluid">
+
             <div class="col-lg-12">
                 <form role="form" id="uploadForm" method="post" action="${path}/file/form/upload" enctype="multipart/form-data" target="imgFrame">
                     <div class="box box-primary">
@@ -70,6 +71,7 @@
                     </div>
                 </form>
             </div>
+
         </section>
         <%-- /.content --%>
     </div>

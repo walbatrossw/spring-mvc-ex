@@ -40,8 +40,8 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 </a></li>
-                    <li><a href="${path}/file/form/upload"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
-                    <li><a href="${path}/file/ajax/upload"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
+                    <li><a href="${path}/file/form/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
+                    <li><a href="${path}/file/ajax/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
                 </ul>
             </li>
             <li class="header">게시판</li>

@@ -22,17 +22,22 @@ public class UploadFileUtils {
     // 파일 업로드
     public static String uploadFile(String originalFileName, byte[] fileData, HttpServletRequest request) throws Exception {
 
-        UUID uuid = UUID.randomUUID(); // 중복저장을 방지하기 위해
+        // 파일명 중복방지 방지
+        UUID uuid = UUID.randomUUID();
         String savedFileName = uuid.toString() + "_" + originalFileName;
 
-        String uploadRootPath = getUploadRootPath(originalFileName, request);   // 파일 업로드 루트 경로
+        // 파일 업로드 경로 설정
+        String uploadRootPath = getUploadRootPath(originalFileName, request);
         String datePath = getDatePath(uploadRootPath);
 
+        // 파일 객체 생성, 파일 복사
         File target = new File(uploadRootPath + datePath, savedFileName);
         FileCopyUtils.copy(fileData, target);
 
+        // 업로드 경로 + 파일명
         String uploadedFileName = null;
 
+        // 이미지 파일일 경우 썸네일이미지 생성
         if (MediaUtils.getMediaType(getFormatName(originalFileName)) != null) {
             uploadedFileName = makeThumbnail(uploadRootPath, datePath, savedFileName);
         } else {
@@ -45,10 +50,13 @@ public class UploadFileUtils {
     // 파일 삭제
     public static void deleteFile(String fileName, HttpServletRequest request) {
 
+        // 파일 업로드 경로
         String uploadRootPath = getUploadRootPath(fileName, request);
 
+        // 파일타입 확인
         MediaType mediaType = MediaUtils.getMediaType(getFormatName(fileName));
 
+        // 이미지 파일 여부 확인 : 원본이미지 삭제
         if (mediaType != null) {
 
             String front = fileName.substring(0, 12);
@@ -58,13 +66,16 @@ public class UploadFileUtils {
 
         }
 
+        // 파일삭제(썸네일이미지 or 일반파일)
         new File(uploadRootPath + fileName.replace('/', File.separatorChar)).delete();
     }
 
     // 파일 출력을 위한 Header 설정
     public static HttpHeaders getHttpHeaders(String fileName) throws Exception {
 
+        // 파일타입 확인
         MediaType mediaType = MediaUtils.getMediaType(getFormatName(fileName));
+
         HttpHeaders httpHeaders = new HttpHeaders();
 
         if (mediaType != null) {
@@ -79,7 +90,6 @@ public class UploadFileUtils {
         return httpHeaders;
     }
 
-
     // 파일 확장자 추출
     public static String getFormatName(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -93,15 +103,12 @@ public class UploadFileUtils {
         }
 
         return request.getSession().getServletContext().getRealPath("/resources/upload/files/");
-
     }
 
-
-    // 날짜 경로 추출 : 파일 관리를 위해
+    // 날짜별 경로 추출 : 파일 관리를 위해
     private static String getDatePath(String uploadPath) {
 
         Calendar calendar = Calendar.getInstance();
-
         String yearPath = File.separator + calendar.get(Calendar.YEAR);
         String monthPath = yearPath + File.separator + new DecimalFormat("00").format(calendar.get(Calendar.MONTH) + 1);
         String datePath = monthPath + File.separator + new DecimalFormat("00").format(calendar.get(Calendar.DATE));
@@ -111,7 +118,7 @@ public class UploadFileUtils {
         return datePath;
     }
 
-    // 파일 최종 저장 경로 생성
+    // 파일 저장 경로 생성
     private static void makeDir(String uploadPath, String... paths) {
 
         if (new File(uploadPath + paths[paths.length - 1]).exists())
@@ -132,12 +139,12 @@ public class UploadFileUtils {
 
         BufferedImage sourceImg = ImageIO.read(new File(uploadPath + path, fileName));
         BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
-        String thumnailName = uploadPath + path + File.separator + "s_" + fileName;
-        File newFile = new File(thumnailName);
+        String thumbnailName = uploadPath + path + File.separator + "s_" + fileName;
+        File newFile = new File(thumbnailName);
         String formatName = getFormatName(fileName);
         ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 
-        return thumnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
+        return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
     }
 
     // 파일 아이콘

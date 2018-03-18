@@ -1,4 +1,4 @@
-package com.doubles.mvcboard.upload.controller;
+package com.doubles.mvcboard.tutorial.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +15,18 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/file/form")
-public class FormUploadController {
+public class UploadFormController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FormUploadController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadFormController.class);
 
-    @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public String uploadGET() {
+    @RequestMapping(value = "/uploadPage", method = RequestMethod.GET)
+    public String uploadPage() {
 
         return "tutorial/upload_form";
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String uploadPOST(MultipartFile file, Model model, HttpServletRequest request) throws Exception {
+    public String uploadFile(MultipartFile file, Model model, HttpServletRequest request) throws Exception {
 
         logger.info("==================== FILE UPLOAD ===========================");
         logger.info("original file name : " + file.getOriginalFilename());
@@ -34,7 +34,6 @@ public class FormUploadController {
         logger.info("contentType : " + file.getContentType());
         logger.info("============================================================");
 
-        //String uploadPath = getRealUploadPath(request);
         String uploadPath = getRealUploadPath(request);
 
         String savedFileName = uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
@@ -53,9 +52,15 @@ public class FormUploadController {
     private String uploadFile(String uploadPath,
                               String originalFileName,
                               byte[] fileData) throws Exception {
+        // 중복파일 저장을 방지하기 위해
         UUID uuid = UUID.randomUUID();
         String savedFileName = uuid.toString() + "_" + originalFileName;
+
+        // 파일 객체 생성
         File target = new File(uploadPath, savedFileName);
+
+        // 파일 데이터를 파일로 처리
+        // 데이터가 담긴 바이트 배열을 파일객체에 기록
         FileCopyUtils.copy(fileData, target);
 
         return savedFileName;

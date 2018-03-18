@@ -1,4 +1,4 @@
-package com.doubles.mvcboard.upload.controller;
+package com.doubles.mvcboard.tutorial.controller;
 
 import com.doubles.mvcboard.commons.util.UploadFileUtils;
 import org.apache.commons.io.IOUtils;
@@ -19,12 +19,12 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping("/file/ajax")
-public class AjaxUploadController {
+public class UploadAjaxController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AjaxUploadController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadAjaxController.class);
 
-    @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public ModelAndView uploadAjaxGET() {
+    @RequestMapping(value = "/uploadPage", method = RequestMethod.GET)
+    public ModelAndView uploadPage() {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("tutorial/upload_ajax");
@@ -35,9 +35,10 @@ public class AjaxUploadController {
 
     // 파일 업로드
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public ResponseEntity<String> uploadAjaxPOST(MultipartFile file, HttpServletRequest request) {
+    public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
 
         ResponseEntity<String> entity = null;
+
         try {
             String uploadedFileName = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
             entity = new ResponseEntity<>(uploadedFileName, HttpStatus.CREATED);
@@ -58,9 +59,9 @@ public class AjaxUploadController {
         InputStream inputStream = null;
 
         try {
-            HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName);
-            String uploadRootPath = UploadFileUtils.getUploadRootPath(fileName, request);
-            inputStream = new FileInputStream(uploadRootPath + fileName);
+            HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); // 헤더
+            String uploadRootPath = UploadFileUtils.getUploadRootPath(fileName, request); // 업로드 경로
+            inputStream = new FileInputStream(uploadRootPath + fileName); // 읽어오기
             entity = new ResponseEntity<>(IOUtils.toByteArray(inputStream), httpHeaders, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
