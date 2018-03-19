@@ -40,7 +40,7 @@ public class UploadFileUtils {
         // 이미지 파일일 경우 썸네일이미지 생성
         if (MediaUtils.getMediaType(getFormatName(originalFileName)) != null) {
             uploadedFileName = makeThumbnail(uploadRootPath, datePath, savedFileName);
-        } else {
+        } else { // 일반 파일일 경우
             uploadedFileName = makeIcon(uploadRootPath, datePath, savedFileName);
         }
 
@@ -105,7 +105,7 @@ public class UploadFileUtils {
         return request.getSession().getServletContext().getRealPath("/resources/upload/files/");
     }
 
-    // 날짜별 경로 추출 : 파일 관리를 위해
+    // 날짜별 경로 추출 : 파일 관리를 위해 - ex) /2018/03/01
     private static String getDatePath(String uploadPath) {
 
         Calendar calendar = Calendar.getInstance();

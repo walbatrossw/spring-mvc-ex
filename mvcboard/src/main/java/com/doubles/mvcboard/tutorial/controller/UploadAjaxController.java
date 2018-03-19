@@ -23,6 +23,7 @@ public class UploadAjaxController {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadAjaxController.class);
 
+    // AJAX 파일업로드 페이지 매핑
     @RequestMapping(value = "/uploadPage", method = RequestMethod.GET)
     public ModelAndView uploadPage() {
 
@@ -33,7 +34,7 @@ public class UploadAjaxController {
 
     }
 
-    // 파일 업로드
+    // 파일 업로드 처리
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
 
@@ -51,7 +52,7 @@ public class UploadAjaxController {
 
     }
 
-    // 파일 출력
+    // 업로드 파일 출력 처리
     @RequestMapping(value = "/display", method = RequestMethod.GET)
     public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws IOException {
 
@@ -74,7 +75,7 @@ public class UploadAjaxController {
 
     }
 
-    // 파일 삭제
+    // 업로드 파일 삭제 처리
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) {
 
