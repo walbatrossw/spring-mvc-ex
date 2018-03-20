@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/file/ajax")
@@ -41,28 +42,29 @@ public class UploadAjaxController {
         ResponseEntity<String> entity = null;
 
         try {
-            String uploadedFileName = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
-            entity = new ResponseEntity<>(uploadedFileName, HttpStatus.CREATED);
+            String filePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
+            entity = new ResponseEntity<>(filePath, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return entity;
-
     }
 
     // 업로드 파일 출력 처리
     @RequestMapping(value = "/display", method = RequestMethod.GET)
     public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws IOException {
 
+        logger.info("fileName : " + fileName);
         ResponseEntity<byte[]> entity = null;
         InputStream inputStream = null;
 
         try {
-            HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); // 헤더
-            String uploadRootPath = UploadFileUtils.getUploadRootPath(fileName, request); // 업로드 경로
-            inputStream = new FileInputStream(uploadRootPath + fileName); // 읽어오기
+            HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); // Http 헤더 설정 가져오기
+            String rootPath = UploadFileUtils.getRootPath(fileName, request); // 업로드 기본경로 경로
+            inputStream = new FileInputStream(rootPath + fileName); // 파일데이터를 전송하기위해 inputStream 객체 생성
+            // 파일데이터, HttpHeader 전송
             entity = new ResponseEntity<>(IOUtils.toByteArray(inputStream), httpHeaders, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +74,7 @@ public class UploadAjaxController {
         }
 
         return entity;
+
 
     }
 

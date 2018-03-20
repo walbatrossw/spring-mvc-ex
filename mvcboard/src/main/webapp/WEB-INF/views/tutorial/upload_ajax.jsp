@@ -9,7 +9,7 @@
     .fileDrop {
         width: 100%;
         height: 200px;
-        border: 2px dotted #0b58a2;
+        border: 4px dotted #0b58a2;
     }
 
     small {
@@ -58,18 +58,12 @@
                             <br/>
                             <br/>
                             <br/>
-                            <p class="text-center">파일을 드래그해주세요.</p>
+                            <p class="text-center">업로드 할 파일을 탐색기에서 드래그해주세요.</p>
                         </div>
                         <hr/>
                         <div class="uploadedList"></div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> 저장</button>
-                        </div>
-                    </div>
-                    <!-- /.box-footer -->
                 </div>
             </div>
         </section>
@@ -87,24 +81,28 @@
 <%--plugin_js.jsp--%>
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
-    
+
     $(".fileDrop").on("dragenter dragover", function (event) {
         event.preventDefault();
     });
 
     $(".fileDrop").on("drop", function (event) {
+        // 기본 이벤트 처리 방지
         event.preventDefault();
-
+        // 이벤트와 같이 전달된 데이터들을 가져와 files에 저장
         var files = event.originalEvent.dataTransfer.files;
-
+        // 단일 파일업로드이기 때문에 첫번째 파일을 file에 저장
         var file = files[0];
-
+        // 콘솔에 출력
         console.log(file);
 
+        // FormData객체를 통해 form태그처럼 파일데이터를 전송 : IE의 경우 버전이 10이상만 지원
         var formData = new FormData();
-
+        // FormData에 데이터를 key, value의 형태로 저장
         formData.append("file", file);
 
+        // $.ajax()를 이용해서 formData객체에 저장된 파일데이터를 전송하기 위해서는 processData, contentType의 속성을
+        // false로 지정해야함
         $.ajax({
             url: "/file/ajax/upload",
             data: formData,
@@ -121,13 +119,16 @@
                                 + "<img src='display?fileName=" + data + "'/>"
                             + "</a>"
                             + "<small data-src="+data+">X</small>"
-                        + "</div>";
+                        + "</div>"
+                        + "<hr/>";
                 } else {
                     str = "<div>"
                             + "<a href='display?fileName="+data+"'>"
+                                + "<i class='fa fa-file'></i> "
                                 + getOriginalName(data)
                             + "</a><small data-src="+data+">X</small>"
-                        + "</div>";
+                        + "</div>"
+                        + "<hr/>";
                 }
                 $(".uploadedList").append(str);
             }
