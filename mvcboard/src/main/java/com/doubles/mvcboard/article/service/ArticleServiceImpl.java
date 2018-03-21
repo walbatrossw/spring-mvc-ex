@@ -4,6 +4,7 @@ import com.doubles.mvcboard.article.domain.ArticleVO;
 import com.doubles.mvcboard.article.persistence.ArticleDAO;
 import com.doubles.mvcboard.commons.paging.Criteria;
 import com.doubles.mvcboard.commons.paging.SearchCriteria;
+import com.doubles.mvcboard.upload.persistence.ArticleFileDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,14 +17,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleDAO articleDAO;
 
+    private final ArticleFileDAO articleFileDAO;
+
     @Inject
-    public ArticleServiceImpl(ArticleDAO articleDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
         this.articleDAO = articleDAO;
+        this.articleFileDAO = articleFileDAO;
     }
 
+    @Transactional
     @Override
     public void create(ArticleVO articleVO) throws Exception {
         articleDAO.create(articleVO);
+        String[] files = articleVO.getFiles();
+        if (files == null)
+            return;
+        for (String fileName : files)
+            articleFileDAO.addFile(fileName);
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)

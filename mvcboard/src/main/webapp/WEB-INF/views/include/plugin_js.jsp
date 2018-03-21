@@ -10,6 +10,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <%--fileUpload--%>
 <script src="/bower_components/fileupload/js/jasny-bootstrap.min.js"></script>
+<%--lightbox--%>
+<script src="/bower_components/lightbox/js/lightbox.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
 user experience. -->

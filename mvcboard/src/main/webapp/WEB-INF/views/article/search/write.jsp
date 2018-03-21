@@ -96,20 +96,30 @@
 <%--이미지--%>
 <script id="templatePhotoAttach" type="text/x-handlebars-template">
     <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgScr}}" alt="Attachment"></span>
+        <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fa fa-camera"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
+            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages">
+                <i class="fa fa-camera"></i> {{fileName}}
+            </a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
         </div>
     </li>
 </script>
 <%--일반 파일--%>
 <script id="templateFileAttach" type="text/x-handlebars-template">
     <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgScr}}" alt="Attachment"></span>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
+            <a href="{{getLink}}" class="mailbox-attachment-name">
+                <i class="fa fa-paperclip"></i> {{fileName}}
+            </a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
         </div>
     </li>
 </script>
@@ -140,7 +150,7 @@
             var formData = new FormData();
             formData.append("file", file);
             $.ajax({
-                url: "/file/ajax/upload",
+                url: "/article/file/upload",
                 data: formData,
                 dataType: "text",
                 processData: false,
@@ -150,7 +160,7 @@
                     // 파일정보 가공
                     var fileInfo = getFileInfo(data);
                     // 이미지 파일일 경우
-                    if (data.substr(12, 2) == "s_") {
+                    if (data.substr(12, 2) === "s_") {
                         var html = templatePhotoAttach(fileInfo);
 
                         // 이미지 파일이 아닐 경우
@@ -163,7 +173,7 @@
         });
 
         // 글 저장 버튼 클릭 이벤트 : 파일명 DB 저장 처리
-        $("#regForm").submit(function (event) {
+        $("#writeForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
             var str = "";
@@ -179,7 +189,7 @@
             event.preventDefault();
             var that = $(this);
             $.ajax({
-                url: "/file/ajax/delete",
+                url: "/article/file/delete",
                 type: "post",
                 data: {fileName:$(this).attr("href")},
                 dataType: "text",
