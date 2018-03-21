@@ -1,4 +1,4 @@
-package com.doubles.mvcboard.tutorial.controller;
+package com.doubles.mvcboard.upload.controller;
 
 import com.doubles.mvcboard.commons.util.UploadFileUtils;
 import org.apache.commons.io.IOUtils;
@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/file/ajax")
 public class UploadAjaxController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadAjaxController.class);
-
-    // AJAX 파일업로드 페이지 매핑
+    // AJAX 파일업로드 테스트 페이지 매핑
     @RequestMapping(value = "/uploadPage", method = RequestMethod.GET)
     public ModelAndView uploadPage() {
 
@@ -32,7 +30,6 @@ public class UploadAjaxController {
         modelAndView.setViewName("tutorial/upload_ajax");
 
         return modelAndView;
-
     }
 
     // 파일 업로드 처리
@@ -42,8 +39,8 @@ public class UploadAjaxController {
         ResponseEntity<String> entity = null;
 
         try {
-            String filePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
-            entity = new ResponseEntity<>(filePath, HttpStatus.CREATED);
+            String savedFilePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
+            entity = new ResponseEntity<>(savedFilePath, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,28 +51,22 @@ public class UploadAjaxController {
 
     // 업로드 파일 출력 처리
     @RequestMapping(value = "/display", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws IOException {
+    public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws Exception {
 
-        logger.info("fileName : " + fileName);
         ResponseEntity<byte[]> entity = null;
-        InputStream inputStream = null;
 
-        try {
-            HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); // Http 헤더 설정 가져오기
-            String rootPath = UploadFileUtils.getRootPath(fileName, request); // 업로드 기본경로 경로
-            inputStream = new FileInputStream(rootPath + fileName); // 파일데이터를 전송하기위해 inputStream 객체 생성
-            // 파일데이터, HttpHeader 전송
+        HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); // Http 헤더 설정 가져오기
+        String rootPath = UploadFileUtils.getRootPath(fileName, request); // 업로드 기본경로 경로
+
+        // 파일데이터, HttpHeader 전송
+        try (InputStream inputStream = new FileInputStream(rootPath + fileName)) {
             entity = new ResponseEntity<>(IOUtils.toByteArray(inputStream), httpHeaders, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } finally {
-            inputStream.close();
         }
 
         return entity;
-
-
     }
 
     // 업로드 파일 삭제 처리
