@@ -1,6 +1,7 @@
 package com.doubles.mvcboard.upload.controller;
 
 import com.doubles.mvcboard.commons.util.UploadFileUtils;
+import com.doubles.mvcboard.upload.service.ArticleFileService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -8,13 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/article/file")
 public class ArticleFileController {
+
+    private static ArticleFileService articleFileService;
+
+    @Inject
+    public ArticleFileController(ArticleFileService articleFileService) {
+        this.articleFileService = articleFileService;
+    }
 
     // 게시글 파일 업로드
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -42,6 +52,19 @@ public class ArticleFileController {
         // 파일데이터, HttpHeader 전송
         try (InputStream inputStream = new FileInputStream(rootPath + fileName)) {
             entity = new ResponseEntity<>(IOUtils.toByteArray(inputStream), httpHeaders, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    @RequestMapping(value = "/list/{articleNo}", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) throws Exception {
+        ResponseEntity<List<String>> entity = null;
+        try {
+            List<String> files = articleFileService.getArticleFiles(articleNo);
+            entity = new ResponseEntity<>(files, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

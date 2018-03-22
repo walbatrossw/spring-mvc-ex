@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Repository
 public class ArticleFileDAOImpl implements ArticleFileDAO {
@@ -22,4 +23,8 @@ public class ArticleFileDAOImpl implements ArticleFileDAO {
         sqlSession.insert(NAMESPACE + ".addFile", fileName);
     }
 
+    @Override
+    public List<String> getArticleFiles(Integer articleNo) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".getArticleFiles", articleNo);
+    }
 }

@@ -38,6 +38,12 @@
                     <div class="box-body" style="height: 700px">
                         ${article.content}
                     </div>
+
+                    <%--업로드 파일 정보 영역--%>
+                    <div class="box-footer uploadFiles">
+                        <ul class="mailbox-attachments clearfix uploadedList"></ul>
+                    </div>
+
                     <div class="box-footer">
                         <div class="user-block">
                             <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
@@ -166,6 +172,35 @@
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>
+<%--업로드 JS--%>
+<script type="text/javascript" src="/resources/dist/js/upload.js"></script>
+<%--첨부파일 하나의 영역--%>
+<%--이미지--%>
+<script id="templatePhotoAttach" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+        <div class="mailbox-attachment-info">
+            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages">
+                <i class="fa fa-camera"></i> {{fileName}}
+            </a>
+        </div>
+    </li>
+</script>
+<%--일반 파일--%>
+<script id="templateFileAttach" type="text/x-handlebars-template">
+    <li>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+        <div class="mailbox-attachment-info">
+            <a href="{{getLink}}" class="mailbox-attachment-name">
+                <i class="fa fa-paperclip"></i> {{fileName}}
+            </a>
+        </div>
+    </li>
+</script>
 <script id="replyTemplate" type="text/x-handlebars-template">
     {{#each.}}
     <div class="post replyDiv" data-replyNo={{replyNo}}>
@@ -201,6 +236,28 @@
 
         var articleNo = "${article.articleNo}";  // 현재 게시글 번호
         var replyPageNum = 1; // 댓글 페이지 번호 초기화
+
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html()); // 이미지 template
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());   // 일반파일 template
+
+
+        $.getJSON("/article/file/list/" + articleNo, function (list) {
+            if (list.length === 0) {
+                $(".uploadedList").html("첨부파일이 없습니다.");
+            }
+            $(list).each(function () {
+                // 파일정보 가공
+                var fileInfo = getFileInfo(this);
+                // 이미지 파일일 경우
+                if (fileInfo.fullName.substr(12, 2) === "s_") {
+                    var html = templatePhotoAttach(fileInfo);
+                    // 이미지 파일이 아닐 경우
+                } else {
+                    html = templateFileAttach(fileInfo);
+                }
+                $(".uploadedList").append(html);
+            })
+        });
 
         // 댓글 내용 : 줄바꿈/공백처리
         Handlebars.registerHelper("escape", function (replyText) {

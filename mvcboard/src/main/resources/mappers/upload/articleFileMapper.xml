@@ -6,13 +6,21 @@
 <mapper namespace="com.doubles.mvcboard.mappers.upload.ArticleFileMapper">
 
     <insert id="addFile">
-      INSERT INTO tbl_article_file (
+        INSERT INTO tbl_article_file (
           file_name
           , article_no
-      ) VALUES (
+        ) VALUES (
           #{file_name}
           , LAST_INSERT_ID()
-      )
+        )
     </insert>
+
+    <select id="getArticleFiles" resultType="string">
+        SELECT
+            file_name
+        FROM tbl_article_file
+        WHERE article_no = #{articleNo}
+        ORDER BY reg_date
+    </select>
 
 </mapper>

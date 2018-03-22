@@ -1,10 +1,11 @@
 package com.doubles.mvcboard.upload.service;
 
+import java.util.List;
+
 public interface ArticleFileService {
 
-    // 파일 업로드
-
-    // 파일 출력
+    // 파일 목록
+    List<String> getArticleFiles(Integer articleNo) throws Exception;
 
     // 파일 삭제
 
