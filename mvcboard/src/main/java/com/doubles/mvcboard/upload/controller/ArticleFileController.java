@@ -59,12 +59,13 @@ public class ArticleFileController {
         return entity;
     }
 
+    // 게시글 파일 목록
     @RequestMapping(value = "/list/{articleNo}", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) throws Exception {
         ResponseEntity<List<String>> entity = null;
         try {
-            List<String> files = articleFileService.getArticleFiles(articleNo);
-            entity = new ResponseEntity<>(files, HttpStatus.OK);
+            List<String> fileList = articleFileService.getArticleFiles(articleNo);
+            entity = new ResponseEntity<>(fileList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,13 +73,32 @@ public class ArticleFileController {
         return entity;
     }
 
-    // 게시글 파일 단일 삭제 : 게시글 작성
+    // 게시글 파일 삭제 : 게시글 작성
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) {
+    public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) throws Exception {
         ResponseEntity<String> entity = null;
 
         try {
             UploadFileUtils.deleteFile(fileName, request);
+            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+
+    // 게시글 파일 삭제 : 게시글 수정
+    @RequestMapping(value = "/delete/{articleNo}", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteFile(@PathVariable("articleNo") Integer articleNo,
+                                             String fileName,
+                                             HttpServletRequest request) throws Exception {
+        ResponseEntity<String> entity = null;
+
+        try {
+            UploadFileUtils.deleteFile(fileName, request);
+            articleFileService.deleteFile(fileName, articleNo);
             entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

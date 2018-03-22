@@ -10,7 +10,7 @@
           file_name
           , article_no
         ) VALUES (
-          #{file_name}
+          #{fileName}
           , LAST_INSERT_ID()
         )
     </insert>
@@ -22,5 +22,34 @@
         WHERE article_no = #{articleNo}
         ORDER BY reg_date
     </select>
+
+    <delete id="deleteFile">
+        DELETE FROM tbl_article_file
+        WHERE file_name = #{fileName}
+    </delete>
+
+    <delete id="deleteFiles">
+        DELETE FROM tbl_article_file
+        WHERE article_no = #{articleNo}
+    </delete>
+
+    <insert id="replaceFile">
+        INSERT INTO tbl_article_file (
+            file_name
+            , article_no
+        ) VALUES (
+            #{fileName}
+            , #{articleNo}
+        )
+    </insert>
+
+    <update id="updateFileCnt">
+        UPDATE tbl_article
+        SET file_cnt = (
+            SELECT COUNT(article_no) FROM tbl_article_file
+            WHERE article_no = #{articleNo}
+        )
+        WHERE article_no = #{articleNo}
+    </update>
 
 </mapper>

@@ -10,13 +10,13 @@ function getFileInfo(fullName) {
     // 이미지 파일일 경우
     if (checkImageType(fullName)) {
         // 썸네일 파일 이미지 URL
-        imgSrc = "/file/ajax/display?fileName=" + fullName;
+        imgSrc = "/article/file/display?fileName=" + fullName;
         // UUID_파일명.확장자 (s_ 제외 : 원본이미지)
         fileLink = fullName.substr(14);
         // 원본파일 요청 URL
         var datePath = fullName.substr(0, 12); // 날짜 경로
         var originalFileName = fullName.substr(14);      // 파일명(s_ 제외)
-        getLink = "/file/ajax/display?fileName=" + datePath + originalFileName;
+        getLink = "/article/file/display?fileName=" + datePath + originalFileName;
 
         // 이미지 파일이 아닐 경우
     } else {
@@ -25,7 +25,7 @@ function getFileInfo(fullName) {
         // UUID_파일명.확장자
         fileLink = fullName.substr(12);
         // 파일 요청 url
-        getLink = "/file/ajax/display?fileName=" + fullName;
+        getLink = "/article/file/display?fileName=" + fullName;
     }
     // 화면에 출력할 파일명
     fileName = fileLink.substr(fileLink.indexOf("_") + 1);

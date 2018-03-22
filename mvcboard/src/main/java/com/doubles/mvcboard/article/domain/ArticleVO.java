@@ -14,6 +14,8 @@ public class ArticleVO {
     private int replyCnt;
 
     private String[] files;
+    private int fileCnt;
+
 
     public Integer getArticleNo() {
         return articleNo;
@@ -77,6 +79,15 @@ public class ArticleVO {
 
     public void setFiles(String[] files) {
         this.files = files;
+        setFileCnt(files.length);
+    }
+
+    public int getFileCnt() {
+        return fileCnt;
+    }
+
+    private void setFileCnt(int fileCnt) {
+        this.fileCnt = fileCnt;
     }
 
     @Override
@@ -90,6 +101,7 @@ public class ArticleVO {
                 ", viewCnt=" + viewCnt +
                 ", replyCnt=" + replyCnt +
                 ", files=" + Arrays.toString(files) +
+                ", fileCnt=" + fileCnt +
                 '}';
     }
 }

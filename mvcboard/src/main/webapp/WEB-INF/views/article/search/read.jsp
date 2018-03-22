@@ -177,7 +177,7 @@
 <%--첨부파일 하나의 영역--%>
 <%--이미지--%>
 <script id="templatePhotoAttach" type="text/x-handlebars-template">
-    <li>
+    <li data-src="{{fullName}}">
         <span class="mailbox-attachment-icon has-img">
             <img src="{{imgSrc}}" alt="Attachment">
         </span>
@@ -190,7 +190,7 @@
 </script>
 <%--일반 파일--%>
 <script id="templateFileAttach" type="text/x-handlebars-template">
-    <li>
+    <li data-src="{{fullName}}">
         <span class="mailbox-attachment-icon has-img">
             <img src="{{imgSrc}}" alt="Attachment">
         </span>
@@ -450,6 +450,24 @@
         });
 
         $(".delBtn").on("click", function () {
+
+            var replyCnt = $(".replyDiv").length;
+            if (replyCnt > 0) {
+                alert("댓글이 달린 게시글은 삭제할수 없습니다.");
+                return;
+            }
+
+            var arr = [];
+            $(".uploadedList li").each(function (index) {
+                arr.push($(this).attr("data-src"));
+            });
+
+            if (arr.length > 0) {
+                $.post("/article/file/deleteAll", {files:arr}, function () {
+                    
+                });
+            }
+
             formObj.attr("action", "/article/paging/search/remove");
             formObj.submit();
         });

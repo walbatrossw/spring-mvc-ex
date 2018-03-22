@@ -28,12 +28,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
     @Override
     public void create(ArticleVO articleVO) throws Exception {
+
         articleDAO.create(articleVO);
         String[] files = articleVO.getFiles();
+
         if (files == null)
             return;
         for (String fileName : files)
             articleFileDAO.addFile(fileName);
+
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -43,13 +46,25 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDAO.read(articleNo);
     }
 
+    @Transactional
     @Override
     public void update(ArticleVO articleVO) throws Exception {
+        Integer articleNo = articleVO.getArticleNo();
+        String[] files = articleVO.getFiles();
+
         articleDAO.update(articleVO);
+        articleFileDAO.deleteFiles(articleNo);
+
+        if (files == null)
+            return;
+        for (String fileName : files)
+            articleFileDAO.replaceFile(fileName, articleNo);
     }
 
+    @Transactional
     @Override
     public void delete(Integer articleNo) throws Exception {
+        articleFileDAO.deleteFiles(articleNo);
         articleDAO.delete(articleNo);
     }
 

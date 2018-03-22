@@ -8,5 +8,6 @@ public interface ArticleFileService {
     List<String> getArticleFiles(Integer articleNo) throws Exception;
 
     // 파일 삭제
+    void deleteFile(String fileName, Integer articleNo) throws Exception;
 
 }
