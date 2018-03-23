@@ -1,10 +1,10 @@
 
 -- 게시글 첨부파일 테이블 생성
-CREATE TABLE tbl_article_attach (
-  full_name VARCHAR(150) NOT NULL ,
+CREATE TABLE tbl_article_file (
+  file_name VARCHAR(150) NOT NULL ,
   article_no INT NOT NULL ,
   reg_date TIMESTAMP DEFAULT NOW(),
-  PRIMARY KEY (full_name)
+  PRIMARY KEY (file_name)
 );
 
 -- 게시글 첨부파일 테이블 참조키 설정
