@@ -7,17 +7,16 @@
 
     <insert id="addFile">
         INSERT INTO tbl_article_file (
-          file_name
-          , article_no
+            file_name
+            , article_no
         ) VALUES (
-          #{fileName}
-          , LAST_INSERT_ID()
+            #{fileName}
+            , LAST_INSERT_ID()
         )
     </insert>
 
     <select id="getArticleFiles" resultType="string">
-        SELECT
-            file_name
+        SELECT file_name
         FROM tbl_article_file
         WHERE article_no = #{articleNo}
         ORDER BY reg_date
@@ -46,7 +45,8 @@
     <update id="updateFileCnt">
         UPDATE tbl_article
         SET file_cnt = (
-            SELECT COUNT(article_no) FROM tbl_article_file
+            SELECT COUNT(article_no)
+            FROM tbl_article_file
             WHERE article_no = #{articleNo}
         )
         WHERE article_no = #{articleNo}

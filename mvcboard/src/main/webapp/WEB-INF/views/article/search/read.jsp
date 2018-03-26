@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
-<%@ include file="../../include/head.jsp"%>
+<%@ include file="../../include/head.jsp" %>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@ include file="../../include/main_header.jsp"%>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@ include file="../../include/left_column.jsp"%>
+    <%@ include file="../../include/left_column.jsp" %>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -50,7 +50,8 @@
                             <span class="username">
                                 <a href="#">${article.writer}</a>
                             </span>
-                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${article.regDate}"/></span>
+                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm"
+                                                                      value="${article.regDate}"/></span>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -77,14 +78,17 @@
                         <form class="form-horizontal">
                             <div class="form-group margin">
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..." style="resize: none"></textarea>
+                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..."
+                                              style="resize: none"></textarea>
                                 </div>
                                 <div class="col-sm-2">
                                     <input class="form-control" id="newReplyWriter" type="text" placeholder="댓글작성자...">
                                 </div>
                                 <hr/>
                                 <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
+                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i
+                                            class="fa fa-save"></i> 저장
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -152,7 +156,8 @@
                                 <input type="hidden" class="rno"/>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">아니요.</button>
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">아니요.
+                                </button>
                                 <button type="button" class="btn btn-primary modalDelBtn">네. 삭제합니다.</button>
                             </div>
                         </div>
@@ -167,11 +172,11 @@
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@ include file="../../include/main_footer.jsp"%>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 <!-- ./wrapper -->
-<%@ include file="../../include/plugin_js.jsp"%>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script id="replyTemplate" type="text/x-handlebars-template">
     {{#each.}}
     <div class="post replyDiv" data-replyNo={{replyNo}}>
@@ -244,17 +249,17 @@
 
             // 댓글 입력처리 수행
             $.ajax({
-                type : "post",
-                url : "/replies/",
-                headers : {
-                    "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "POST"
+                type: "post",
+                url: "/replies/",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
                 },
-                dataType : "text",
-                data : JSON.stringify({
-                    articleNo : articleNo,
-                    replyWriter : replyWriter,
-                    replyText : replyText
+                dataType: "text",
+                data: JSON.stringify({
+                    articleNo: articleNo,
+                    replyWriter: replyWriter,
+                    replyText: replyText
                 }),
                 success: function (result) {
                     console.log("result : " + result);
@@ -281,15 +286,15 @@
             var replyNo = $(".replyNo").val();
             var replyText = $("#replyText").val();
             $.ajax({
-                type : "put",
-                url : "/replies/" + replyNo,
-                headers : {
-                    "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "PUT"
+                type: "put",
+                url: "/replies/" + replyNo,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "PUT"
                 },
-                dataType : "text",
+                dataType: "text",
                 data: JSON.stringify({
-                    replyText : replyText
+                    replyText: replyText
                 }),
                 success: function (result) {
                     console.log("result : " + result);
@@ -309,8 +314,8 @@
                 type: "delete",
                 url: "/replies/" + replyNo,
                 headers: {
-                    "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "DELETE"
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "DELETE"
                 },
                 dataType: "text",
                 success: function (result) {
@@ -347,8 +352,8 @@
             });
 
             if (arr.length > 0) {
-                $.post("/article/file/deleteAll", {files:arr}, function () {
-                    
+                $.post("/article/file/deleteAll", {files: arr}, function () {
+
                 });
             }
 
