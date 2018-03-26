@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/article/file")
 public class ArticleFileController {
 
-    private static ArticleFileService articleFileService;
+    private final ArticleFileService articleFileService;
 
     @Inject
     public ArticleFileController(ArticleFileService articleFileService) {
@@ -27,8 +27,8 @@ public class ArticleFileController {
     }
 
     // 게시글 파일 업로드
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
         ResponseEntity<String> entity = null;
         try {
             String savedFilePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
