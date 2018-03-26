@@ -1,8 +1,7 @@
 
 
 // 파일 템플릿
-var templateImage = Handlebars.compile($("#templateImage").html());
-var templateFile = Handlebars.compile($("#templateFile").html());
+var fileTemplate = Handlebars.compile($("#fileTemplate").html());
 
 // 전체 페이지 파일 드랍 드래그 이벤트 처리 : 지정된 영역외 이벤트 발생 금지
 $(".content-wrapper").on("dragenter dragover drop", function (event) {
@@ -52,13 +51,27 @@ function getFiles(articleNo) {
 // 파일 출력
 function printFiles(data) {
     var fileInfo = getFileInfo(data);
-    if (fileInfo.fullName.substr(12, 2) === "s_") {
-        var html = templateImage(fileInfo);
-    } else {
-        html = templateFile(fileInfo);
-    }
+    var html = fileTemplate(fileInfo);
     $(".uploadedList").append(html);
+
+    if (fileInfo.fullName.substr(12, 2) === "s_") {
+        var that = $(".uploadedList li").last();
+        that.find(".mailbox-attachment-name").attr("data-lightbox", "uploadImages");
+        that.find(".fa-paperclip").attr("class", "fa fa-camera");
+    }
+
 }
+
+// 파일명 DB저장
+function filesSummit(that) {
+    var str = "";
+    $(".uploadedList .delBtn").each(function (index) {
+        str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>"
+    });
+    that.append(str);
+    that.get(0).submit();
+}
+
 
 // 입력페이지 파일 삭제
 function deleteFileWrtPage(that) {

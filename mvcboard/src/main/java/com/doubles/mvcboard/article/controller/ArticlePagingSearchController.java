@@ -32,7 +32,7 @@ public class ArticlePagingSearchController {
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.GET)
-    public String writeGET() throws Exception {
+    public String writeGET(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
 
         return "article/search/write";
     }

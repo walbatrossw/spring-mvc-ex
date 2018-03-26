@@ -70,7 +70,7 @@
                             <ul class="mailbox-attachments clearfix uploadedList"></ul>
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
+                            <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i> 초기화</button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> 저장</button>
@@ -91,23 +91,7 @@
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>
-<%--첨부파일 하나의 영역--%>
-<%--이미지--%>
-<script id="templateImage" type="text/x-handlebars-template">
-    <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
-        <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages">
-                <i class="fa fa-camera"></i> {{fileName}}
-            </a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
-                <i class="fa fa-fw fa-remove"></i>
-            </a>
-        </div>
-    </li>
-</script>
-<%--일반 파일--%>
-<script id="templateFile" type="text/x-handlebars-template">
+<script id="fileTemplate" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img">
             <img src="{{imgSrc}}" alt="Attachment">
@@ -125,20 +109,13 @@
 <script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
 <script>
 
-    /*====================================================게시판 첨부파일 업로드 관련======================================*/
     $(document).ready(function () {
 
-
-        // 글 저장 버튼 클릭 이벤트 : 파일명 DB 저장 처리
+        // 게시글 저장 버튼 클릭 이벤트 처리
         $("#writeForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
-            var str = "";
-            $(".uploadedList .delBtn").each(function (index) {
-                str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>"
-            });
-            that.append(str);
-            that.get(0).submit();
+            filesSummit(that);
         });
 
         // 파일 삭제 버튼 클릭 이벤트
@@ -146,6 +123,14 @@
             event.preventDefault();
             var that = $(this);
             deleteFileWrtPage(that);
+        });
+
+        // 목록 버튼 클릭 이벤트 처리
+        $(".listBtn").on("click", function () {
+            self.location = "/article/paging/search/list?page=${searchCriteria.page}"
+                + "&perPageNum=${searchCriteria.perPageNum}"
+                + "&searchType=${searchCriteria.searchType}"
+                + "&keyword=${searchCriteria.keyword}";
         });
 
     });

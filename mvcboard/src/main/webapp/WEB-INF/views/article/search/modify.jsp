@@ -98,19 +98,7 @@
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>
-<%--첨부파일 하나의 영역--%>
-<%--이미지--%>
-<script id="templateImage" type="text/x-handlebars-template">
-    <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
-        <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fa fa-camera"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
-        </div>
-    </li>
-</script>
-<%--일반 파일--%>
-<script id="templateFile" type="text/x-handlebars-template">
+<script id="fileTemplate" type="text/x-handlebars-template">
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
         <div class="mailbox-attachment-info">
@@ -119,7 +107,6 @@
         </div>
     </li>
 </script>
-<%--업로드 JS--%>
 <script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
 <script>
     $(document).ready(function () {
@@ -142,12 +129,7 @@
         $("#modifyForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
-            var str = "";
-            $(".uploadedList .delBtn").each(function (index) {
-                str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>"
-            });
-            that.append(str);
-            that.get(0).submit();
+            filesSummit(that);
         });
 
         /*================================================게시판 페이지 이동관련===========================================*/
