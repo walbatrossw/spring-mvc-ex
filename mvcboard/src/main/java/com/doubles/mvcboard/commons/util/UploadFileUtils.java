@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,11 @@ public class UploadFileUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadFileUtils.class);
 
-    // 파일 업로드 처리 메서드
-    public static String uploadFile(String originalFileName, byte[] fileData, HttpServletRequest request) throws Exception {
+    // 파일 업로드 처리
+    public static String uploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
+
+        String originalFileName = file.getOriginalFilename(); // 파일명
+        byte[] fileData = file.getBytes();  // 파일 데이터
 
         // 1. 파일명 중복 방지 처리
         String uuidFileName = getUuidFileName(originalFileName);
@@ -42,7 +46,7 @@ public class UploadFileUtils {
         return replaceSavedFilePath(datePath, uuidFileName);
     }
 
-    // 파일 삭제
+    // 파일 삭제 처리
     public static void deleteFile(String fileName, HttpServletRequest request) {
 
         String rootPath = getRootPath(fileName, request); // 기본경로 추출(이미지 or 일반파일)
@@ -62,17 +66,21 @@ public class UploadFileUtils {
     public static HttpHeaders getHttpHeaders(String fileName) throws Exception {
 
         MediaType mediaType = MediaUtils.getMediaType(fileName); // 파일타입 확인
-        HttpHeaders httpHeaders = new HttpHeaders(); // HttpHeder객체 생성
+        HttpHeaders httpHeaders = new HttpHeaders();
 
-        if (mediaType != null) { // 이미지 파일 O
+        // 이미지 파일 O
+        if (mediaType != null) {
             httpHeaders.setContentType(mediaType);
-        } else { // 이미지 파일 X
-            fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID 제거
-            httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
-            // 파일명 한글 인코딩처리
-            httpHeaders.add("Content-Disposition", "attachment; filename=\"" +
-                    new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
+            return httpHeaders;
         }
+
+        // 이미지 파일 X
+        fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID 제거
+        httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
+        // 파일명 한글 인코딩처리
+        httpHeaders.add("Content-Disposition",
+                        "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"),
+                                "ISO-8859-1")+"\"");
 
         return httpHeaders;
     }
@@ -117,32 +125,35 @@ public class UploadFileUtils {
     }
 
     // 파일 저장 경로 치환
-    private static String replaceSavedFilePath(String datePath, String fileName) throws Exception {
+    private static String replaceSavedFilePath(String datePath, String fileName) {
         String savedFilePath = datePath + File.separator + fileName;
         return savedFilePath.replace(File.separatorChar, '/');
     }
 
-    // 파일명 중복방지
+    // 파일명 중복방지 처리
     private static String getUuidFileName(String originalFileName) {
         return UUID.randomUUID().toString() + "_" + originalFileName;
     }
 
-
     // 썸네일 이미지 생성
     private static String makeThumbnail(String uploadRootPath, String datePath, String fileName) throws Exception {
 
-        BufferedImage originalImg = ImageIO.read(new File(uploadRootPath + datePath, fileName)); // 원본이미지를 메모리상에 로딩
-        BufferedImage thumbnailImg = Scalr.resize(originalImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100); // 원본이미지를 축소
+        // 원본이미지를 메모리상에 로딩
+        BufferedImage originalImg = ImageIO.read(new File(uploadRootPath + datePath, fileName));
+        // 원본이미지를 축소
+        BufferedImage thumbnailImg = Scalr.resize(originalImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
+        // 썸네일 파일명
         String thumbnailImgName = "s_" + fileName;
-        String fullPath = uploadRootPath + datePath + File.separator + thumbnailImgName; // 썸네일 업로드 경로
-        File newFile = new File(fullPath); // 썸네일 파일 객체생성
-
-        String formatName = MediaUtils.getFormatName(fileName); // 썸네일 파일 확장자 추출
-        ImageIO.write(thumbnailImg, formatName.toUpperCase(), newFile); // 썸네일 파일 저장
+        // 썸네일 업로드 경로
+        String fullPath = uploadRootPath + datePath + File.separator + thumbnailImgName;
+        // 썸네일 파일 객체생성
+        File newFile = new File(fullPath);
+        // 썸네일 파일 확장자 추출
+        String formatName = MediaUtils.getFormatName(fileName);
+        // 썸네일 파일 저장
+        ImageIO.write(thumbnailImg, formatName, newFile);
 
         return thumbnailImgName;
     }
-
-
 
 }

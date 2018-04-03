@@ -35,7 +35,7 @@ public class UploadFormTestController {
 //        String uploadPath = getRealUploadPath(request);
 //        String savedFileName = uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
 
-        String savedFileName = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
+        String savedFileName = UploadFileUtils.uploadFile(file, request);
         model.addAttribute("savedFileName", savedFileName);
 
         return "tutorial/upload_result";

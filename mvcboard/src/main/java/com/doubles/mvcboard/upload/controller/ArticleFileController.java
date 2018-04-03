@@ -31,7 +31,7 @@ public class ArticleFileController {
     public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
         ResponseEntity<String> entity = null;
         try {
-            String savedFilePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
+            String savedFilePath = UploadFileUtils.uploadFile(file, request);
             entity = new ResponseEntity<>(savedFilePath, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class ArticleFileController {
 
     // 게시글 파일 목록
     @RequestMapping(value = "/list/{articleNo}", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) throws Exception {
+    public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) {
         ResponseEntity<List<String>> entity = null;
         try {
             List<String> fileList = articleFileService.getArticleFiles(articleNo);
@@ -75,7 +75,7 @@ public class ArticleFileController {
 
     // 게시글 파일 삭제 : 게시글 작성
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) throws Exception {
+    public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) {
         ResponseEntity<String> entity = null;
 
         try {
@@ -93,7 +93,7 @@ public class ArticleFileController {
     @RequestMapping(value = "/delete/{articleNo}", method = RequestMethod.POST)
     public ResponseEntity<String> deleteFile(@PathVariable("articleNo") Integer articleNo,
                                              String fileName,
-                                             HttpServletRequest request) throws Exception {
+                                             HttpServletRequest request) {
         ResponseEntity<String> entity = null;
 
         try {

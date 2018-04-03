@@ -36,7 +36,7 @@ public class UploadAjaxTestController {
         ResponseEntity<String> entity = null;
 
         try {
-            String savedFilePath = UploadFileUtils.uploadFile(file.getOriginalFilename(), file.getBytes(), request);
+            String savedFilePath = UploadFileUtils.uploadFile(file, request);
             entity = new ResponseEntity<>(savedFilePath, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
