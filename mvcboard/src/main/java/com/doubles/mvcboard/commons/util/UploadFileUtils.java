@@ -22,7 +22,7 @@ public class UploadFileUtils {
     // 파일 업로드 처리 메서드
     public static String uploadFile(String originalFileName, byte[] fileData, HttpServletRequest request) throws Exception {
 
-        // 1. 파일명 중복 방지
+        // 1. 파일명 중복 방지 처리
         String uuidFileName = getUuidFileName(originalFileName);
 
         // 2. 파일 업로드 경로 설정
@@ -34,14 +34,12 @@ public class UploadFileUtils {
         FileCopyUtils.copy(fileData, target); // 파일 객체에 파일 데이터 복사
 
         // 4. 이미지 파일인 경우 썸네일이미지 생성
-        if (MediaUtils.getMediaType(getFormatName(originalFileName)) != null) {
+        if (MediaUtils.getMediaType(originalFileName) != null) {
             uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
         }
 
         // 5. 파일 저장 경로 치환
-        String savedFilePath = replaceSavedFilePath(datePath, uuidFileName);
-
-        return savedFilePath;
+        return replaceSavedFilePath(datePath, uuidFileName);
     }
 
     // 파일 삭제
@@ -50,7 +48,7 @@ public class UploadFileUtils {
         String rootPath = getRootPath(fileName, request); // 기본경로 추출(이미지 or 일반파일)
 
         // 1. 원본 이미지 파일 삭제
-        MediaType mediaType = MediaUtils.getMediaType(getFormatName(fileName));
+        MediaType mediaType = MediaUtils.getMediaType(fileName);
         if (mediaType != null) {
             String originalImg = fileName.substring(0, 12) + fileName.substring(14);
             new File(rootPath + originalImg.replace('/', File.separatorChar)).delete();
@@ -63,7 +61,7 @@ public class UploadFileUtils {
     // 파일 출력을 위한 HttpHeader 설정
     public static HttpHeaders getHttpHeaders(String fileName) throws Exception {
 
-        MediaType mediaType = MediaUtils.getMediaType(getFormatName(fileName)); // 파일타입 확인
+        MediaType mediaType = MediaUtils.getMediaType(fileName); // 파일타입 확인
         HttpHeaders httpHeaders = new HttpHeaders(); // HttpHeder객체 생성
 
         if (mediaType != null) { // 이미지 파일 O
@@ -83,7 +81,7 @@ public class UploadFileUtils {
     public static String getRootPath(String fileName, HttpServletRequest request) {
 
         String rootPath = "/resources/upload";
-        MediaType mediaType = MediaUtils.getMediaType(getFormatName(fileName)); // 파일타입 확인
+        MediaType mediaType = MediaUtils.getMediaType(fileName); // 파일타입 확인
         if (mediaType != null)
             return request.getSession().getServletContext().getRealPath(rootPath + "/images"); // 이미지 파일 경로
 
@@ -129,10 +127,6 @@ public class UploadFileUtils {
         return UUID.randomUUID().toString() + "_" + originalFileName;
     }
 
-    // 파일 확장자 추출
-    private static String getFormatName(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
 
     // 썸네일 이미지 생성
     private static String makeThumbnail(String uploadRootPath, String datePath, String fileName) throws Exception {
@@ -143,7 +137,7 @@ public class UploadFileUtils {
         String fullPath = uploadRootPath + datePath + File.separator + thumbnailImgName; // 썸네일 업로드 경로
         File newFile = new File(fullPath); // 썸네일 파일 객체생성
 
-        String formatName = getFormatName(fileName); // 썸네일 파일 확장자 추출
+        String formatName = MediaUtils.getFormatName(fileName); // 썸네일 파일 확장자 추출
         ImageIO.write(thumbnailImg, formatName.toUpperCase(), newFile); // 썸네일 파일 저장
 
         return thumbnailImgName;

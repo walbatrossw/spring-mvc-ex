@@ -129,7 +129,7 @@
         $("#modifyForm").submit(function (event) {
             event.preventDefault();
             var that = $(this);
-            filesSummit(that);
+            filesSubmit(that);
         });
 
         /*================================================게시판 페이지 이동관련===========================================*/

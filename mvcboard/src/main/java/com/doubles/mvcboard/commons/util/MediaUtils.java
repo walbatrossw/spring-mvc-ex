@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MediaUtils {
+class MediaUtils {
 
     private static Map<String, MediaType> mediaTypeMap;
 
@@ -18,8 +18,14 @@ public class MediaUtils {
     }
 
     // 파일 타입
-    public static MediaType getMediaType(String formatName) {
-        return mediaTypeMap.get(formatName.toUpperCase());
+    static MediaType getMediaType(String fileName) {
+        String formatName = getFormatName(fileName);
+        return mediaTypeMap.get(formatName);
+    }
+
+    // 파일 확장자 추출
+    static String getFormatName(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1).toUpperCase();
     }
 
 }
