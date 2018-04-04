@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <ul class="mailbox-attachments clearfix uploadedList"></ul>
+                            <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
@@ -102,7 +102,7 @@
     <li>
         <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
+            <a href="{{originalFileUrl}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
             <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
         </div>
     </li>

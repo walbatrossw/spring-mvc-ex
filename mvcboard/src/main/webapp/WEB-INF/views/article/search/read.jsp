@@ -41,7 +41,7 @@
 
                     <%--업로드 파일 정보 영역--%>
                     <div class="box-footer uploadFiles">
-                        <ul class="mailbox-attachments clearfix uploadedList"></ul>
+                        <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
                     </div>
 
                     <div class="box-footer">
@@ -211,7 +211,7 @@
             <img src="{{imgSrc}}" alt="Attachment">
         </span>
         <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name">
+            <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
                 <i class="fa fa-paperclip"></i> {{fileName}}
             </a>
         </div>
@@ -347,7 +347,7 @@
             }
 
             var arr = [];
-            $(".uploadedList li").each(function () {
+            $(".uploadedFileList li").each(function () {
                 arr.push($(this).attr("data-src"));
             });
 
