@@ -33,4 +33,15 @@
         <property name="maxUploadSize" value="10485760"/>
     </bean>
 
+
+    <bean id="sampleInterceptor" class="com.doubles.mvcboard.tutorial.interceptor.SampleInterceptor"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/interceptor/doA"/>
+            <mvc:mapping path="/interceptor/doB"/>
+            <ref bean="sampleInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
