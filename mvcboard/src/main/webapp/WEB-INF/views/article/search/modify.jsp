@@ -100,10 +100,16 @@
 <%@ include file="../../include/plugin_js.jsp"%>
 <script id="fileTemplate" type="text/x-handlebars-template">
     <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgSrc}}" alt="Attachment"></span>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
         <div class="mailbox-attachment-info">
-            <a href="{{originalFileUrl}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
+            <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                <i class="fa fa-paperclip"></i> {{originalFileName}}
+            </a>
+            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
         </div>
     </li>
 </script>

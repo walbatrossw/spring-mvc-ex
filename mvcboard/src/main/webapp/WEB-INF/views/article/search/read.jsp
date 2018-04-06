@@ -212,7 +212,7 @@
         </span>
         <div class="mailbox-attachment-info">
             <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
-                <i class="fa fa-paperclip"></i> {{fileName}}
+                <i class="fa fa-paperclip"></i> {{originalFileName}}
             </a>
         </div>
     </li>

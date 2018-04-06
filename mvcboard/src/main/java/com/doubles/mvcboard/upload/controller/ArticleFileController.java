@@ -59,7 +59,7 @@ public class ArticleFileController {
         return entity;
     }
 
-    // 게시글 파일 목록
+    // 게시글 첨부 파일 목록
     @RequestMapping(value = "/list/{articleNo}", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) {
         ResponseEntity<List<String>> entity = null;

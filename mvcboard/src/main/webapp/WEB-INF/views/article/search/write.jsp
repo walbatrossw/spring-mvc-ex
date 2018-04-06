@@ -98,7 +98,7 @@
         </span>
         <div class="mailbox-attachment-info">
             <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
-                <i class="fa fa-paperclip"></i> {{fileName}}
+                <i class="fa fa-paperclip"></i> {{originalFileName}}
             </a>
             <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
                 <i class="fa fa-fw fa-remove"></i>
