@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/plugins/iCheck/square/blue.css">
     <%--lightbox--%>
     <link rel="stylesheet" href="/bower_components/lightbox/css/lightbox.css">
     <!-- Theme style -->

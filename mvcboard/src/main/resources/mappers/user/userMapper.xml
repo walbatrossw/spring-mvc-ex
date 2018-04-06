@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doubles.mvcboard.mappers.user.UserMapper">
+
+    <select id="login" resultMap="userVOResultMap">
+        SELECT
+          user_id
+          , user_pw
+          , user_name
+        FROM tbl_user
+        WHERE user_id = #{userId}
+            AND user_pw = #{userPw}
+    </select>
+
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="userId" column="user_id"/>
+        <result property="userPw" column="user_pw"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPoint" column="user_point"/>
+    </resultMap>
+
+</mapper>
