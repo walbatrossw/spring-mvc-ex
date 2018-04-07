@@ -5,6 +5,13 @@
 
 <mapper namespace="com.doubles.mvcboard.mappers.user.UserMapper">
 
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="userId" column="user_id"/>
+        <result property="userPw" column="user_pw"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPoint" column="user_point"/>
+    </resultMap>
+
     <select id="login" resultMap="userVOResultMap">
         SELECT
           user_id
@@ -15,11 +22,19 @@
             AND user_pw = #{userPw}
     </select>
 
-    <resultMap id="userVOResultMap" type="UserVO">
-        <id property="userId" column="user_id"/>
-        <result property="userPw" column="user_pw"/>
-        <result property="userName" column="user_name"/>
-        <result property="userPoint" column="user_point"/>
-    </resultMap>
+
+    <update id="keepLogin">
+        UPDATE tbl_user
+        SET session_key = #{sessionId}
+            , session_limit = #{next}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="checkUserWithSessionKey" resultMap="userVOResultMap">
+        SELECT
+            *
+        FROM tbl_user
+        WHERE session_key = #{value}
+    </select>
 
 </mapper>

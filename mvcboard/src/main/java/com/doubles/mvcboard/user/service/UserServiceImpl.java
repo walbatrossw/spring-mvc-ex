@@ -6,6 +6,7 @@ import com.doubles.mvcboard.user.persistence.UserDAO;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,5 +21,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {
         return userDAO.login(loginDTO);
+    }
+
+    @Override
+    public void keepLogin(String userId, String sessionId, Date next) throws Exception {
+        userDAO.keepLogin(userId, sessionId, next);
+    }
+
+    @Override
+    public UserVO checkLoginBefore(String value) {
+        return userDAO.checkUserWithSessionKey(value);
     }
 }

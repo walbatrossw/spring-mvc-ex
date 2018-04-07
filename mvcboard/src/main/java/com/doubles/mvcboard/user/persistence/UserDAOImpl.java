@@ -6,6 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -24,4 +27,18 @@ public class UserDAOImpl implements UserDAO {
         return sqlSession.selectOne(NAMESPACE + ".login", loginDTO);
     }
 
+    @Override
+    public void keepLogin(String userId, String sessionId, Date next) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("sessionId", sessionId);
+        paramMap.put("next", next);
+
+        sqlSession.update(NAMESPACE + ".keepLogin", paramMap);
+    }
+
+    @Override
+    public UserVO checkUserWithSessionKey(String value) {
+        return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
+    }
 }
