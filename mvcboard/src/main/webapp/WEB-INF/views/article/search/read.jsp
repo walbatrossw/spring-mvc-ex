@@ -46,7 +46,7 @@
 
                     <div class="box-footer">
                         <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
+                            <img class="img-circle img-bordered-sm" src="${path}/dist/img/default-user.png" alt="user image">
                             <span class="username">
                                 <a href="#">${article.writer}</a>
                             </span>
@@ -63,35 +63,38 @@
                             <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
-                            <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
-                        </div>
+                        <c:if test="${login.userId == article.writer}">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
+                                <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
 
                 <div class="box box-warning">
                     <div class="box-header with-border">
-                        <a class="link-black text-lg"><i class="fa fa-pencil margin-r-5"></i> 댓글작성</a>
+                        <a class="link-black text-lg"><i class="fa fa-pencil margin-r-5"></i> 댓글 쓰기</a>
                     </div>
                     <div class="box-body">
-                        <form class="form-horizontal">
-                            <div class="form-group margin">
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..."
-                                              style="resize: none"></textarea>
+                        <c:if test="${not empty login}">
+                            <form role="form">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..."style="resize: none"></textarea>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input class="form-control" id="newReplyWriter" type="text" placeholder="댓글작성자...">
+                                <div class="col-sm-2" hidden>
+                                    <input class="form-control" id="newReplyWriter" type="text" value="${login.userId}" readonly>
                                 </div>
-                                <hr/>
-                                <div class="col-sm-2">
-                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i
-                                            class="fa fa-save"></i> 저장
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                                <button type="button" class="btn btn-default btn-block replyAddBtn">
+                                    <i class="fa fa-save"></i> 댓글 저장
+                                </button>
+                            </form>
+                        </c:if>
+                        <c:if test="${empty login}">
+                            <a href="${path}/user/login" class="btn btn-default btn-block" role="button">
+                                <i class="fa fa-edit"></i> 로그인 한 사용자만 댓글 등록이 가능합니다.
+                            </a>
+                        </c:if>
                     </div>
                 </div>
 
@@ -187,6 +190,7 @@
             <span class="username">
                 <%--작성자 이름--%>
                 <a href="#">{{replyWriter}}</a>
+                {{#eqReplyWriter replyWriter}}
                 <%--댓글 삭제 버튼--%>
                 <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
                     <i class="fa fa-times"> 삭제</i>
@@ -195,6 +199,7 @@
                 <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
                     <i class="fa fa-edit"> 수정</i>
                 </a>
+                {{/eqReplyWriter}}
             </span>
             <%--댓글 작성일자--%>
             <span class="description">{{prettifyDate regDate}}</span>
@@ -221,6 +226,14 @@
 <script type="text/javascript" src="/resources/dist/js/reply.js"></script>
 <script>
     $(document).ready(function () {
+
+        Handlebars.registerHelper("eqReplyWriter", function (replyWriter, block) {
+            var accum = "";
+            if (replyWriter === "${login.userId}") {
+                accum += block.fn();
+            }
+            return accum;
+        });
 
         var articleNo = "${article.articleNo}";  // 현재 게시글 번호
         var replyPageNum = 1; // 댓글 페이지 번호 초기화

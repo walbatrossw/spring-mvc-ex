@@ -52,9 +52,9 @@
                                 <textarea class="form-control" id="content" name="content" rows="30"
                                           placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" hidden>
                                 <label for="writer">작성자</label>
-                                <input class="form-control" id="writer" name="writer">
+                                <input class="form-control" id="writer" name="writer" value="${login.userId}" readonly>
                             </div>
                             <div class="form-group">
                                 <div class="fileDrop">

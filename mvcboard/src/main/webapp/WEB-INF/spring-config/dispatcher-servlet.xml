@@ -36,6 +36,7 @@
 
     <bean id="sampleInterceptor" class="com.doubles.mvcboard.tutorial.interceptor.SampleInterceptor"/>
     <bean id="loginInterceptor" class="com.doubles.mvcboard.commons.interceptor.LoginInterceptor"/>
+    <bean id="authInterceptor" class="com.doubles.mvcboard.commons.interceptor.AuthInterceptor"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
@@ -46,6 +47,12 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/loginPost"/>
             <ref bean="loginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/article/paging/search/write"/>
+            <mvc:mapping path="/article/paging/search/modify"/>
+            <mvc:mapping path="/article/paging/search/remove"/>
+            <ref bean="authInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
