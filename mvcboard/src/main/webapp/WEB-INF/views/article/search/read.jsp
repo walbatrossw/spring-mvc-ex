@@ -78,7 +78,7 @@
                     </div>
                     <div class="box-body">
                         <c:if test="${not empty login}">
-                            <form role="form">
+                            <form>
                                 <div class="form-group">
                                     <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글내용..."style="resize: none"></textarea>
                                 </div>
