@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,12 +29,11 @@ public class ArticleDAOTest {
     @Test
     public void testCreate() throws Exception {
 
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 2000; i++) {
             ArticleVO articleVO = new ArticleVO();
             articleVO.setTitle(i+ "번째 글 제목입니다...");
             articleVO.setContent(i+ "번재 글 내용입니다...");
             articleVO.setWriter("user0"+(i%10));
-
             articleDAO.create(articleVO);
         }
 

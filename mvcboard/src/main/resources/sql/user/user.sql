@@ -1,7 +1,7 @@
 -- 회원 테이블
 CREATE TABLE tbl_user (
   user_id VARCHAR(50) NOT NULL,
-  user_pw VARCHAR(50) NOT NULL,
+  user_pw VARCHAR(100) NOT NULL,
   user_name VARCHAR(100) NOT NULL,
   user_point INT NOT NULL DEFAULT 0,
   PRIMARY KEY (user_id)

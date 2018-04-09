@@ -28,9 +28,9 @@ public class ReplyDAOTest {
 
     @Test
     public void testReplyCreateService() throws Exception {
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 250; i++) {
             ReplyVO replyVO = new ReplyVO();
-            replyVO.setArticleNo(997);
+            replyVO.setArticleNo(1997);
             replyVO.setReplyText(i+"번째 댓글입니다..");
             replyVO.setReplyWriter("user0"+(i%10));
 
