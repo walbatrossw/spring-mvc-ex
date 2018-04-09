@@ -29,7 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO checkLoginBefore(String value) {
+    public UserVO checkLoginBefore(String value) throws Exception {
         return userDAO.checkUserWithSessionKey(value);
+    }
+
+    @Override
+    public void register(UserVO userVO) throws Exception {
+        userDAO.register(userVO);
     }
 }

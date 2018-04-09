@@ -22,13 +22,15 @@ public class UserDAOImpl implements UserDAO {
         this.sqlSession = sqlSession;
     }
 
+    // 로그인 처리
     @Override
     public UserVO login(LoginDTO loginDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".login", loginDTO);
     }
 
+    // 로그인 유지 처리
     @Override
-    public void keepLogin(String userId, String sessionId, Date next) {
+    public void keepLogin(String userId, String sessionId, Date next) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
         paramMap.put("sessionId", sessionId);
@@ -38,7 +40,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public UserVO checkUserWithSessionKey(String value) {
+    public UserVO checkUserWithSessionKey(String value) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
+    }
+
+    @Override
+    public void register(UserVO userVO) throws Exception {
+        sqlSession.insert(NAMESPACE + ".register", userVO);
     }
 }

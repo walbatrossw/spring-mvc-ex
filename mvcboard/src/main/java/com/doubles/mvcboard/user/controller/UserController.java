@@ -3,11 +3,13 @@ package com.doubles.mvcboard.user.controller;
 import com.doubles.mvcboard.user.domain.LoginDTO;
 import com.doubles.mvcboard.user.domain.UserVO;
 import com.doubles.mvcboard.user.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import javax.inject.Inject;
@@ -40,7 +42,7 @@ public class UserController {
 
         UserVO userVO = userService.login(loginDTO);
 
-        if (userVO == null) {
+        if (userVO == null || !BCrypt.checkpw(loginDTO.getUserPw(), userVO.getUserPw())) {
             return;
         }
 
@@ -59,6 +61,7 @@ public class UserController {
     public String logout(HttpServletRequest request,
                          HttpServletResponse response,
                          HttpSession httpSession) throws Exception {
+
         Object object = httpSession.getAttribute("login");
         if (object != null) {
             UserVO userVO = (UserVO) object;
@@ -75,4 +78,23 @@ public class UserController {
 
         return "/user/logout";
     }
+
+    // 회원가입 페이지
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registerGET() throws Exception {
+        return "/user/register";
+    }
+
+    // 회원가입 처리
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registerPOST(UserVO userVO, RedirectAttributes redirectAttributes) throws Exception {
+
+        String hashPw = BCrypt.hashpw(userVO.getUserPw(), BCrypt.gensalt());
+        userVO.setUserPw(hashPw);
+        userService.register(userVO);
+        redirectAttributes.addFlashAttribute("msg", "REGISTERED");
+
+        return "redirect:/user/login";
+    }
+
 }

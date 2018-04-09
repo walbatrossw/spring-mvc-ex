@@ -19,7 +19,6 @@
           , user_name
         FROM tbl_user
         WHERE user_id = #{userId}
-            AND user_pw = #{userPw}
     </select>
 
 
@@ -36,5 +35,17 @@
         FROM tbl_user
         WHERE session_key = #{value}
     </select>
+
+    <insert id="register">
+        INSERT INTO tbl_user (
+            user_id
+            , user_pw
+            , user_name
+        ) VALUES (
+            #{userId}
+            , #{userPw}
+            , #{userName}
+        )
+    </insert>
 
 </mapper>
