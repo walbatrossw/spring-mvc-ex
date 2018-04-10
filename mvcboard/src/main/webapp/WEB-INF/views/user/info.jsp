@@ -36,7 +36,7 @@
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle"
                              src="${path}/dist/img/default-user.png" alt="User profile picture">
-                        <h3 class="profile-username text-center">더블에스</h3>
+                        <h3 class="profile-username text-center">${login.userName}</h3>
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
                                 <div class="progress active">
@@ -90,28 +90,27 @@
                     <div class="box-body">
                         <strong><i class="fa fa-user-plus margin-r-5"></i> 회원가입일</strong>
                         <p class="text-muted">
-                            2018년 4월 5일
+                            <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
                         </p>
 
                         <hr>
 
                         <strong><i class="fa fa-sign-in margin-r-5"></i> 최종 접속일</strong>
                         <p class="text-muted">
-                            2018년 4월 5일 20시 30분
+                            <fmt:formatDate value="${login.userLoginDate}" pattern="yyyy-MM-dd a HH:mm"/>
                         </p>
 
                         <hr>
 
                         <strong><i class="fa fa-envelope-o margin-r-5"></i> 이메일</strong>
                         <p class="text-muted">
-                            walbatrossw@gmail.com
+                            ${login.userEmail}
                         </p>
 
                         <hr>
 
                         <strong><i class="fa fa-file-text-o margin-r-5"></i> 자기소개</strong>
-
-                        <p>안녕하세요. 반갑습니다.</p>
+                        <p>${login.userSignature}</p>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -122,103 +121,97 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#myActivities" data-toggle="tab">나의 활동</a></li>
-                        <li><a href="#myArticle" data-toggle="tab">나의 게시글</a></li>
-                        <li><a href="#myBookmark" data-toggle="tab">나의 북마크</a></li>
+                        <li><a href="#myArticles" data-toggle="tab">나의 게시글 목록</a></li>
+                        <li><a href="#myBookmarks" data-toggle="tab">나의 북마크 목록</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="active tab-pane" id="myActivities">
                             <!-- The timeline -->
                             <ul class="timeline timeline-inverse">
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-red">2018년 4월 5일</span>
-                                </li>
-                                <!-- /.timeline-label -->
                                 <!-- timeline item -->
                                 <li>
-                                    <i class="fa fa-envelope bg-blue"></i>
+                                    <i class="fa fa-bookmark bg-blue"></i>
                                     <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 12시 30분</span>
-                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2017년 4월 5일 12시 30분</span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">1000</a>번 게시물을 북마크하였습니다.
                                         </h3>
-                                        <div class="timeline-body">
-                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                            quora plaxo ideeli hulu weebly balihoo...
-                                        </div>
                                         <div class="timeline-footer">
-                                            <a class="btn btn-primary btn-xs">Read more</a>
-                                            <a class="btn btn-danger btn-xs">Delete</a>
+                                            <a class="btn btn-primary btn-xs">자세히 보기</a>
                                         </div>
                                     </div>
                                 </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
                                 <li>
-                                    <i class="fa fa-user bg-aqua"></i>
-
+                                    <i class="fa fa-bookmark bg-blue"></i>
                                     <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted
-                                            your friend request
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2017년 4월 5일 12시 30분</span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">1000</a>번 게시물을 북마크하였습니다.
                                         </h3>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-comments bg-yellow"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post
-                                        </h3>
-
-                                        <div class="timeline-body">
-                                            Take me to your leader!
-                                            Switzerland is small and neutral!
-                                            We are more like Germany, ambitious and misunderstood!
-                                        </div>
                                         <div class="timeline-footer">
-                                            <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                                            <a class="btn btn-primary btn-xs">자세히 보기</a>
                                         </div>
                                     </div>
                                 </li>
-                                <!-- END timeline item -->
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-green">2018년 4월 1일</span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
                                 <li>
-                                    <i class="fa fa-camera bg-purple"></i>
-
+                                    <i class="fa fa-thumbs-up bg-red"></i>
                                     <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2017년 4월 5일 12시 30분</span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">1000</a>번 게시물을 추천하였습니다.
                                         </h3>
-
-                                        <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <div class="timeline-footer">
+                                            <a class="btn btn-primary btn-xs">자세히 보기</a>
                                         </div>
                                     </div>
                                 </li>
-                                <!-- END timeline item -->
                                 <li>
-                                    <i class="fa fa-clock-o bg-gray"></i>
+                                    <i class="fa fa-comment bg-yellow"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2017년 4월 5일 12시 30분</span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">1000</a>번 게시물에 댓글을 작성하였습니다.
+                                        </h3>
+                                        <div class="timeline-footer">
+                                            <a class="btn btn-primary btn-xs">자세히 보기</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fa fa-pencil bg-green"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2017년 4월 5일 12시 30분</span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">1000</a>번 게시물을 작성하였습니다.
+                                        </h3>
+                                        <div class="timeline-footer">
+                                            <a class="btn btn-primary btn-xs">자세히 보기</a>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li class="active"><a>1</a></li>
+                                    <li><a>2</a></li>
+                                    <li><a>3</a></li>
+                                    <li><a>4</a></li>
+                                    <%--<c:if test="${pageMaker.prev}">--%>
+                                    <%--<li><a href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">--%>
+                                    <%--<li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>--%>
+                                    <%--<a href="${path}/article/paging/search/list${pageMaker.makeSearch(idx)}">${idx}</a>--%>
+                                    <%--</li>--%>
+                                    <%--</c:forEach>--%>
+                                    <%--<c:if test="${pageMaker.next && pageMaker.endPage > 0}">--%>
+                                    <%--<li><a href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>--%>
+                                    <%--</c:if>--%>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="tab-pane" id="myArticle">
+                        <div class="tab-pane" id="myArticles">
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
@@ -269,7 +262,7 @@
 
                         <!-- /.tab-pane -->
 
-                        <div class="tab-pane" id="myBookmark">
+                        <div class="tab-pane" id="myBookmarks">
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
@@ -337,32 +330,32 @@
                         <h4 class="modal-title">회원정보 수정</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="${path}/user/register" method="post">
+                        <form>
                             <div class="form-group has-feedback">
-                                <input type="text" name="userId" class="form-control" placeholder="아아디" readonly>
+                                <input type="text" id="userId" class="form-control" placeholder="아아디" value="${login.userId}" readonly>
                                 <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" name="userName" class="form-control" placeholder="이름">
+                                <input type="text" id="userName" class="form-control" placeholder="이름" value="${login.userName}">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                            <input type="email" name="userEmail" class="form-control" placeholder="이메일">
+                            <input type="email" id="userEmail" class="form-control" placeholder="이메일" value="${login.userEmail}">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="password" name="userPw" class="form-control" placeholder="비밀번호">
+                                <input type="password" id="userPw" class="form-control" placeholder="비밀번호">
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <textarea class="form-control" id="userIntroduction" rows="3" placeholder="자기소개" style="resize: none"></textarea>
+                                <textarea class="form-control" id="userSignature" rows="3" placeholder="자기소개" style="resize: none">${login.userSignature}</textarea>
                                 <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">수정 저장</button>
+                        <button type="button" class="btn btn-primary infoMod">수정 저장</button>
                     </div>
                 </div>
             </div>
@@ -462,6 +455,45 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
+
+        $(".infoMod").on("click", function () {
+            var userIdObj = $("#userId");
+            var userPwObj = $("#userPw");
+            var userNameObj = $("#userName");
+            var userEmailObj = $("#userEmail");
+            var userSignatureObj =$("#userSignature");
+
+            var userId = userIdObj.val();
+            var userPw = userPwObj.val();
+            var userName = userNameObj.val();
+            var userEmail = userEmailObj.val();
+            var userSignature = userSignatureObj.val();
+
+            $.ajax({
+                type: "post",
+                url: "/user/info/modify",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                    userId: userId,
+                    userPw: userPw,
+                    userName: userName,
+                    userEmail: userEmail,
+                    userSignature: userSignature
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result === "MODIFIED") {
+                        alert("회원정보가 수정되었습니다.");
+                    }
+                }
+            });
+        });
+
+
 
     });
 </script>

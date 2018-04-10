@@ -9,14 +9,17 @@
         <id property="userId" column="user_id"/>
         <result property="userPw" column="user_pw"/>
         <result property="userName" column="user_name"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userJoinDate" column="user_join_date"/>
+        <result property="userLoginDate" column="user_login_date"/>
+        <result property="userSignature" column="user_signature"/>
+        <result property="userImg" column="user_img"/>
         <result property="userPoint" column="user_point"/>
     </resultMap>
 
     <select id="login" resultMap="userVOResultMap">
         SELECT
-          user_id
-          , user_pw
-          , user_name
+          *
         FROM tbl_user
         WHERE user_id = #{userId}
     </select>
@@ -41,10 +44,12 @@
             user_id
             , user_pw
             , user_name
+            , user_email
         ) VALUES (
             #{userId}
             , #{userPw}
             , #{userName}
+            , #{userEmail}
         )
     </insert>
 

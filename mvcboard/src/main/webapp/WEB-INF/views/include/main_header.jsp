@@ -21,18 +21,15 @@
                 <c:if test="${not empty login}">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${path}/dist/img/default-user.png" class="user-image" alt="User Image">
+                            <img src="${login.userImg}" class="user-image" alt="User Image">
                             <span class="hidden-xs">${login.userName}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
                                 <img src="${path}/dist/img/default-user.png" class="img-circle" alt="User Image">
-                                <p>
+                                <p>${login.userName}
                                     <small>
-                                        <%--가입일자 : <fmt:formatDate value="${login.regdate}" pattern="yyyy-MM-dd"/>--%>
-                                    </small>
-                                    <small>
-                                        <%--최근로그인일자 : <fmt:formatDate value="${login.logdate}" pattern="yyyy-MM-dd a HH:mm"/>--%>
+                                        가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
                                     </small>
                                 </p>
                             </li>
@@ -51,7 +48,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="${path}/user/profile" class="btn btn-default btn-flat"><i
+                                    <a href="${path}/user/info" class="btn btn-default btn-flat"><i
                                             class="fa fa-info-circle"></i><b> 내 프로필</b></a>
                                 </div>
                                 <div class="pull-right">

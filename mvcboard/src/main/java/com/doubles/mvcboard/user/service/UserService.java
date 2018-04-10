@@ -14,5 +14,5 @@ public interface UserService {
     UserVO checkLoginBefore(String value) throws Exception;
 
     void register(UserVO userVO) throws Exception;
-
+    
 }
