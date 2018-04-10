@@ -51,10 +51,10 @@
         <div class="social-auth-links text-center">
             <p>- 또는 -</p>
             <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-                <i class="fa fa-facebook"></i> 페이스북으로 로그인
+                <i class="fa fa-facebook"></i> 페이스북으로 가입
             </a>
             <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-                <i class="fa fa-google-plus"></i> 구글 계정으로 로그인
+                <i class="fa fa-google-plus"></i> 구글 계정으로 가입
             </a>
         </div>
 

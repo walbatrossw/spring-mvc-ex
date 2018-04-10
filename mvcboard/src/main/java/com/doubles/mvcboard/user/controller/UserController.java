@@ -97,4 +97,10 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+    // 회원 정보, 프로필 페이지
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile() throws Exception {
+        return "/user/profile";
+    }
+
 }
