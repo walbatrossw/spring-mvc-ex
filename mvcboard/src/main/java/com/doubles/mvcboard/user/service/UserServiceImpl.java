@@ -3,6 +3,7 @@ package com.doubles.mvcboard.user.service;
 import com.doubles.mvcboard.user.domain.LoginDTO;
 import com.doubles.mvcboard.user.domain.UserVO;
 import com.doubles.mvcboard.user.persistence.UserDAO;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -36,5 +37,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserVO userVO) throws Exception {
         userDAO.register(userVO);
+    }
+
+    @Override
+    public boolean isValidUserPw(String userId, String userPw) throws Exception {
+        String hashedUserPw = userDAO.getUserPw(userId);
+
+        return BCrypt.checkpw(userPw, hashedUserPw);
+    }
+
+    @Override
+    public void userInfoModify(UserVO userVO) throws Exception {
+        userDAO.userInfoUpdate(userVO);
+    }
+
+    @Override
+    public void userPwModify(String userId, String newUserPw) throws Exception {
+        userDAO.userPwUpdate(userId, newUserPw);
     }
 }

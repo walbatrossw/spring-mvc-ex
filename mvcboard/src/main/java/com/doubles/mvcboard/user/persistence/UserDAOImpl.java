@@ -48,4 +48,23 @@ public class UserDAOImpl implements UserDAO {
     public void register(UserVO userVO) throws Exception {
         sqlSession.insert(NAMESPACE + ".register", userVO);
     }
+
+    @Override
+    public String getUserPw(String userId) throws Exception {
+
+        return sqlSession.selectOne(NAMESPACE + ".getUserPw", userId);
+    }
+
+    @Override
+    public void userInfoUpdate(UserVO userVO) throws Exception {
+        sqlSession.update(NAMESPACE + ".userInfoUpdate", userVO);
+    }
+
+    @Override
+    public void userPwUpdate(String userId, String newUserPw) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("newUserPw", newUserPw);
+        sqlSession.update(NAMESPACE + ".userPwUpdate", paramMap);
+    }
 }

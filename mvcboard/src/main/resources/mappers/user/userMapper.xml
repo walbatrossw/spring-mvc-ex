@@ -24,7 +24,6 @@
         WHERE user_id = #{userId}
     </select>
 
-
     <update id="keepLogin">
         UPDATE tbl_user
         SET session_key = #{sessionId}
@@ -52,5 +51,27 @@
             , #{userEmail}
         )
     </insert>
+
+    <select id="getUserPw" resultType="string">
+        SELECT user_pw
+        FROM tbl_user
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="userInfoUpdate">
+        UPDATE tbl_user
+        SET
+            user_name = #{userName}
+            , user_email = #{userEmail}
+            , user_signature = #{userSignature}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="userPwUpdate">
+        UPDATE tbl_user
+        SET
+            user_pw = #{newUserPw}
+        WHERE user_id = #{userId}
+    </update>
 
 </mapper>

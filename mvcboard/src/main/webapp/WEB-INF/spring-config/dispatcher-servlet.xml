@@ -15,6 +15,7 @@
     <mvc:resources mapping="/bower_components/**" location="/resources/bower_components/"/>
     <mvc:resources mapping="/plugins/**" location="/resources/plugins/"/>
     <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+    <mvc:resources mapping="/user/**" location="/resources/upload/user/"/>
 
     <!--viewResolver 설정-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

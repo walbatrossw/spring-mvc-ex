@@ -14,5 +14,10 @@ public interface UserService {
     UserVO checkLoginBefore(String value) throws Exception;
 
     void register(UserVO userVO) throws Exception;
-    
+
+    boolean isValidUserPw(String userId, String userPw) throws Exception;
+
+    void userInfoModify(UserVO userVO) throws Exception;
+
+    void userPwModify(String userId, String newUserPw) throws Exception;
 }

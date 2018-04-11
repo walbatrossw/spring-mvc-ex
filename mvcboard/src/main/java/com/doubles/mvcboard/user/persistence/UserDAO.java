@@ -17,4 +17,14 @@ public interface UserDAO {
 
     // 회원가입 처리
     void register(UserVO userVO) throws Exception;
+
+    // 회원비밀번호
+    String getUserPw(String userId) throws Exception;
+
+    // 회원정보 수정처리
+    void userInfoUpdate(UserVO userVO) throws Exception;
+
+    // 회원 비밀번호 수정
+    void userPwUpdate(String userId, String newUserPw) throws Exception;
+
 }

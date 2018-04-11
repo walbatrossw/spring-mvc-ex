@@ -21,12 +21,12 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserLoginController {
 
     private final UserService userService;
 
     @Inject
-    public UserController(UserService userService) {
+    public UserLoginController(UserService userService) {
         this.userService = userService;
     }
 
@@ -79,24 +79,6 @@ public class UserController {
         return "/user/logout";
     }
 
-    // 회원가입 페이지
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerGET() throws Exception {
-        return "/user/register";
-    }
 
-    // 회원가입 처리
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerPOST(UserVO userVO, RedirectAttributes redirectAttributes) throws Exception {
-
-        String hashPw = BCrypt.hashpw(userVO.getUserPw(), BCrypt.gensalt());
-        userVO.setUserPw(hashPw);
-        userService.register(userVO);
-        redirectAttributes.addFlashAttribute("msg", "REGISTERED");
-
-        return "redirect:/user/login";
-    }
-
-    // 회원 탈퇴
 
 }

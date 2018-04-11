@@ -324,39 +324,39 @@
         <div class="modal fade" id="myInfoMod">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">회원정보 수정</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
+                    <form role="form" id="userInfoModForm" action="${path}/user/info/modify" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">회원정보 수정</h4>
+                        </div>
+                        <div class="modal-body">
                             <div class="form-group has-feedback">
-                                <input type="text" id="userId" class="form-control" placeholder="아아디" value="${login.userId}" readonly>
+                                <input type="text" id="userId" name="userId" class="form-control" placeholder="아아디" value="${login.userId}" readonly>
                                 <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" id="userName" class="form-control" placeholder="이름" value="${login.userName}">
+                                <input type="text" id="userName" name="userName" class="form-control" placeholder="이름" value="${login.userName}">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                            <input type="email" id="userEmail" class="form-control" placeholder="이메일" value="${login.userEmail}">
+                            <input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="이메일" value="${login.userEmail}">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="password" id="userPw" class="form-control" placeholder="비밀번호">
+                                <input type="password" id="userPw" name="userPw" class="form-control" placeholder="비밀번호">
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <textarea class="form-control" id="userSignature" rows="3" placeholder="자기소개" style="resize: none">${login.userSignature}</textarea>
+                                <textarea class="form-control" name="userSignature" id="userSignature" rows="3" placeholder="자기소개" style="resize: none">${login.userSignature}</textarea>
                                 <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary infoMod">수정 저장</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                            <button type="submit" class="btn btn-primary myInfoModBtn">수정 저장</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -364,29 +364,32 @@
         <div class="modal fade" id="myPwMod">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">비밀번호 수정</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="현재 비밀번호">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <form role="form" action="${path}/user/info/password/modify" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">비밀번호 수정</h4>
                         </div>
-                        <div class="form-group has-feedback">
-                            <input type="password" name="userPw" class="form-control" placeholder="변경할 비밀번호">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        <div class="modal-body">
+                            <div class="form-group has-feedback">
+                                <input type="hidden" name="userId" class="form-control" value="${login.userId}">
+                                <input type="password" name="oldUserPw" class="form-control" placeholder="현재 비밀번호">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="password" name="newUserPw" class="form-control" placeholder="변경할 비밀번호">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="password" class="form-control" placeholder="변경할 비밀번호 확인">
+                                <span class="glyphicon glyphicon-check form-control-feedback"></span>
+                            </div>
                         </div>
-                        <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="변경할 비밀번호 확인">
-                            <span class="glyphicon glyphicon-check form-control-feedback"></span>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                            <button type="submit" class="btn btn-primary">비밀번호 수정</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">비밀번호 수정</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -394,33 +397,39 @@
         <div class="modal fade" id="myProfileImgMod">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">프로필 이미지 수정</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                    <img src="${path}/resources/dist/img/default-user.png" alt="...">
-                                </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
-                                <div>
+                    <form role="form" id="uploadForm" method="post" action="${path}/user/info/img/upload" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">프로필 이미지 수정</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
+                                        <img src="${login.userImg}" alt="...">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+                                    <div>
                                     <span class="btn btn-default btn-file">
                                         <span class="fileinput-new">이미지 선택</span>
                                         <span class="fileinput-exists">변경</span>
-                                        <input type="file" name="...">
+                                        <input type="file" id="userImg" name="userImg">
+                                        <input type="hidden" name="userId" value="${login.userId}">
                                     </span>
-                                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">제거</a>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">제거</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">수정 저장</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                            <c:if test="${login.userImg ne '/user/default-user.png'}">
+                                <button type="button" class="btn btn-primary">프로필 이미지 삭제</button>
+                            </c:if>
+                            <button type="submit" class="btn btn-primary">프로필 이미지 변경 저장</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -455,46 +464,22 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
+        var result = "${msg}";
+        if (result === "INVALID userPw") {
+            alert("비밀번호가 일치하지 않습니다.");
+        } else if (result === "MODIFIED userInfo") {
+            alert("회원정보 수정이 완료되었습니다.");
+        } else if (result === "MODIFIED userPw") {
+            alert("비밀번호 변경이 완료되었습니다.");
+        } else if (result === "SAME userPw") {
+            alert("현재 비밀번호와 변경할 비밀번호가 동일합니다.");
+        }
 
-        $(".infoMod").on("click", function () {
-            var userIdObj = $("#userId");
-            var userPwObj = $("#userPw");
-            var userNameObj = $("#userName");
-            var userEmailObj = $("#userEmail");
-            var userSignatureObj =$("#userSignature");
+        var userImg = "${login.userImg}";
 
-            var userId = userIdObj.val();
-            var userPw = userPwObj.val();
-            var userName = userNameObj.val();
-            var userEmail = userEmailObj.val();
-            var userSignature = userSignatureObj.val();
+        if (userImg !== "/user/default-user.png") {
 
-            $.ajax({
-                type: "post",
-                url: "/user/info/modify",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-HTTP-Method-Override": "POST"
-                },
-                dataType: "text",
-                data: JSON.stringify({
-                    userId: userId,
-                    userPw: userPw,
-                    userName: userName,
-                    userEmail: userEmail,
-                    userSignature: userSignature
-                }),
-                success: function (result) {
-                    console.log("result : " + result);
-                    if (result === "MODIFIED") {
-                        alert("회원정보가 수정되었습니다.");
-                    }
-                }
-            });
-        });
-
-
-
+        }
     });
 </script>
 </body>
