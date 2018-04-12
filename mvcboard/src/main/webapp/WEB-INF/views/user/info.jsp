@@ -35,7 +35,7 @@
                 <div class="box box-primary">
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle"
-                             src="${path}/dist/img/default-user.png" alt="User profile picture">
+                             src="${path}/user${login.userImg}" alt="User profile picture">
                         <h3 class="profile-username text-center">${login.userName}</h3>
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
@@ -397,7 +397,7 @@
         <div class="modal fade" id="myProfileImgMod">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form role="form" id="uploadForm" method="post" action="${path}/user/info/img/upload" enctype="multipart/form-data">
+                    <form role="form" id="uploadForm" method="post" action="${path}/user/img/upload" enctype="multipart/form-data">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
@@ -407,14 +407,14 @@
                             <div class="text-center">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                        <img src="${login.userImg}" alt="...">
+                                        <img src="${path}/user${login.userImg}" alt="...">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
                                     <span class="btn btn-default btn-file">
                                         <span class="fileinput-new">이미지 선택</span>
                                         <span class="fileinput-exists">변경</span>
-                                        <input type="file" id="userImg" name="userImg">
+                                        <input type="file" id="userImgFile" name="userImgFile">
                                         <input type="hidden" name="userId" value="${login.userId}">
                                     </span>
                                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">제거</a>
@@ -424,7 +424,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-                            <c:if test="${login.userImg ne '/user/default-user.png'}">
+                            <c:if test="${login.userImg ne '/default-user.png'}">
                                 <button type="button" class="btn btn-primary">프로필 이미지 삭제</button>
                             </c:if>
                             <button type="submit" class="btn btn-primary">프로필 이미지 변경 저장</button>

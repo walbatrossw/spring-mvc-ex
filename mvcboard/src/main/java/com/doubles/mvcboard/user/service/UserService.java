@@ -20,4 +20,8 @@ public interface UserService {
     void userInfoModify(UserVO userVO) throws Exception;
 
     void userPwModify(String userId, String newUserPw) throws Exception;
+
+    // 회원 프로필 사진파일 수정
+    void userImgModify(String userId, String userImg) throws Exception;
+
 }

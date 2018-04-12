@@ -74,4 +74,11 @@
         WHERE user_id = #{userId}
     </update>
 
+    <update id="userImgUpdate">
+        UPDATE tbl_user
+        SET
+            user_img = #{userImg}
+        WHERE user_id = #{userId}
+    </update>
+
 </mapper>

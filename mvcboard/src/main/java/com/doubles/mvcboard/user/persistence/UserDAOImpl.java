@@ -67,4 +67,12 @@ public class UserDAOImpl implements UserDAO {
         paramMap.put("newUserPw", newUserPw);
         sqlSession.update(NAMESPACE + ".userPwUpdate", paramMap);
     }
+
+    @Override
+    public void userImgUpdate(String userId, String userImg) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("userImg", userImg);
+        sqlSession.update(NAMESPACE + ".userImgUpdate", paramMap);
+    }
 }

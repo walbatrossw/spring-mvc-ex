@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
     public void userPwModify(String userId, String newUserPw) throws Exception {
         userDAO.userPwUpdate(userId, newUserPw);
     }
+
+    @Override
+    public void userImgModify(String userId, String userImg) throws Exception {
+        userDAO.userImgUpdate(userId, userImg);
+    }
 }

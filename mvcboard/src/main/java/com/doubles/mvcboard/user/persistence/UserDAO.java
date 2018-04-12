@@ -27,4 +27,7 @@ public interface UserDAO {
     // 회원 비밀번호 수정
     void userPwUpdate(String userId, String newUserPw) throws Exception;
 
+    // 회원 프로필 사진파일 수정
+    void userImgUpdate(String userId, String userImg) throws Exception;
+
 }

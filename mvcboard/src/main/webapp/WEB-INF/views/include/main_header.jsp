@@ -21,12 +21,12 @@
                 <c:if test="${not empty login}">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${login.userImg}" class="user-image" alt="User Image">
+                            <img src="${path}/user${login.userImg}" class="user-image" alt="User Image">
                             <span class="hidden-xs">${login.userName}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="${path}/dist/img/default-user.png" class="img-circle" alt="User Image">
+                                <img src="${path}/user${login.userImg}" class="img-circle" alt="User Image">
                                 <p>${login.userName}
                                     <small>
                                         가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
@@ -62,7 +62,7 @@
                 <c:if test="${empty login}">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/dist/img/default-user.png" class="user-image" alt="User Image">
+                            <img src="${path}/user/default-user.png" class="user-image" alt="User Image">
                             <span class="hidden-xs">회원가입 또는 로그인</span>
                         </a>
                         <ul class="dropdown-menu">
