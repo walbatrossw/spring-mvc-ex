@@ -14,7 +14,7 @@ ALTER TABLE tbl_user ADD COLUMN session_key VARCHAR(50) NOT NULL DEFAULT 'none';
 ALTER TABLE tbl_user ADD COLUMN session_limit TIMESTAMP;
 
 -- 회원 프로필 이미지 칼럼 추가
-ALTER TABLE tbl_user ADD COLUMN user_img VARCHAR(100) NOT NULL DEFAULT '/upload/user/default-user.png';
+ALTER TABLE tbl_user ADD COLUMN user_img VARCHAR(100) NOT NULL DEFAULT 'user/default-user.png';
 
 -- 회원이메일 추가
 ALTER TABLE tbl_user ADD COLUMN user_email VARCHAR(50) NOT NULL;

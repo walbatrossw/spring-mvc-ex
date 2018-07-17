@@ -21,12 +21,12 @@
                 <c:if test="${not empty login}">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${path}/user${login.userImg}" class="user-image" alt="User Image">
+                            <img src="/${login.userImg}" class="user-image" alt="User Image">
                             <span class="hidden-xs">${login.userName}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="${path}/user${login.userImg}" class="img-circle" alt="User Image">
+                                <img src="/${login.userImg}" class="img-circle" alt="User Image">
                                 <p>${login.userName}
                                     <small>
                                         가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
