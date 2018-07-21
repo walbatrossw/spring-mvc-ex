@@ -184,8 +184,8 @@
     {{#each.}}
     <div class="post replyDiv" data-replyNo={{replyNo}}>
         <div class="user-block">
-            <%--댓글 작성자 프로필사진 : 추후 이미지 업로드기능 구현 예정--%>
-            <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
+            <%--댓글 작성자 프로필사진--%>
+            <img class="img-circle img-bordered-sm" src="/{{userVO.userImg}}" alt="user image">
             <%--댓글 작성자--%>
             <span class="username">
                 <%--작성자 이름--%>

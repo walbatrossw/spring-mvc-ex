@@ -1,15 +1,19 @@
 package com.doubles.mvcboard.reply.domain;
 
+import com.doubles.mvcboard.user.domain.UserVO;
+
 import java.util.Date;
 
 public class ReplyVO {
 
     private Integer replyNo;
-    private Integer ArticleNo;
+    private Integer articleNo;
     private String replyText;
     private String replyWriter;
     private Date regDate;
     private Date updateDate;
+
+    private UserVO userVO;
 
     public Integer getReplyNo() {
         return replyNo;
@@ -20,11 +24,11 @@ public class ReplyVO {
     }
 
     public Integer getArticleNo() {
-        return ArticleNo;
+        return articleNo;
     }
 
     public void setArticleNo(Integer articleNo) {
-        ArticleNo = articleNo;
+        this.articleNo = articleNo;
     }
 
     public String getReplyText() {
@@ -59,15 +63,24 @@ public class ReplyVO {
         this.updateDate = updateDate;
     }
 
+    public UserVO getUserVO() {
+        return userVO;
+    }
+
+    public void setUserVO(UserVO userVO) {
+        this.userVO = userVO;
+    }
+
     @Override
     public String toString() {
         return "ReplyVO{" +
                 "replyNo=" + replyNo +
-                ", ArticleNo=" + ArticleNo +
+                ", articleNo=" + articleNo +
                 ", replyText='" + replyText + '\'' +
                 ", replyWriter='" + replyWriter + '\'' +
                 ", regDate=" + regDate +
                 ", updateDate=" + updateDate +
+                ", userVO=" + userVO +
                 '}';
     }
 }

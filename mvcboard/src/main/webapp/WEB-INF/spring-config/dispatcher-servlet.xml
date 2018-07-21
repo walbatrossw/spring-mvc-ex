@@ -35,11 +35,17 @@
     </bean>
 
     <!--인터셉터 설정-->
+    <bean id="sampleInterceptor" class="com.doubles.mvcboard.tutorial.interceptor.SampleInterceptor"/>
     <bean id="loginInterceptor" class="com.doubles.mvcboard.commons.interceptor.LoginInterceptor"/>
     <bean id="authInterceptor" class="com.doubles.mvcboard.commons.interceptor.AuthInterceptor"/>
     <bean id="rememberMeInterceptor" class="com.doubles.mvcboard.commons.interceptor.RememberMeInterceptor"/>
 
     <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/interceptor/doA"/>
+            <mvc:mapping path="/interceptor/doB"/>
+            <ref bean="sampleInterceptor"/>
+        </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/user/loginPost"/>
             <ref bean="loginInterceptor"/>
