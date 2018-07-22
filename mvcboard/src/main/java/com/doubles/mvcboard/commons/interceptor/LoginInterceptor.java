@@ -28,12 +28,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             httpSession.setAttribute(LOGIN, userVO);
             //response.sendRedirect("/");
 
-            // 쿠키 생성
             if (request.getParameter("useCookie") != null) {
                 logger.info("remember me...");
+                // 쿠키 생성
                 Cookie loginCookie = new Cookie("loginCookie", httpSession.getId());
                 loginCookie.setPath("/");
                 loginCookie.setMaxAge(60*60*24*7);
+                // 전송
                 response.addCookie(loginCookie);
             }
 

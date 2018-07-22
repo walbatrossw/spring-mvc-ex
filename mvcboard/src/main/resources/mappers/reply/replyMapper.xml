@@ -55,8 +55,8 @@
             , update_date
             , user_img
         FROM tbl_reply
-            , tbl_user
-        WHERE user_id = reply_writer and article_no = #{articleNo}
+        INNER JOIN tbl_user ON user_id = reply_writer
+        WHERE article_no = #{articleNo}
         ORDER BY reply_no DESC
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
     </select>
