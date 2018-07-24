@@ -27,7 +27,7 @@
     <update id="keepLogin">
         UPDATE tbl_user
         SET session_key = #{sessionId}
-            , session_limit = #{next}
+            , session_limit = #{sessionLimit}
         WHERE user_id = #{userId}
     </update>
 

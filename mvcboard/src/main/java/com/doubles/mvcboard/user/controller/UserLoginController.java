@@ -50,7 +50,7 @@ public class UserLoginController {
 
         if (loginDTO.isUseCookie()) {
             int amount = 60 * 60 * 24 * 7;
-            Date sessionLimit = new Date(System.currentTimeMillis()+(1000*amount));
+            Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
             userService.keepLogin(userVO.getUserId(), httpSession.getId(), sessionLimit);
         }
 
@@ -72,13 +72,12 @@ public class UserLoginController {
                 loginCookie.setPath("/");
                 loginCookie.setMaxAge(0);
                 response.addCookie(loginCookie);
-                userService.keepLogin(userVO.getUserId(), httpSession.getId(), new Date());
+                userService.keepLogin(userVO.getUserId(), "none", new Date());
             }
         }
 
         return "/user/logout";
     }
-
 
 
 }

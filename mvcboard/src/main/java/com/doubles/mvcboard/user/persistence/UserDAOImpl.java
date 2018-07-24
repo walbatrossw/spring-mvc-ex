@@ -30,15 +30,16 @@ public class UserDAOImpl implements UserDAO {
 
     // 로그인 유지 처리
     @Override
-    public void keepLogin(String userId, String sessionId, Date next) throws Exception {
+    public void keepLogin(String userId, String sessionId, Date sessionLimit) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
         paramMap.put("sessionId", sessionId);
-        paramMap.put("next", next);
+        paramMap.put("sessionLimit", sessionLimit);
 
         sqlSession.update(NAMESPACE + ".keepLogin", paramMap);
     }
 
+    // 세션키 검증
     @Override
     public UserVO checkUserWithSessionKey(String value) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);

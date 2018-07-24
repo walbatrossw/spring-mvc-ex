@@ -39,6 +39,7 @@
     <bean id="loginInterceptor" class="com.doubles.mvcboard.commons.interceptor.LoginInterceptor"/>
     <bean id="authInterceptor" class="com.doubles.mvcboard.commons.interceptor.AuthInterceptor"/>
     <bean id="rememberMeInterceptor" class="com.doubles.mvcboard.commons.interceptor.RememberMeInterceptor"/>
+    <bean id="loginAfterInterceptor" class="com.doubles.mvcboard.commons.interceptor.LoginAfterInterceptor"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
@@ -60,6 +61,11 @@
         <mvc:interceptor>
             <mvc:mapping path="/**/"/>
             <ref bean="rememberMeInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/login"/>
+            <mvc:mapping path="/user/register"/>
+            <ref bean="loginAfterInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
